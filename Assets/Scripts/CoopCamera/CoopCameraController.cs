@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using ImageCampus.ToolBox.Services;
 
 [Serializable]
 public class CoopCameraSettings
@@ -22,7 +23,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
 
     private CoopCameraModel _model;
 
-    public bool IsPersistent => false;
+    public bool IsPersistance => false;
 
     private void Awake()
     {

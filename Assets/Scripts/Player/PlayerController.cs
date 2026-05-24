@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using ImageCampus.ToolBox.Services;
 
 [RequireComponent(typeof(PlayerView))]
 [RequireComponent (typeof(PlayerInput))]
