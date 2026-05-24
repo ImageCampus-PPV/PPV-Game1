@@ -1,5 +1,5 @@
 name: my-first-action
-run-name: ${{ github.actor }} pushed some shit
+run-name: ${{ github.actor }} pushed!
 on: [push]
 jobs:
   check-bats-version:
