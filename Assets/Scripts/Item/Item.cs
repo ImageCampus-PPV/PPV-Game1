@@ -1,8 +1,12 @@
+using NUnit.Framework;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Item : MonoBehaviour
 {
+    [SerializeField] private ItemType _itemType;
+    public ItemType Type => _itemType;
+
     public virtual void Collect()
     {
         if (!gameObject.activeSelf)
