@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public abstract class Item : MonoBehaviour
 {
     public virtual void Collect()
