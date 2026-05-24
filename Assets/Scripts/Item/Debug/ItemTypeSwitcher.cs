@@ -22,8 +22,6 @@ public class ItemTypeSwitcher : MonoBehaviour
 
     public void OnCycleFilter(InputAction.CallbackContext context)
     {
-        Debug.Log("Cycle!");
-
         if (!context.performed)
             return;
 

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 [RequireComponent(typeof(PlayerView))]
 [RequireComponent (typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
