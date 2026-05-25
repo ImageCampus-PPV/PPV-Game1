@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using UnityEngine;
+using ImageCampus.ToolBox.Services;
 
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class Item : MonoBehaviour
@@ -7,22 +7,21 @@ public abstract class Item : MonoBehaviour
     [SerializeField] private ItemType _itemType;
     public ItemType Type => _itemType;
 
-    public virtual void Collect(ItemCollector collector = null)
+    public virtual void Collect()
     {
         if (!gameObject.activeSelf)
             return;
 
-        if (collector != null && collector.TryGetComponent<MyInventory>(out var inventory))
+        if (ServiceProvider.Instance.ContainsService<MyInventory>())
         {
-            Debug.Log("Collecting item");
-
+            var inventory = ServiceProvider.Instance.GetService<MyInventory>();
             if (!inventory.TryAdd(this))
                 Reject();
         }
-        //else
-        //{
-        //    gameObject.SetActive(false);
-        //}
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public abstract void UseItem();

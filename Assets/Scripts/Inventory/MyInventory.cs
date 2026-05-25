@@ -6,7 +6,8 @@ using ImageCampus.ToolBox.Services;
 using ImageCampus.ToolBox.Events;
 using Inventory.Events;
 
-public class MyInventory : MonoBehaviour
+
+public class MyInventory : MonoBehaviour, IService
 {
     [SerializeField] private int _capacity = 8;
     [SerializeField] private InventorySlotUI _slotPrefab;
@@ -16,16 +17,25 @@ public class MyInventory : MonoBehaviour
     private InventorySlotUI[] _slots;
     private EventBus _eventBus;
 
+    public bool IsPersistance => false;
+
     public ReadOnlyCollection<Item> Items => _items.AsReadOnly();
     public int Count => _items.Count;
     public bool IsFull => _items.Count >= _capacity;
 
     private void Awake()
     {
+        ServiceProvider.Instance.AddService<MyInventory>(this);
+
         if (ServiceProvider.Instance.ContainsService<EventBus>())
             _eventBus = ServiceProvider.Instance.GetService<EventBus>();
 
         InitSlots();
+    }
+
+    private void OnDestroy()
+    {
+        ServiceProvider.Instance.RemoveService<MyInventory>();
     }
 
     public bool TryAdd(Item item)
@@ -61,7 +71,7 @@ public class MyInventory : MonoBehaviour
         _eventBus?.Raise<ItemRemovedEvent>(item, this);
     }
 
-    public void DropItemAt(int index)
+    public void DropItemAt(int index, Vector3 dropPosition)
     {
         if (index < 0 || index >= _items.Count) return;
 
@@ -69,7 +79,7 @@ public class MyInventory : MonoBehaviour
         _items.RemoveAt(index);
 
         item.gameObject.SetActive(true);
-        item.transform.position = transform.position;
+        item.transform.position = dropPosition;
 
         RefreshUI();
         _eventBus?.Raise<ItemRemovedEvent>(item, this);
