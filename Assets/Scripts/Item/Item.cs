@@ -7,19 +7,29 @@ public abstract class Item : MonoBehaviour
     [SerializeField] private ItemType _itemType;
     public ItemType Type => _itemType;
 
-    public virtual void Collect()
+    public virtual void Collect(ItemCollector collector = null)
     {
         if (!gameObject.activeSelf)
             return;
 
-        //TODO: Add to inventory here.
-        gameObject.SetActive(false);
+        if (collector != null && collector.TryGetComponent<MyInventory>(out var inventory))
+        {
+            Debug.Log("Collecting item");
+
+            if (!inventory.TryAdd(this))
+                Reject();
+        }
+        //else
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
     public abstract void UseItem();
 
     public virtual void Reject()
     {
+        Debug.Log("Item rejected");
         //TODO: Visual rejection feedback.
     }
 }
