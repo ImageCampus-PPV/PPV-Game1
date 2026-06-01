@@ -16,7 +16,7 @@ public class PlayerJoinHandler : MonoBehaviour
 
     public void OnPlayerJoined(PlayerInput playerInput)
     {
-        PlayerController controller = playerInput.GetComponent<PlayerController>();
+        Character controller = playerInput.GetComponent<Character>();
 
         if (controller == null)
         {
@@ -30,7 +30,7 @@ public class PlayerJoinHandler : MonoBehaviour
 
     public void OnPlayerLeft(PlayerInput playerInput)
     {
-        PlayerController controller = playerInput.GetComponent<PlayerController>();
+        Character controller = playerInput.GetComponent<Character>();
 
         if (controller != null)
         {
