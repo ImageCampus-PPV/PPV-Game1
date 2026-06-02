@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class FallingItem : Item
+public class DragonItem : Item
 {
     public override void UseItem()
     {

@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91d3c38e8f2033a488704370c69c754f, type: 3}
-  m_Name: Floating
+  m_Name: RustyScrap
   m_EditorClassIdentifier: Assembly-CSharp::ItemType
