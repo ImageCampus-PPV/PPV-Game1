@@ -318,6 +318,58 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f87647a4-5f01-46b7-a413-0aa361d385d2
     m_ActionName: 'Player/SwitchItemType[/Keyboard/i,/DualShock4GamepadHID/rightShoulder]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85042527180921061}
+        m_TargetAssemblyTypeName: Character, Assembly-CSharp
+        m_MethodName: OnPrimaryAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e01150bc-7120-444f-b137-8f21fb169fd2
+    m_ActionName: 'Player/PrimaryAction[/DualShock4GamepadHID/rightTrigger,/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85042527180921061}
+        m_TargetAssemblyTypeName: Character, Assembly-CSharp
+        m_MethodName: OnSecondaryAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: dc63c661-efa1-4faf-a7e7-b7b1c57146fa
+    m_ActionName: 'Player/SecondaryAction[/DualShock4GamepadHID/leftTrigger,/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 85042527180921061}
+        m_TargetAssemblyTypeName: Character, Assembly-CSharp
+        m_MethodName: OnSkillAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3dc42908-7687-405c-8440-4f04c8f98f96
+    m_ActionName: 'Player/SkillAction[/DualShock4GamepadHID/dpad/down,/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1cbb61aa-c02a-4593-abe5-3733cc2ba800
+    m_ActionName: 'Player/Collect[/Keyboard/f,/DualShock4GamepadHID/buttonWest]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -336,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemCollector
   _filter: {fileID: 11400000, guid: 60770ca0fa5832147a81064ca2ffb9ee, type: 2}
+  _collectActionName: Collect
 --- !u!114 &1790953903513159696
 MonoBehaviour:
   m_ObjectHideFlags: 0
