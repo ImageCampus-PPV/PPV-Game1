@@ -142,15 +142,15 @@ public class CharacterSelectManager : MonoBehaviour
         if (_dragonStatusText != null)
         {
             _dragonStatusText.text = _assignment.DragonDeviceIndex >= 0
-                ? $"🐉 Dragon\n<color=green>{GetDeviceName(_assignment.DragonDeviceIndex)}</color>"
-                : "🐉 Dragon\n<color=grey>Unassigned\n(press ← / Q)</color>";
+                ? $"Dragon\n<color=green>{GetDeviceName(_assignment.DragonDeviceIndex)}</color>"
+                : "Dragon\n<color=grey>Unassigned\n(Left button / Q)</color>";
         }
 
         if (_mechaStatusText != null)
         {
             _mechaStatusText.text = _assignment.MechaDeviceIndex >= 0
-                ? $"🤖 Mecha\n<color=green>{GetDeviceName(_assignment.MechaDeviceIndex)}</color>"
-                : "🤖 Mecha\n<color=grey>Unassigned\n(press → / E)</color>";
+                ? $"Mecha\n<color=green>{GetDeviceName(_assignment.MechaDeviceIndex)}</color>"
+                : "Mecha\n<color=grey>Unassigned\n(Right button / E)</color>";
         }
 
         if (_startPrompt != null && !_assignment.BothAssigned)
@@ -165,7 +165,7 @@ public class CharacterSelectManager : MonoBehaviour
         ReadOnlyArray<InputDevice> devices = InputSystem.devices;
 
         if (index < 0 || index >= devices.Count) 
-            return "Desconocido";
+            return "Unknown";
 
         return devices[index].displayName;
     }
