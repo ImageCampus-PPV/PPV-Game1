@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class PlayersContainer : MonoBehaviour
 {
-    [SerializeField] List<PlayerController> _players = new();
+    [SerializeField] List<Character> _players = new();
 
-    public List<PlayerController> Players { get => _players; set => _players = value; }
+    public List<Character> Players { get => _players; set => _players = value; }
 
     private void Awake()
     {

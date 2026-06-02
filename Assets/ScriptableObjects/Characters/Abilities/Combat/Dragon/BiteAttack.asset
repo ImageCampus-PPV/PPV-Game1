@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84aa7ed299b62d418e3110121b1fbf3, type: 3}
+  m_Name: BiteAttack
+  m_EditorClassIdentifier: Assembly-CSharp::BiteAttackStrategy
+  hitboxRadius: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  damage: 10
+  attackSpeed: 1
+  _slowDownMultiplier: 0.5
+  _speedReductionDuration: 0.3
+  _maxComboCount: 3
+  _lastHitDamageMultiplier: 1.5
+  _comboWindow: 1

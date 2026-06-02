@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7615ffd78da5a42a7713635259fb7b, type: 3}
+  m_Name: DragonCombat
+  m_EditorClassIdentifier: Assembly-CSharp::DragonCombat
+  _showAim: 1
+  _aimLineLength: 1.5
+  _groundXAttack: {fileID: 11400000, guid: 0e8f8958794a22f469d59f99c6b75445, type: 2}
+  _groundYAttack: {fileID: 11400000, guid: d121e8ef7b91bdc478df3b8343a7e6c0, type: 2}
+  _airXAttack: {fileID: 11400000, guid: 53e6b8d7a4d45244d99aa9379bb0a967, type: 2}
+  _airYAttack: {fileID: 11400000, guid: 6b04afd5a23d4a04cb1e6661a0ee8b2d, type: 2}
+  _diveAttack: {fileID: 11400000, guid: a8c5ddb419df547478f863cae171b6cc, type: 2}

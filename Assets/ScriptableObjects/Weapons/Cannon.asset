@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8e79e7eafb2cf4cbcd5a7b138b706e, type: 3}
+  m_Name: Cannon
+  m_EditorClassIdentifier: Assembly-CSharp::CannonWeapon
+  damage: 20
+  range: 3
+  cooldown: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _projectileSpeed: 12
+  _projectilePrefab: {fileID: 4006366309282531498, guid: 5b7f7f7608a52f84dbf309643bb6d0a5, type: 3}
