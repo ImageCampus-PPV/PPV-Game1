@@ -23,7 +23,6 @@ public class InGameInspector : MonoBehaviour
 
     private void Start()
     {
-        _menuPanel.SetActive(false);
         _openMenuButton.onClick.AddListener(OpenMenu);
         _switchPlayerButton.onClick.AddListener(SwitchPlayer);
     }

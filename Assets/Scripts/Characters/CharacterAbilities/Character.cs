@@ -1,6 +1,7 @@
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -114,6 +115,11 @@ public class Character : MonoBehaviour
         _rawAimInput = context.ReadValue<Vector2>();
 
         _isOnGamepad = context.control.device is Gamepad;
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            ability.ProcessAim(_rawAimInput);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -176,19 +182,6 @@ public class Character : MonoBehaviour
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
-        }
-    }
-
-    public void OnAim(InputAction.CallbackContext context)
-    {
-        if (IsIgnoringInput) 
-            return;
-
-        Vector2 aim = context.ReadValue<Vector2>();
-
-        foreach (CharacterAbility ability in _activeAbilities)
-        {
-            ability.ProcessAim(aim);
         }
     }
 

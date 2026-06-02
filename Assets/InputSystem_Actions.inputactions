@@ -564,7 +564,7 @@
                 {
                     "name": "",
                     "id": "7d41e4eb-f868-47bc-8d13-2e4ac564ac24",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad;Joystick",

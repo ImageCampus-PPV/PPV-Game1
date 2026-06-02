@@ -34,7 +34,7 @@ public class MechaCombat : CharacterAbility
         if (_slot1Weapon == null) 
             return;
 
-        Vector2 aim = GetAimDirection();
+        Vector2 aim = Character.CurrentAimDir;
 
         if (context.started || context.performed)
             _slot1Weapon.OnPressed(context, aim);
@@ -47,7 +47,7 @@ public class MechaCombat : CharacterAbility
         if (_slot2Weapon == null) 
             return;
 
-        Vector2 aim = GetAimDirection();
+        Vector2 aim = Character.CurrentAimDir;
 
         if (context.started || context.performed)
             _slot2Weapon.OnPressed(context, aim);
@@ -63,7 +63,7 @@ public class MechaCombat : CharacterAbility
 
     public override void Tick()
     {
-        _aimDir = GetAimDirection();
+        _aimDir = Character.CurrentAimDir;
 
         (_slot1Weapon as GatlingWeapon)?.UpdateAimDir(_aimDir);
         (_slot2Weapon as GatlingWeapon)?.UpdateAimDir(_aimDir);
@@ -86,30 +86,4 @@ public class MechaCombat : CharacterAbility
         _slot2Weapon?.FixedTick();
     }
 
-    private Vector2 GetAimDirection()
-    {
-        if (_stickAimDir.sqrMagnitude > 0.1f)
-        {
-            _aimDir = _stickAimDir;
-            return _aimDir;
-        }
-
-        Mouse mouse = UnityEngine.InputSystem.Mouse.current;
-
-        if (mouse != null && Camera.main != null)
-        {
-            Vector3 screenPos = mouse.position.ReadValue();
-            screenPos.z = Mathf.Abs(Camera.main.transform.position.z);
-            Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(screenPos);
-            Vector2 dir = mouseWorld - (Vector2)Character.transform.position;
-
-            if (dir.sqrMagnitude > 0.01f)
-            {
-                _aimDir = dir.normalized;
-                return _aimDir;
-            }
-        }
-
-        return _aimDir;
-    }
 }
