@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class InventorySlotUI : MonoBehaviour
 {
     [SerializeField] private Image _icon;
@@ -16,11 +15,11 @@ public class InventorySlotUI : MonoBehaviour
             _emptyIndicator.SetActive(false);
 
         if (_nameText != null)
-            _nameText.text = stack.Sample.name;
+            _nameText.text = stack.Type != null ? stack.Type.name : stack.Sample.name;
 
         if (_countText != null)
         {
-            _countText.gameObject.SetActive(stack.Count > 1);
+            _countText.gameObject.SetActive(true);
             _countText.text = $"x{stack.Count}";
         }
 
@@ -48,8 +47,8 @@ public class InventorySlotUI : MonoBehaviour
 
         if (_countText != null)
         {
-            _countText.text = string.Empty;
             _countText.gameObject.SetActive(false);
+            _countText.text = string.Empty;
         }
 
         if (_emptyIndicator != null)

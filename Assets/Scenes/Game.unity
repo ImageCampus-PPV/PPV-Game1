@@ -571,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 6760193854735121635, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
       propertyPath: _itemType
       value: 
-      objectReference: {fileID: 11400000, guid: e7f49b2b50696bf49bc2f7a53d069bd4, type: 2}
+      objectReference: {fileID: 11400000, guid: 04d49af3e2c640e429c18aceff55ef78, type: 2}
     - target: {fileID: 9119693353735329710, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.1
@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyInventory
   _capacity: 8
-  _slotPrefab: {fileID: 9186739989415075882, guid: 1e63819560ce0814183d8ec498cfc2dd, type: 3}
+  _slotPrefab: {fileID: 3981546343948635423, guid: 1e63819560ce0814183d8ec498cfc2dd, type: 3}
   _slotContainer: {fileID: 666741933}
 --- !u!114 &560394076
 MonoBehaviour:

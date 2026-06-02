@@ -1,10 +1,8 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(Item))]
 public class ItemPickupArea : MonoBehaviour
 {
-    [SerializeField] private string _itemDisplayName = "Item";
     [SerializeField] private ItemPickupPrompt _prompt;
 
     public Item Item { get; private set; }
@@ -17,7 +15,8 @@ public class ItemPickupArea : MonoBehaviour
 
     public void ShowPrompt(string buttonName)
     {
-        _prompt?.Show(buttonName, _itemDisplayName);
+        string itemName = Item.Type != null ? Item.Type.name : gameObject.name;
+        _prompt?.Show(buttonName, itemName);
     }
 
     public void HidePrompt()

@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: DragonOnly
   m_EditorClassIdentifier: Assembly-CSharp::ItemTypeFilter
   _allowedTypes:
+  - {fileID: 11400000, guid: 38826027cc9d2a54bac23515ee3ddf5c, type: 2}
+  - {fileID: 11400000, guid: 2ecb9a8d014a81547964e3744c67d106, type: 2}
   - {fileID: 11400000, guid: 67b4ff073a1f7fb469aeed22d245250d, type: 2}
