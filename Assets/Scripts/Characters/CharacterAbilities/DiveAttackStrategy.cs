@@ -9,6 +9,7 @@ public class DiveAttackStrategy : AttackStrategy
     [SerializeField] private float _maxVulnerabilityTime = 3f;
     [SerializeField] private float _distanceToMaxDamage = 10f;
     [SerializeField] private float _fallSpeedMultiplier = 1.2f;
+    [SerializeField] private float _damagePerSecond = 15f;
 
     private RuntimeDebugVisual _debugVisual;
 
@@ -16,6 +17,7 @@ public class DiveAttackStrategy : AttackStrategy
     private bool _isFalling;
     private bool _isWeakened;
     private float _vulnerabilityTimer;
+    private float _calculatedAoe;
 
     public override void Execute(Vector2 aimDir)
     {
@@ -45,6 +47,18 @@ public class DiveAttackStrategy : AttackStrategy
         else if (_isWeakened)
         {
             _vulnerabilityTimer -= Time.deltaTime;
+
+            if (_calculatedAoe > 0f)
+            {
+                if (!_debugVisual)
+                    _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+
+                _debugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.orange, Time.deltaTime);
+
+                Collider2D[] extraHits = Physics2D.OverlapCircleAll(character.transform.position, _calculatedAoe, enemyLayer);
+                DealDamageToTargets(extraHits, _damagePerSecond * Time.deltaTime);
+            }
+
             if (_vulnerabilityTimer < 0f)
                 Recover();
         }
@@ -61,15 +75,15 @@ public class DiveAttackStrategy : AttackStrategy
         float scaleFactor = Mathf.Clamp01(distanceFell / _distanceToMaxDamage);
 
         float calculatedDamage = Mathf.Lerp(damage, _maxDamage, scaleFactor);
-        float calculatedAoe = Mathf.Lerp(1f, _maxAoeRadius, scaleFactor);
+        _calculatedAoe = Mathf.Lerp(1f, _maxAoeRadius, scaleFactor);
         _vulnerabilityTimer = Mathf.Lerp(1f, _maxVulnerabilityTime, scaleFactor);
 
         if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
-        _debugVisual.DrawCircle(character.transform.position, calculatedAoe, Color.purple, 1.5f, 0.15f);
+        _debugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.purple, 1.5f, 0.15f);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(character.transform.position, calculatedAoe, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(character.transform.position, _calculatedAoe, enemyLayer);
         DealDamageToTargets(hits, calculatedDamage);
     }
 
@@ -78,5 +92,6 @@ public class DiveAttackStrategy : AttackStrategy
         _isWeakened = false;
         character.IsIgnoringInput = false;
         isExecuting = false;
+        _calculatedAoe = 0f;
     }
 }

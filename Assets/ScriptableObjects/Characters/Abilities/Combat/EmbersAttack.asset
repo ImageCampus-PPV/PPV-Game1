@@ -17,7 +17,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
-  attackSpeed: 10
+  attackSpeed: 1
   _range: 5
   _groundRadius: 2
   _continuousBurnDamage: 5

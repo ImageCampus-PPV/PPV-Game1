@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(PlayerInput))]
 public class Character : MonoBehaviour
 {
     [Header("Ground checks")]
@@ -12,14 +13,17 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask _groundLayer;
+    private Vector2 _rawAimInput;
+    private bool _isOnGamepad;
 
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
-    private List<CharacterAbility> _activeAbilities = new List<CharacterAbility>();
+    private List<CharacterAbility> _activeAbilities = new();
+    private ICoopCameraService _camService;
 
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
-    private ICoopCameraService _camService;
+    private PlayerInput _playerInput;
 
     public Action TouchGroundEvent;
     public Action JumpPressedEvent;
@@ -28,9 +32,10 @@ public class Character : MonoBehaviour
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
     public bool IsIgnoringInput { get; set; }
+    public bool IsBlockingRotation { get; set; }
 
+    public Vector2 CurrentAimDir { get; private set; }
     public Rigidbody2D Rb => _rb;
-
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
@@ -39,6 +44,8 @@ public class Character : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _ownCollider = GetComponent<Collider2D>();
+        CurrentAimDir = Vector2.right;
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     protected virtual void Start()
@@ -51,6 +58,7 @@ public class Character : MonoBehaviour
     public void EquipCharacter(CharacterDebugInfo info)
     {
         IsIgnoringInput = false;
+        IsBlockingRotation = false;
 
         Debug.Log(_rb);
 
@@ -98,10 +106,22 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput || IsBlockingRotation)
+            return;
+
+        _rawAimInput = context.ReadValue<Vector2>();
+
+        _isOnGamepad = context.control.device is Gamepad;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput)
             return;
+
+        _isOnGamepad = context.control.device is Gamepad;
 
         _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
         foreach (var ability in _activeAbilities)
@@ -113,6 +133,8 @@ public class Character : MonoBehaviour
     {
         if (IsIgnoringInput)
             return;
+
+        _isOnGamepad = context.control.device is Gamepad;
 
         _activeJump?.ProcessJump(context);
         foreach (var ability in _activeAbilities)
@@ -148,11 +170,46 @@ public class Character : MonoBehaviour
     private void Update()
     {
         CheckGrounded();
+        CalculateAim();
 
         _activeMovement?.Tick();
         _activeJump?.Tick();
         foreach (var ability in _activeAbilities)
             ability.Tick();
+    }
+
+    private void CalculateAim()
+    {
+        if (IsBlockingRotation)
+            return;
+
+        if (_isOnGamepad)
+        {
+            if (_rawAimInput.sqrMagnitude > 0.05f)
+            {
+                CurrentAimDir = _rawAimInput.normalized;
+            }
+        }
+        else
+        {
+            if (Camera.main != null && Mouse.current != null)
+            {
+                Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+                Debug.Log(mouseScreenPos);
+
+                float depthDist = Mathf.Abs(Camera.main.transform.position.z);
+
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new(mouseScreenPos.x, mouseScreenPos.y, depthDist));
+                Debug.Log(mouseWorldPos);
+
+                CurrentAimDir = ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized;
+                Debug.Log(CurrentAimDir);
+            }
+        }
+
+        if (CurrentAimDir == Vector2.zero)
+            CurrentAimDir = Vector2.right;
     }
 
     private void FixedUpdate()

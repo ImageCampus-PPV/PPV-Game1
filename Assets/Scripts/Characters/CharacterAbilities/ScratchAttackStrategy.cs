@@ -22,6 +22,8 @@ public class ScratchAttackStrategy : AttackStrategy
         if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
+        character.IsBlockingRotation = true;
+
         Vector2 attackPos = (Vector2)character.transform.position + (_attackDir * (hitboxRadius));
         _debugVisual.DrawCircle(attackPos, hitboxRadius, Color.crimson, _currentAttackTimer);
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, hitboxRadius, enemyLayer);
@@ -38,6 +40,7 @@ public class ScratchAttackStrategy : AttackStrategy
         if (_currentAttackTimer < 0f)
         {
             isExecuting = false;
+            character.IsBlockingRotation = false;
         }
     }
 }
