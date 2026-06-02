@@ -1,4 +1,6 @@
-public class FloatingItem : Item
+using UnityEngine;
+
+public class MechaItem : Item
 {
     public override void UseItem()
     {

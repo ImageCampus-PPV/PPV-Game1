@@ -36,7 +36,7 @@ public class GlideAbility : CharacterAbility
     {
         IsGliding = false;
 
-        Debug.Log("Gliding Stopped");
+        //Debug.Log("Gliding Stopped");
 
         Rb.gravityScale = _normalGravityScale;
     }
@@ -61,6 +61,6 @@ public class GlideAbility : CharacterAbility
     {
         IsGliding = true;
         Rb.gravityScale = _glideGravityScale;
-        Debug.Log("Gliding started");
+        //Debug.Log("Gliding started");
     }
 }
