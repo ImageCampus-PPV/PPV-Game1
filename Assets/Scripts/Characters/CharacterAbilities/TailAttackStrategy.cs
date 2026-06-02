@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Abilities/Attacks/Ground Tail (Y)")]
 public class TailAttackStrategy : AttackStrategy
 {
-    [SerializeField] Vector2 _hitboxSize = new Vector2(3f, 1.5f); 
+    [SerializeField] float _hitboxSizeX = 3f; 
+    [SerializeField] float _hitboxSizeY = 1.5f; 
     private float _currentAttackTimer;
 
     private RuntimeDebugVisual _debugVisual;
@@ -20,14 +21,14 @@ public class TailAttackStrategy : AttackStrategy
 
         character.ApplyHVelocity(0);
 
-        Vector2 attackPos = (Vector2)character.transform.position + (Vector2.up * (_hitboxSize.y / 2f));
+        Vector2 attackPos = (Vector2)character.transform.position + (Vector2.up * (_hitboxSizeY / 2f));
 
         if(!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
-        _debugVisual.DrawBox(attackPos, _hitboxSize, Color.magenta, attackSpeed);
+        _debugVisual.DrawBox(attackPos, new(_hitboxSizeX, _hitboxSizeY), Color.magenta, attackSpeed);
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPos, _hitboxSize, enemyLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPos, new(_hitboxSizeX, _hitboxSizeY), enemyLayer);
         DealDamageToTargets(hits, damage);
     }
 

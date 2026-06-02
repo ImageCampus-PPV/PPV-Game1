@@ -4,7 +4,9 @@ using UnityEngine;
 public class StickyAbility : CharacterAbility
 {
     [SerializeField] private float _stickDuration = 1.5f;
-    [SerializeField] private Vector2 _jumpOffForce = new Vector2(5f, 15f);
+    [SerializeField] private float _jumpOffForceX = 10f;
+    [SerializeField] private float _unstickForceXMultiplier = 0.5f;
+    [SerializeField] private float _jumpOffForceY = 15f;
     
     private float _stickTimer;
     private Vector2 _wallNormal;
@@ -72,7 +74,7 @@ public class StickyAbility : CharacterAbility
 
         Unstick();
 
-        Vector2 force = _wallNormal * _jumpOffForce.x + Vector2.up * _jumpOffForce.y;
+        Vector2 force = _wallNormal * _jumpOffForceX + Vector2.up * _jumpOffForceY;
 
         Rb.linearVelocity = Vector2.zero;
 
@@ -86,7 +88,7 @@ public class StickyAbility : CharacterAbility
 
         Character.transform.position += (Vector3)(_wallNormal * 0.1f);
 
-        Rb.AddForce(_wallNormal * _jumpOffForce.x * 0.5f, ForceMode2D.Impulse);
+        Rb.AddForce(_wallNormal * _jumpOffForceX * _unstickForceXMultiplier, ForceMode2D.Impulse);
 
         IsSticking = false;
         Rb.gravityScale = 1f;

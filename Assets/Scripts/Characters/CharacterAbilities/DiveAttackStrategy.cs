@@ -8,6 +8,7 @@ public class DiveAttackStrategy : AttackStrategy
     [SerializeField] private float _maxAoeRadius = 5f;
     [SerializeField] private float _maxVulnerabilityTime = 3f;
     [SerializeField] private float _distanceToMaxDamage = 10f;
+    [SerializeField] private float _fallSpeedMultiplier = 1.2f;
 
     private RuntimeDebugVisual _debugVisual;
 
@@ -26,7 +27,8 @@ public class DiveAttackStrategy : AttackStrategy
         _isWeakened = false;
         _startYPos = character.transform.position.y;
 
-        character.ApplyHVelocity(0f);
+        character.IsIgnoringInput = true;
+        character.Rb.gravityScale = _fallSpeedMultiplier;
     }
 
     public override void Tick()
@@ -53,6 +55,7 @@ public class DiveAttackStrategy : AttackStrategy
         _isFalling = false;
         _isWeakened = true;
         character.ApplyHVelocity(0f);
+        character.Rb.gravityScale = 1f;
 
         float distanceFell = _startYPos - character.transform.position.y;
         float scaleFactor = Mathf.Clamp01(distanceFell / _distanceToMaxDamage);
@@ -64,7 +67,7 @@ public class DiveAttackStrategy : AttackStrategy
         if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
-        _debugVisual.DrawCircle(character.transform.position, calculatedAoe, Color.red, 1.5f, 0.15f);
+        _debugVisual.DrawCircle(character.transform.position, calculatedAoe, Color.purple, 1.5f, 0.15f);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(character.transform.position, calculatedAoe, enemyLayer);
         DealDamageToTargets(hits, calculatedDamage);
@@ -73,6 +76,7 @@ public class DiveAttackStrategy : AttackStrategy
     private void Recover()
     {
         _isWeakened = false;
+        character.IsIgnoringInput = false;
         isExecuting = false;
     }
 }

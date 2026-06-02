@@ -27,6 +27,9 @@ public class Character : MonoBehaviour
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
+    public bool IsIgnoringInput { get; set; }
+
+    public Rigidbody2D Rb => _rb;
 
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
@@ -47,6 +50,8 @@ public class Character : MonoBehaviour
 
     public void EquipCharacter(CharacterDebugInfo info)
     {
+        IsIgnoringInput = false;
+
         Debug.Log(_rb);
 
         CleanUpAbilities();
@@ -95,6 +100,9 @@ public class Character : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (IsIgnoringInput)
+            return;
+
         _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
         foreach (var ability in _activeAbilities)
             ability.ProcessMove(context.ReadValue<Vector2>());
@@ -103,9 +111,38 @@ public class Character : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (IsIgnoringInput)
+            return;
+
         _activeJump?.ProcessJump(context);
         foreach (var ability in _activeAbilities)
             ability.ProcessJump(context);
+    }
+
+    public void OnPrimaryAction(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput)
+            return;
+
+        foreach (var ability in _activeAbilities)
+            ability.ProcessAction(context);
+    }
+
+    public void OnSecondaryAction(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput)
+            return;
+
+        //TODO: Fire ball for Dragon
+    }
+
+    public void OnSkillAction(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput)
+            return;
+
+        foreach (var ability in _activeAbilities)
+            ability.ProcessSkill(context);
     }
 
     private void Update()

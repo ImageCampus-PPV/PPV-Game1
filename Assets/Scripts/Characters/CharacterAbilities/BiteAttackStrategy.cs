@@ -21,6 +21,8 @@ public class BiteAttackStrategy : AttackStrategy
 
         isExecuting = true;
 
+        _attackDir = aimDir;
+
         _currentComboCount++;
 
         if (_currentComboCount > _maxComboCount)
@@ -36,7 +38,7 @@ public class BiteAttackStrategy : AttackStrategy
         if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
-        _debugVisual.DrawCircle(attackPos, hitboxRadius, Color.red, attackSpeed);
+        _debugVisual.DrawCircle(attackPos, hitboxRadius, Color.aliceBlue, attackSpeed);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, hitboxRadius, enemyLayer);
         DealDamageToTargets(hits, damage);

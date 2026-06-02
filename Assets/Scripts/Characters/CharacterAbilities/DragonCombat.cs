@@ -1,9 +1,16 @@
 using ImageCampus.ToolBox.Services;
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public interface ICombat
+{
+    List<AttackStrategy> Strategies { get; }
+}
+
 [CreateAssetMenu(menuName = "Abilities/DragonCombat")]
-public class DragonCombat : CharacterAbility
+public class DragonCombat : CharacterAbility, ICombat
 {
     [Header("Debug")]
     [SerializeField] private bool _showAim = true;
@@ -21,6 +28,9 @@ public class DragonCombat : CharacterAbility
 
     private RuntimeDebugVisual _debugVisual;
     private LineRenderer _debugLine;
+    private List<AttackStrategy> _strategies = new();
+
+    public List<AttackStrategy> Strategies => _strategies;
 
     public override void Initialize(Character character, Rigidbody2D rb)
     {
@@ -31,7 +41,11 @@ public class DragonCombat : CharacterAbility
         _airYAttack.Initialize(character);
         _diveAttack.Initialize(character);
 
-        _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+        _strategies.Add(_groundXAttack);
+        _strategies.Add(_groundYAttack);
+        _strategies.Add(_airXAttack);
+        _strategies.Add(_airYAttack);
+        _strategies.Add(_diveAttack);
     }
 
     public override void ProcessMove(Vector2 input)
@@ -89,6 +103,9 @@ public class DragonCombat : CharacterAbility
 
         if (_showAim && Character != null)
         {
+            if (!_debugVisual)
+                _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+
             _debugVisual.DrawRay(
                 Character.transform.position,
                 _currentAimDir,
