@@ -1458,6 +1458,7 @@ GameObject:
   - component: {fileID: 560394074}
   - component: {fileID: 560394075}
   - component: {fileID: 560394076}
+  - component: {fileID: 560394077}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1569,6 +1570,20 @@ MonoBehaviour:
   _mechaCharacter: {fileID: 1750149060}
   _dragonInfo: {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
   _mechaInfo: {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
+--- !u!114 &560394077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560394070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd0141621a7f4b0418bf3d7d6b96a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RuntimeDebugVisual
+  _debugMat: {fileID: 2100000, guid: d0064fa5555f4f4459dc62e999e903c9, type: 2}
+  _circleSegments: 24
 --- !u!1 &586875387 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
@@ -4190,7 +4205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4683897364147014492, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Color.b
