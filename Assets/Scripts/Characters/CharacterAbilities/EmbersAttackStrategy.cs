@@ -37,6 +37,8 @@ public class EmbersAttackStrategy : AttackStrategy
             return;
         }
 
+        _currentAim = character.CurrentAimDir;
+
         _debugVisual.DrawRay(character.transform.position, _currentAim, _range, Color.red, Time.deltaTime);
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(character.transform.position, _currentAim, _range, enemyLayer | _groundLayer);

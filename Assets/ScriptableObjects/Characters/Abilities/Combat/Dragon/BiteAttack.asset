@@ -17,6 +17,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
-  attackSpeed: 10
+  attackSpeed: 1
   _slowDownMultiplier: 0.5
+  _speedReductionDuration: 0.3
   _maxComboCount: 3
+  _lastHitDamageMultiplier: 1.5
+  _comboWindow: 1

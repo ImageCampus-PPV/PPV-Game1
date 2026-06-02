@@ -17,5 +17,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
-  attackSpeed: 10
-  _hitboxSize: {x: 3, y: 1.5}
+  attackSpeed: 1
+  _hitboxSizeX: 3
+  _hitboxSizeY: 1.5
+  _knockBackXForce: 10
+  _knockBackYForce: 2

@@ -1,6 +1,7 @@
 using ImageCampus.ToolBox.Services;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,7 +25,6 @@ public class DragonCombat : CharacterAbility, ICombat
 
     private AttackStrategy _currentAttack;
     private Vector2 _currentMovementInput;
-    private Vector2 _currentAimDir;
 
     private RuntimeDebugVisual _debugVisual;
     private LineRenderer _debugLine;
@@ -35,11 +35,20 @@ public class DragonCombat : CharacterAbility, ICombat
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
+
+        _groundXAttack = Instantiate(_groundXAttack);
+        _groundYAttack = Instantiate(_groundYAttack);
+        _airXAttack = Instantiate(_airXAttack);
+        _airYAttack = Instantiate(_airYAttack);
+        _diveAttack = Instantiate(_diveAttack);
+
         _groundXAttack.Initialize(character);
         _groundYAttack.Initialize(character);
         _airXAttack.Initialize(character);
         _airYAttack.Initialize(character);
         _diveAttack.Initialize(character);
+
+        _strategies.Clear();
 
         _strategies.Add(_groundXAttack);
         _strategies.Add(_groundYAttack);
@@ -51,14 +60,6 @@ public class DragonCombat : CharacterAbility, ICombat
     public override void ProcessMove(Vector2 input)
     {
         _currentMovementInput = input;
-
-        if (input != Vector2.zero)
-        {
-            if (Mathf.Abs(input.y) > Mathf.Abs(input.x))
-                _currentAimDir = new(0f, Mathf.Sign(input.y));
-            else
-                _currentAimDir = new(Mathf.Sign(input.x), 0);
-        }
     }
 
     public override void ProcessAction(InputAction.CallbackContext context)
@@ -66,7 +67,10 @@ public class DragonCombat : CharacterAbility, ICombat
         if (_currentAttack != null && _currentAttack.IsExecuting)
         {
             if (context.canceled)
-                _currentAttack.Cancel();
+            {
+                if (_currentAttack is ICancelOnRelease)
+                    _currentAttack.Cancel();
+            }
             return;
         }
 
@@ -85,13 +89,15 @@ public class DragonCombat : CharacterAbility, ICombat
 
     private void DetermineBasicAttack()
     {
-        bool isVertical = Mathf.Abs(_currentMovementInput.y) > Mathf.Abs(_currentMovementInput.x);
+        Vector2 aim = Character.CurrentAimDir;
 
-        _currentAttack = Character.IsGrounded ? 
-                        isVertical ? _groundYAttack : _groundXAttack : 
+        bool isVertical = Mathf.Abs(aim.y) > Mathf.Abs(aim.x);
+
+        _currentAttack = Character.IsGrounded ?
+                        isVertical ? _groundYAttack : _groundXAttack :
                         isVertical ? _airYAttack : _airXAttack;
 
-        _currentAttack?.Execute(_currentAimDir);
+        _currentAttack?.Execute(aim);
     }
 
     public override void Tick()
@@ -108,7 +114,7 @@ public class DragonCombat : CharacterAbility, ICombat
 
             _debugVisual.DrawRay(
                 Character.transform.position,
-                _currentAimDir,
+                Character.CurrentAimDir,
                 _aimLineLength,
                 Color.cyan,
                 Time.deltaTime

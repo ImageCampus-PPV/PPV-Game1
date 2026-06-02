@@ -17,8 +17,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   damage: 10
-  attackSpeed: 10
+  attackSpeed: 1
   _maxDamage: 100
   _maxAoeRadius: 5
   _maxVulnerabilityTime: 3
   _distanceToMaxDamage: 10
+  _fallSpeedMultiplier: 1.2
+  _damagePerSecond: 15
