@@ -1497,6 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84d34b6679f034243ad033810416abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _characterSelectSceneName: CharacterSelect
 --- !u!114 &560394075
 MonoBehaviour:
   m_ObjectHideFlags: 0

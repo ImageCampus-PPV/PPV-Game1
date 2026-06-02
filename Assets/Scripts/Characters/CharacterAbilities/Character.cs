@@ -55,7 +55,6 @@ public class Character : MonoBehaviour
         Debug.Log(_rb);
 
         CleanUpAbilities();
-
         _activeAbilities.Clear();
 
         if (info.MovementAbility != null)
@@ -70,7 +69,7 @@ public class Character : MonoBehaviour
             _activeJump.Initialize(this, _rb);
         }
 
-        foreach (var ability in info.Abilities)
+        foreach (CharacterAbility ability in info.Abilities)
         {
             if (ability == null)
             {
@@ -78,7 +77,7 @@ public class Character : MonoBehaviour
                 continue;
             }
 
-            var clonedAbility = Instantiate(ability);
+            CharacterAbility clonedAbility = Instantiate(ability);
             clonedAbility.Initialize(this, _rb);
             _activeAbilities.Add(clonedAbility);
         }
@@ -86,63 +85,89 @@ public class Character : MonoBehaviour
 
     private void CleanUpAbilities()
     {
-        if (_activeMovement != null)
+        if (_activeMovement != null) 
             Destroy(_activeMovement);
-        if (_activeJump != null)
+
+        if (_activeJump != null) 
             Destroy(_activeJump);
 
-        foreach (var ability in _activeAbilities)
+        foreach (CharacterAbility ability in _activeAbilities)
         {
-            if (ability != null)
+            if (ability != null) 
                 Destroy(ability);
-        }
+        }         
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput) 
             return;
 
         _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
-        foreach (var ability in _activeAbilities)
-            ability.ProcessMove(context.ReadValue<Vector2>());
-    }
 
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            ability.ProcessMove(context.ReadValue<Vector2>());
+        }
+    }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput) 
             return;
 
         _activeJump?.ProcessJump(context);
-        foreach (var ability in _activeAbilities)
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.ProcessJump(context);
+        }       
     }
 
     public void OnPrimaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput) 
             return;
 
-        foreach (var ability in _activeAbilities)
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.ProcessAction(context);
+        }      
     }
 
     public void OnSecondaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput) 
             return;
 
-        //TODO: Fire ball for Dragon
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            ability.ProcessSkill(context);
+        }         
     }
 
     public void OnSkillAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput) 
             return;
 
-        foreach (var ability in _activeAbilities)
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.ProcessSkill(context);
+        }
+    }
+
+    public void OnAim(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput) 
+            return;
+
+        Vector2 aim = context.ReadValue<Vector2>();
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            ability.ProcessAim(aim);
+        }
     }
 
     private void Update()
@@ -151,29 +176,39 @@ public class Character : MonoBehaviour
 
         _activeMovement?.Tick();
         _activeJump?.Tick();
-        foreach (var ability in _activeAbilities)
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.Tick();
+        }
     }
 
     private void FixedUpdate()
     {
         _activeMovement?.FixedTick();
         _activeJump?.FixedTick();
-        foreach (var ability in _activeAbilities)
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.FixedTick();
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         _activeMovement?.CharCollisionStay(collision);
         _activeJump?.CharCollisionStay(collision);
-        foreach (var ability in _activeAbilities)
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
             ability.CharCollisionStay(collision);
+        }
     }
 
     private void CheckGrounded()
     {
         var hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
+
         bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
 
         SetGrounded(grounded);
@@ -183,45 +218,38 @@ public class Character : MonoBehaviour
     {
         IsGrounded = grounded;
 
-        if (!grounded)
+        if (!grounded) 
             LastGroundedTime = float.NegativeInfinity;
     }
 
     private void SetGrounded(bool grounded)
     {
         bool wasGrounded = IsGrounded;
-
         IsGrounded = grounded;
 
-        if (!grounded)
+        if (!grounded) 
             return;
 
         LastGroundedTime = Time.time;
 
-        //if it had accumulated jumps, it means it's the first time it 
-        //touches the ground.
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }
 
     private float ClampScreenMovement(float xVel)
     {
-        var bounds = _camService.GetBounds();
-
+        CameraBounds bounds = _camService.GetBounds();
         float posX = _rb.position.x;
 
-        if ((posX <= bounds.left + bounds.margin && xVel < 0) ||
-            (posX >= bounds.right - bounds.margin && xVel > 0))
-        {
+        if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
             xVel = 0;
-        }
 
         return xVel;
     }
+
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);
-
         Vector2 vel = _rb.linearVelocity;
         vel.x = xVel;
         _rb.linearVelocity = vel;

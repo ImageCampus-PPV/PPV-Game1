@@ -131,6 +131,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "626abe1d-9907-4c70-95cf-62c6d1dbc5ee",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -648,6 +657,17 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Collect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7a27893-3aa1-458f-933c-e510d5182258",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

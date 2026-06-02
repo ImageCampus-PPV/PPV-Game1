@@ -19,3 +19,4 @@ MonoBehaviour:
   _jumpAbility: {fileID: 11400000, guid: a936235003682154ca77f97ce1bf1193, type: 2}
   _abilities:
   - {fileID: 11400000, guid: 199744e8d2fcad44bbb4fcac008a8e63, type: 2}
+  - {fileID: 11400000, guid: 8f9919c561c5f734f89afb6233bf46d0, type: 2}
