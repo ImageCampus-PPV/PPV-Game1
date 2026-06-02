@@ -15,11 +15,15 @@ public class MovementAbility : CharacterAbility
     private float _currentXInput = 0;
     private float _currentAccelerationTime = 0f;
     private float _currentXVelocity;
+    
+    public float SpeedMultiplier { get; set; }
 
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
         _currentXVelocity = _initialSpeed;
+
+        SpeedMultiplier = 1f;
     }
 
     public override void ProcessMove(Vector2 input)
@@ -35,8 +39,10 @@ public class MovementAbility : CharacterAbility
 
     private void UpdateVelocity()
     {
-        float accelerationRate = (_maxSpeed - _initialSpeed) / _accelerationTime;
-        float decelerationRate = _maxSpeed / _decelerationTime;
+        float targetMaxSpeed = _maxSpeed * SpeedMultiplier;
+
+        float accelerationRate = (targetMaxSpeed - _initialSpeed) / _accelerationTime;
+        float decelerationRate = targetMaxSpeed / _decelerationTime;
 
         if (!Character.IsGrounded)
             accelerationRate *= _accelerationReductOnAir;
@@ -63,7 +69,7 @@ public class MovementAbility : CharacterAbility
                 decelerationRate * _revDecelerationMultiplier * Time.fixedDeltaTime);
 
 
-            if (currentSpeed >= _maxSpeed - 0.1f)
+            if (currentSpeed >= targetMaxSpeed - 0.1f)
             {
                 //TODO: Skidding animation
             }
@@ -76,6 +82,6 @@ public class MovementAbility : CharacterAbility
             _currentXVelocity = _initialSpeed * inputSign;
         }
 
-        _currentXVelocity = Mathf.MoveTowards(_currentXVelocity, _maxSpeed * inputSign, accelerationRate * Time.fixedDeltaTime);
+        _currentXVelocity = Mathf.MoveTowards(_currentXVelocity, targetMaxSpeed * inputSign, accelerationRate * Time.fixedDeltaTime);
     }
 }

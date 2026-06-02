@@ -9,15 +9,12 @@ public class StickyAbility : CharacterAbility
     private float _stickTimer;
     private Vector2 _wallNormal;
     private Vector2 _attachPoint;
-    private float _normalGravityScale;
 
     public bool IsSticking { get; private set; }
 
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
-
-        _normalGravityScale = Rb.gravityScale;
 
         Character.JumpPressedEvent += JumpOff;
     }
