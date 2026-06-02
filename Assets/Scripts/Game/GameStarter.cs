@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Users;
 
 public class GameStarter : MonoBehaviour
 {
@@ -39,8 +41,8 @@ public class GameStarter : MonoBehaviour
 
     private void AssignDevices()
     {
-        AssignDevice(_dragonCharacter, _assignment.GetDragonDevice());
-        AssignDevice(_mechaCharacter, _assignment.GetMechaDevice());
+        AssignDevice(_dragonCharacter, PlayerAssignment.DragonDevice);
+        AssignDevice(_mechaCharacter, PlayerAssignment.MechaDevice);
     }
 
     private void AssignDevice(Character character, InputDevice device)
@@ -61,7 +63,12 @@ public class GameStarter : MonoBehaviour
             return;
         }
 
-        playerInput.SwitchCurrentControlScheme(device);
+        playerInput.user.UnpairDevices();
+        InputUser.PerformPairingWithDevice(device, playerInput.user);
+
+        string controlScheme = (device is Gamepad) ? "Gamepad" : "Keyboard&Mouse";
+
+        playerInput.SwitchCurrentControlScheme(controlScheme, device);
 
         Debug.Log($"[GameStarter] {character.name} → {device.displayName}");
     }

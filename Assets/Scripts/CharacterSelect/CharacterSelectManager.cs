@@ -57,13 +57,15 @@ public class CharacterSelectManager : MonoBehaviour
 
     private void HandleDeviceInput(InputDevice device, InputControl control)
     {
-        int deviceIndex = GetDeviceIndex(device);
+        bool cancelled = control.name is "buttonSouth" or "space" or "button1";
+        bool left = control.name is "buttonWest" or "q" or "button3";
+        bool right = control.name is "buttonEast" or "e" or "button2";
 
-        if (_assignment.DragonDeviceIndex == deviceIndex || _assignment.MechaDeviceIndex == deviceIndex)
+        if (PlayerAssignment.DragonDevice == device || PlayerAssignment.MechaDevice == device)
         {
-            if (control.name is "buttonSouth" or "space")
+            if (cancelled)
             {
-                CancelAssignment(deviceIndex);
+                CancelAssignment(device);
                 RefreshUI();
                 InputSystem.onAnyButtonPress.CallOnce(OnAnyButton);
             }
@@ -71,20 +73,20 @@ public class CharacterSelectManager : MonoBehaviour
             return;
         }
 
-        if (control.name is "buttonWest" or "q")
+        if (left)
         {
-            if (_assignment.DragonDeviceIndex < 0)
+            if (PlayerAssignment.DragonDevice == null)
             {
-                _assignment.DragonDeviceIndex = deviceIndex;
+                PlayerAssignment.DragonDevice = device;
 
                 Debug.Log($"[CharacterSelect] {device.displayName} assigned to Dragon");
             }
         }
-        else if (control.name is "buttonEast" or "e")
+        else if (right)
         {
-            if (_assignment.MechaDeviceIndex < 0)
+            if (PlayerAssignment.MechaDevice == null)
             {
-                _assignment.MechaDeviceIndex = deviceIndex;
+                PlayerAssignment.MechaDevice = device;
                 Debug.Log($"[CharacterSelect] {device.displayName} assigned to Mecha");
             }
         }
@@ -95,16 +97,16 @@ public class CharacterSelectManager : MonoBehaviour
             ShowStartPrompt();
     }
 
-    private void CancelAssignment(int deviceIndex)
+    private void CancelAssignment(InputDevice device)
     {
-        if (_assignment.DragonDeviceIndex == deviceIndex)
+        if (PlayerAssignment.DragonDevice == device)
         {
-            _assignment.DragonDeviceIndex = -1;
+            PlayerAssignment.DragonDevice = null;
             Debug.Log("[CharacterSelect] Dragon unselected.");
         }
-        else if (_assignment.MechaDeviceIndex == deviceIndex)
+        else if (PlayerAssignment.MechaDevice == device)
         {
-            _assignment.MechaDeviceIndex = -1;
+            PlayerAssignment.MechaDevice = null;
             Debug.Log("[CharacterSelect] Mecha unselected.");
         }
     }
@@ -141,15 +143,15 @@ public class CharacterSelectManager : MonoBehaviour
     {
         if (_dragonStatusText != null)
         {
-            _dragonStatusText.text = _assignment.DragonDeviceIndex >= 0
-                ? $"Dragon\n<color=green>{GetDeviceName(_assignment.DragonDeviceIndex)}</color>"
+            _dragonStatusText.text = PlayerAssignment.DragonDevice != null
+                ? $"Dragon\n<color=green>{PlayerAssignment.DragonDevice.displayName}</color>"
                 : "Dragon\n<color=grey>Unassigned\n(Left button / Q)</color>";
         }
 
         if (_mechaStatusText != null)
         {
-            _mechaStatusText.text = _assignment.MechaDeviceIndex >= 0
-                ? $"Mecha\n<color=green>{GetDeviceName(_assignment.MechaDeviceIndex)}</color>"
+            _mechaStatusText.text = PlayerAssignment.MechaDevice != null
+                ? $"Mecha\n<color=green>{PlayerAssignment.MechaDevice.displayName}</color>"
                 : "Mecha\n<color=grey>Unassigned\n(Right button / E)</color>";
         }
 
@@ -158,15 +160,5 @@ public class CharacterSelectManager : MonoBehaviour
 
         if (_instructionsText != null && !_assignment.BothAssigned)
             _instructionsText.gameObject.SetActive(true);
-    }
-
-    private string GetDeviceName(int index)
-    {
-        ReadOnlyArray<InputDevice> devices = InputSystem.devices;
-
-        if (index < 0 || index >= devices.Count) 
-            return "Unknown";
-
-        return devices[index].displayName;
     }
 }

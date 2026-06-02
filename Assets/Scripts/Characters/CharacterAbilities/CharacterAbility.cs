@@ -1,5 +1,3 @@
-using System;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
