@@ -9,13 +9,18 @@ public class BiteAttackStrategy : AttackStrategy
     [SerializeField] private float _speedReductionDuration = 0.3f;
     [SerializeField] private int _maxComboCount = 3;
     [SerializeField] private float _lastHitDamageMultiplier = 1.5f;
-    [SerializeField] private float _comboWindow = 1.0f;
+    [SerializeField] private float _comboWindowAfterAttack = 1.0f;
+    [SerializeField] private Color _combo1Color = Color.green;
+    [SerializeField] private Color _combo2Color = Color.blue;
+    [SerializeField] private Color _combo3Color = Color.red;
 
     private int _currentComboCount;
     private float _currentAttackTimer;
     private float _slowDownTimer;
     private float _lastAttackTime;
     private Vector2 _attackDir;
+    private float _fullComboWindow;
+    public int CurrentComboCount => _currentComboCount;
 
     private RuntimeDebugVisual _debugVisual = null;
 
@@ -28,7 +33,9 @@ public class BiteAttackStrategy : AttackStrategy
         character.IsBlockingRotation = true;
         _attackDir = aimDir;
 
-        if (Time.time - _lastAttackTime > _comboWindow)
+        _fullComboWindow = attackSpeed + _comboWindowAfterAttack;
+
+        if (Time.time - _lastAttackTime > _fullComboWindow)
         {
             _currentComboCount = 0;
         }
@@ -56,7 +63,15 @@ public class BiteAttackStrategy : AttackStrategy
         if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
-        _debugVisual.DrawCircle(attackPos, hitboxRadius, Color.aliceBlue, attackSpeed);
+        Color comboColor = _currentComboCount switch
+        {
+            1 => _combo1Color,
+            2 => _combo2Color,
+            3 => _combo3Color,
+            _ => _combo3Color
+        };
+
+        _debugVisual.DrawCircle(attackPos, hitboxRadius, comboColor, attackSpeed);
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, hitboxRadius, enemyLayer);
         DealDamageToTargets(hits, finalDamage);
@@ -69,9 +84,16 @@ public class BiteAttackStrategy : AttackStrategy
 
         _currentAttackTimer -= Time.deltaTime;
 
+        if (_slowDownTimer > 0f)
+        {
+            _slowDownTimer -= Time.deltaTime;
+
+            if (_slowDownTimer <= 0f)
+                ResetSpeedModifier();
+        }
+
         if (_currentAttackTimer < 0f)
         {
-            ResetSpeedModifier();
             character.IsBlockingRotation = false;
             isExecuting = false;
         }
