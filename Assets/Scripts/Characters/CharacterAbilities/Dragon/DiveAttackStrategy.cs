@@ -9,7 +9,6 @@ public class DiveAttackStrategy : AttackStrategy
     [SerializeField] private float _maxVulnerabilityTime = 3f;
     [SerializeField] private float _distanceToMaxDamage = 10f;
     [SerializeField] private float _fallSpeedMultiplier = 1.2f;
-    [SerializeField] private float _damagePerSecond = 15f;
 
     private RuntimeDebugVisual _debugVisual;
 
@@ -56,7 +55,7 @@ public class DiveAttackStrategy : AttackStrategy
                 _debugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.orange, Time.deltaTime);
 
                 Collider2D[] extraHits = Physics2D.OverlapCircleAll(character.transform.position, _calculatedAoe, enemyLayer);
-                DealDamageToTargets(extraHits, _damagePerSecond * Time.deltaTime);
+                DealDamageToTargets(extraHits, damage * Time.deltaTime);
             }
 
             if (_vulnerabilityTimer < 0f)
