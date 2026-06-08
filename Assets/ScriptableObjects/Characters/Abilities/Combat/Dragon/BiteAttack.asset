@@ -22,4 +22,7 @@ MonoBehaviour:
   _speedReductionDuration: 0.3
   _maxComboCount: 3
   _lastHitDamageMultiplier: 1.5
-  _comboWindow: 1
+  _comboWindowAfterAttack: 0.5
+  _combo1Color: {r: 0, g: 1, b: 0, a: 1}
+  _combo2Color: {r: 0, g: 0, b: 1, a: 1}
+  _combo3Color: {r: 1, g: 0, b: 0, a: 1}

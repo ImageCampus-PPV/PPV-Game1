@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63a1bfdb36ca5042bdccd8386e6c268, type: 3}
   m_Name: ScratchAttack
   m_EditorClassIdentifier: Assembly-CSharp::ScratchAttackStrategy
-  hitboxRadius: 1
+  hitboxRadius: 1.5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256

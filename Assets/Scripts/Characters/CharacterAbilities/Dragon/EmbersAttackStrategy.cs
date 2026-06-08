@@ -68,7 +68,7 @@ public class EmbersAttackStrategy : AttackStrategy
 
                 Vector2 rangeSize = new(_fireSpreadLength, _fireSpreadHeight);
 
-                Collider2D[] groundAoeHits = Physics2D.OverlapBoxAll(hit.point, rangeSize, enemyLayer);
+                Collider2D[] groundAoeHits = Physics2D.OverlapBoxAll(hit.point, rangeSize, 0f, enemyLayer);
                 DealDamageToTargets(groundAoeHits, damage * Time.deltaTime);
 
                 _debugVisual.DrawBox(hit.point, rangeSize, Color.orange, Time.deltaTime);
