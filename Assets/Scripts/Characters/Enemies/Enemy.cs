@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour, IDamageable, IStatusEffectReceiver
     private DamageResponse _reaction;
     private readonly List<StatusEffect> _effects = new();
 
+    public List<StatusEffect> ActiveEffects => _effects;
+
     private void Awake()
     {
         _reaction = GetComponent<DamageResponse>();
@@ -25,7 +27,7 @@ public class Enemy : MonoBehaviour, IDamageable, IStatusEffectReceiver
 
     private void Update()
     {
-        for (int i = _effects.Count; i > 0; i--)
+        for (int i = _effects.Count - 1; i >= 0; i--)
         {
             _effects[i].Tick(this, Time.deltaTime);
 
