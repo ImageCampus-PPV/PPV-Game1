@@ -143,7 +143,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -382,6 +382,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1cbb61aa-c02a-4593-abe5-3733cc2ba800
     m_ActionName: 'Player/Collect[/Keyboard/f,/DualShock4GamepadHID/buttonWest]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 626abe1d-9907-4c70-95cf-62c6d1dbc5ee
+    m_ActionName: Player/Aim
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -417,6 +421,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
   - {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
   _characterDebugger: {fileID: 7125797993490839326}
+  _characterIndex: 0
 --- !u!114 &7125797993490839326
 MonoBehaviour:
   m_ObjectHideFlags: 0

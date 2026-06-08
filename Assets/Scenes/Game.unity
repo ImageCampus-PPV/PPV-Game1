@@ -4979,7 +4979,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4683897364147014492, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Color.b
@@ -5946,6 +5946,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: _characterIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3288637428352067916, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_Name
       value: Mecha
@@ -6695,7 +6699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4683897364147014492, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
       propertyPath: m_Color.b
