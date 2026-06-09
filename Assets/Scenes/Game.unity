@@ -1796,7 +1796,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560394070}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4c023a2f0f7b2c4394680babf06bfed, type: 3}
   m_Name: 
@@ -1827,7 +1827,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560394070}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6312511d8f532d040aef318275e630fd, type: 3}
   m_Name: 
@@ -3571,19 +3571,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3288637428352067916, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_Name
       value: Dragon
       objectReference: {fileID: 0}
     - target: {fileID: 3288637428352067916, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -5947,22 +5956,39 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: _characterIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: '_charactersToSwitch.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
+    - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: '_charactersToSwitch.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
     - target: {fileID: 3288637428352067916, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_Name
       value: Mecha
       objectReference: {fileID: 0}
     - target: {fileID: 3288637428352067916, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.InputSystem.Utilities;
 
-
 public class CharacterSelectManager : MonoBehaviour
 {
     [Header("Config")]
@@ -42,28 +41,15 @@ public class CharacterSelectManager : MonoBehaviour
             InputSystem.onAnyButtonPress.CallOnce(OnAnyButton);
     }
 
-    private int GetDeviceIndex(InputDevice device)
-    {
-        ReadOnlyArray<InputDevice> devices = InputSystem.devices;
-
-        for (int i = 0; i < devices.Count; i++)
-        {
-            if (devices[i] == device) 
-                return i;
-        }
-            
-        return -1;
-    }
-
     private void HandleDeviceInput(InputDevice device, InputControl control)
     {
-        int deviceIndex = GetDeviceIndex(device);
+        int deviceId = device.deviceId;
 
-        if (_assignment.DragonDeviceIndex == deviceIndex || _assignment.MechaDeviceIndex == deviceIndex)
+        if (_assignment.DragonDeviceId == deviceId || _assignment.MechaDeviceId == deviceId)
         {
             if (control.name is "buttonSouth" or "space")
             {
-                CancelAssignment(deviceIndex);
+                CancelAssignment(deviceId);
                 RefreshUI();
                 InputSystem.onAnyButtonPress.CallOnce(OnAnyButton);
             }
@@ -73,19 +59,18 @@ public class CharacterSelectManager : MonoBehaviour
 
         if (control.name is "buttonWest" or "q")
         {
-            if (_assignment.DragonDeviceIndex < 0)
+            if (_assignment.DragonDeviceId < 0)
             {
-                _assignment.DragonDeviceIndex = deviceIndex;
-
-                Debug.Log($"[CharacterSelect] {device.displayName} assigned to Dragon");
+                _assignment.DragonDeviceId = deviceId;
+                Debug.Log($"[CharacterSelect] Dragon → {device.displayName} (id:{deviceId})");
             }
         }
         else if (control.name is "buttonEast" or "e")
         {
-            if (_assignment.MechaDeviceIndex < 0)
+            if (_assignment.MechaDeviceId < 0)
             {
-                _assignment.MechaDeviceIndex = deviceIndex;
-                Debug.Log($"[CharacterSelect] {device.displayName} assigned to Mecha");
+                _assignment.MechaDeviceId = deviceId;
+                Debug.Log($"[CharacterSelect] Mecha → {device.displayName} (id:{deviceId})");
             }
         }
 
@@ -95,17 +80,17 @@ public class CharacterSelectManager : MonoBehaviour
             ShowStartPrompt();
     }
 
-    private void CancelAssignment(int deviceIndex)
+    private void CancelAssignment(int deviceId)
     {
-        if (_assignment.DragonDeviceIndex == deviceIndex)
+        if (_assignment.DragonDeviceId == deviceId)
         {
-            _assignment.DragonDeviceIndex = -1;
-            Debug.Log("[CharacterSelect] Dragon unselected.");
+            _assignment.DragonDeviceId = -1;
+            Debug.Log("[CharacterSelect] Dragon deseleccionado.");
         }
-        else if (_assignment.MechaDeviceIndex == deviceIndex)
+        else if (_assignment.MechaDeviceId == deviceId)
         {
-            _assignment.MechaDeviceIndex = -1;
-            Debug.Log("[CharacterSelect] Mecha unselected.");
+            _assignment.MechaDeviceId = -1;
+            Debug.Log("[CharacterSelect] Mecha deseleccionado.");
         }
     }
 
@@ -113,18 +98,15 @@ public class CharacterSelectManager : MonoBehaviour
     {
         if (!_assignment.BothAssigned)
         {
-            Debug.Log("[CharacterSelect] Unassigned characters.");
+            Debug.Log("[CharacterSelect] Faltan asignar dispositivos.");
             return;
         }
-
         SceneManager.LoadScene(_gameSceneName);
     }
 
     public void OnStartPressed(InputAction.CallbackContext context)
     {
-        if (!context.performed) 
-            return;
-
+        if (!context.performed) return;
         StartGame();
     }
 
@@ -141,16 +123,16 @@ public class CharacterSelectManager : MonoBehaviour
     {
         if (_dragonStatusText != null)
         {
-            _dragonStatusText.text = _assignment.DragonDeviceIndex >= 0
-                ? $"Dragon\n<color=green>{GetDeviceName(_assignment.DragonDeviceIndex)}</color>"
-                : "Dragon\n<color=grey>Unassigned\n(Left button / Q)</color>";
+            _dragonStatusText.text = _assignment.DragonDeviceId >= 0
+                ? $"Dragon\n<color=green>{GetDeviceName(_assignment.DragonDeviceId)}</color>"
+                : "Dragon\n<color=grey>Sin asignar\n(presioná Q)</color>";
         }
 
         if (_mechaStatusText != null)
         {
-            _mechaStatusText.text = _assignment.MechaDeviceIndex >= 0
-                ? $"Mecha\n<color=green>{GetDeviceName(_assignment.MechaDeviceIndex)}</color>"
-                : "Mecha\n<color=grey>Unassigned\n(Right button / E)</color>";
+            _mechaStatusText.text = _assignment.MechaDeviceId >= 0
+                ? $"Mecha\n<color=green>{GetDeviceName(_assignment.MechaDeviceId)}</color>"
+                : "Mecha\n<color=grey>Sin asignar\n(presioná E)</color>";
         }
 
         if (_startPrompt != null && !_assignment.BothAssigned)
@@ -160,13 +142,10 @@ public class CharacterSelectManager : MonoBehaviour
             _instructionsText.gameObject.SetActive(true);
     }
 
-    private string GetDeviceName(int index)
+    private string GetDeviceName(int deviceId)
     {
-        ReadOnlyArray<InputDevice> devices = InputSystem.devices;
+        var device = InputSystem.GetDeviceById(deviceId);
 
-        if (index < 0 || index >= devices.Count) 
-            return "Unknown";
-
-        return devices[index].displayName;
+        return device != null ? device.displayName : "Desconocido";
     }
 }
