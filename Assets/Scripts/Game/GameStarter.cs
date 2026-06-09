@@ -63,6 +63,8 @@ public class GameStarter : MonoBehaviour
         }
 
         playerInput.SwitchCurrentControlScheme(device);
-        Debug.Log($"[GameStarter] {character.name} → {device.displayName}");
+        character.SetInputDevice(device);
+
+        //Debug.Log($"[GameStarter] {character.name} → {device.displayName} (gamepad: {device is Gamepad})");
     }
 }

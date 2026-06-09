@@ -1,37 +1,34 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ImageCampus.ToolBox.Services;
-
-
 [CreateAssetMenu(menuName = "Abilities/MechaCombat")]
 public class MechaCombat : CharacterAbility
 {
     [Header("Weapon Slots")]
     [SerializeField] private WeaponStrategy _slot1Weapon;
     [SerializeField] private WeaponStrategy _slot2Weapon;
-
     [Header("Aim Debug")]
     [SerializeField] private bool _showAim = true;
+
     [SerializeField] private float _aimLineLength = 1.5f;
 
+    private ShieldAbility _shieldAbility; 
     private Vector2 _aimDir = Vector2.right;
     private Vector2 _stickAimDir = Vector2.zero;
     private RuntimeDebugVisual _debugVisual;
-
     public WeaponStrategy Slot1Weapon => _slot1Weapon;
     public WeaponStrategy Slot2Weapon => _slot2Weapon;
 
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
-
         _slot1Weapon?.Initialize(character);
         _slot2Weapon?.Initialize(character);
     }
 
     public override void ProcessAction(InputAction.CallbackContext context)
     {
-        if (_slot1Weapon == null) 
+        if (_slot1Weapon == null)
             return;
 
         Vector2 aim = Character.CurrentAimDir;
@@ -44,7 +41,7 @@ public class MechaCombat : CharacterAbility
 
     public override void ProcessSkill(InputAction.CallbackContext context)
     {
-        if (_slot2Weapon == null) 
+        if (_slot2Weapon == null)
             return;
 
         Vector2 aim = Character.CurrentAimDir;
@@ -53,6 +50,23 @@ public class MechaCombat : CharacterAbility
             _slot2Weapon.OnPressed(context, aim);
         else if (context.canceled)
             _slot2Weapon.OnReleased(context, aim);
+    }
+
+    public void ProcessShield(InputAction.CallbackContext context)
+    {
+        if (_shieldAbility == null)
+        {
+            foreach (var ability in Character.ActiveAbilities)
+            {
+                if (ability is ShieldAbility shield)
+                {
+                    _shieldAbility = shield;
+                    break;
+                }
+            }
+        }
+
+        _shieldAbility?.OnShieldInput(context);
     }
 
     public override void ProcessAim(Vector2 input)
@@ -85,5 +99,4 @@ public class MechaCombat : CharacterAbility
         _slot1Weapon?.FixedTick();
         _slot2Weapon?.FixedTick();
     }
-
 }

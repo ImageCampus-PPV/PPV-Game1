@@ -62,7 +62,7 @@ public class CharacterSelectManager : MonoBehaviour
             if (_assignment.DragonDeviceId < 0)
             {
                 _assignment.DragonDeviceId = deviceId;
-                Debug.Log($"[CharacterSelect] Dragon → {device.displayName} (id:{deviceId})");
+                //Debug.Log($"[CharacterSelect] Dragon → {device.displayName} (id:{deviceId})");
             }
         }
         else if (control.name is "buttonEast" or "e")
@@ -70,7 +70,7 @@ public class CharacterSelectManager : MonoBehaviour
             if (_assignment.MechaDeviceId < 0)
             {
                 _assignment.MechaDeviceId = deviceId;
-                Debug.Log($"[CharacterSelect] Mecha → {device.displayName} (id:{deviceId})");
+                //Debug.Log($"[CharacterSelect] Mecha → {device.displayName} (id:{deviceId})");
             }
         }
 

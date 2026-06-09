@@ -1939,9 +1939,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 786578262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70, y: 32.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -162, y: 32.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &666741934
@@ -5984,8 +5984,48 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_ActionId
+      value: 192fce9a-7ca3-4fbf-9a15-7805520e8b5d
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_ActionName
+      value: 'Player/Shield[/XInputControllerWindows/buttonEast,/Keyboard/ctrl]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1750149060}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnShield
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Character, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
+      propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}

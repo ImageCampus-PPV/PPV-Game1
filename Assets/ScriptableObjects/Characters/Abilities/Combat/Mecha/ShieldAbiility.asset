@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86755a8872b1be54da146365168ce386, type: 3}
+  m_Name: ShieldAbiility
+  m_EditorClassIdentifier: Assembly-CSharp::ShieldAbility
+  _maxHp: 100
+  _minHp: 0
+  _lifetime: 8
+  _cooldown: 5
+  _brokenCooldownMultiplier: 2
+  _domeRadius: 8
+  _movementSlowMultiplier: 0.4
+  _shieldPrefab: {fileID: 1005853944537409557, guid: afefa1983eb197347867a65e6de5b4d1, type: 3}
