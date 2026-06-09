@@ -7,7 +7,6 @@ public class TailAttackStrategy : AttackStrategy
     [SerializeField] private float _hitboxSizeX = 3f; 
     [SerializeField] private float _hitboxSizeY = 1.5f;
     [SerializeField] private float _knockBackXForce = 10f;
-    [SerializeField] private float _knockBackYForce = 2f;
     private float _currentAttackTimer;
 
     private RuntimeDebugVisual _debugVisual;
@@ -43,7 +42,7 @@ public class TailAttackStrategy : AttackStrategy
             {
                 float dir = Mathf.Sign(hit.transform.position.x - character.transform.position.x);
                 enemyRb.linearVelocity = Vector2.zero;
-                enemyRb.AddForce(new(dir * _knockBackXForce, _knockBackYForce), ForceMode2D.Impulse);
+                enemyRb.AddForce(new(dir * _knockBackXForce, 0), ForceMode2D.Impulse);
             }
         }
     }

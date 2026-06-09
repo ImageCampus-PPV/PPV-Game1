@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8214479579750786648}
   - component: {fileID: 7760340944051414937}
   - component: {fileID: -454266882043031576}
-  - component: {fileID: 1790953903513159696}
   - component: {fileID: 7125797993490839326}
   - component: {fileID: 85042527180921061}
   m_Layer: 7
@@ -143,7 +142,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -316,7 +315,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1790953903513159696}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CharacterTypeSwitcher, Assembly-CSharp
         m_MethodName: OnCycleCharacter
         m_Mode: 0
@@ -382,6 +381,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1cbb61aa-c02a-4593-abe5-3733cc2ba800
     m_ActionName: 'Player/Collect[/Keyboard/f,/DualShock4GamepadHID/buttonWest]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 626abe1d-9907-4c70-95cf-62c6d1dbc5ee
+    m_ActionName: Player/Aim
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -401,22 +404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemCollector
   _filter: {fileID: 11400000, guid: 60770ca0fa5832147a81064ca2ffb9ee, type: 2}
   _collectActionName: Collect
---- !u!114 &1790953903513159696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3288637428352067916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd44493fd00f2c4489a5eae1cc04bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterTypeSwitcher
-  _charactersToSwitch:
-  - {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
-  - {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
-  _characterDebugger: {fileID: 7125797993490839326}
 --- !u!114 &7125797993490839326
 MonoBehaviour:
   m_ObjectHideFlags: 0

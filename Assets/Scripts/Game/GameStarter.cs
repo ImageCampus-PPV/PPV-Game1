@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(100)]
 public class GameStarter : MonoBehaviour
 {
     [Header("Assignment")]
@@ -49,7 +50,7 @@ public class GameStarter : MonoBehaviour
 
         if (playerInput == null)
         {
-            Debug.LogError($"[GameStarter] {character.name} no PlayerInput detected.");
+            Debug.LogError($"[GameStarter] {character.name} no tiene PlayerInput.");
             return;
         }
 
@@ -57,13 +58,13 @@ public class GameStarter : MonoBehaviour
 
         if (device == null)
         {
-            Debug.LogWarning($"[GameStarter] No controller detected for {character.name}.");
+            Debug.LogWarning($"[GameStarter] No hay dispositivo asignado para {character.name}. Usando default.");
             return;
         }
 
         playerInput.SwitchCurrentControlScheme(device);
+        character.SetInputDevice(device);
 
-        Debug.Log($"[GameStarter] {character.name} → {device.displayName}");
+        //Debug.Log($"[GameStarter] {character.name} → {device.displayName} (gamepad: {device is Gamepad})");
     }
 }
-

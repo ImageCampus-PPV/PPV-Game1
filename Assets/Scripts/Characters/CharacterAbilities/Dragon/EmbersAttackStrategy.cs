@@ -7,8 +7,11 @@ public class EmbersAttackStrategy : AttackStrategy
 {
     [SerializeField] private float _range = 5f;
     [SerializeField] private float _groundRadius = 2f;
-    [SerializeField] private float _continuousBurnDamage = 5f;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private float _burnDamagePerSecond = 3f;
+    [SerializeField] private float _burnDuration = 3f;
+    [SerializeField] private float _fireSpreadLength = 5f;
+    [SerializeField] private float _fireSpreadHeight = 1f;
     private Vector2 _currentAim;
 
     private RuntimeDebugVisual _debugVisual;
@@ -48,15 +51,28 @@ public class EmbersAttackStrategy : AttackStrategy
             if (((1 << hit.collider.gameObject.layer) & enemyLayer) != 0)
             {
                 IDamageable damageable = hit.collider.GetComponent<IDamageable>();
-                damageable?.TakeDamage(_continuousBurnDamage * Time.deltaTime);
+                //mientras el ascuas toque al enemigo, le hace daño
+                damageable?.TakeDamage(damage * Time.deltaTime);
+
+                if (hit.collider.TryGetComponent<IStatusEffectReceiver>(out var receiver))
+                //y, además, le aplica el efecto de quemadura por x tiempo.
+                {
+                    if (!receiver.HasEffect<BurnEffect>())
+                        receiver.ApplyEffect(new BurnEffect(_burnDuration, _burnDamagePerSecond));
+                }
             }
 
             if (((1 << hit.collider.gameObject.layer) & _groundLayer) != 0)
             {
                 _debugVisual.DrawCircle(hit.point, _groundRadius, Color.coral, Time.deltaTime);
 
-                Collider2D[] groundAoeHits = Physics2D.OverlapCircleAll(hit.point, _groundRadius, enemyLayer);
-                DealDamageToTargets(groundAoeHits, _continuousBurnDamage * Time.deltaTime);
+                Vector2 rangeSize = new(_fireSpreadLength, _fireSpreadHeight);
+
+                Collider2D[] groundAoeHits = Physics2D.OverlapBoxAll(hit.point, rangeSize, 0f, enemyLayer);
+                DealDamageToTargets(groundAoeHits, damage * Time.deltaTime);
+
+                _debugVisual.DrawBox(hit.point, rangeSize, Color.orange, Time.deltaTime);
+
                 break;
             }
         }
