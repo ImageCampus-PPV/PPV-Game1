@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
+
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(PlayerInput))]
 public class Character : MonoBehaviour
 {
@@ -14,28 +15,27 @@ public class Character : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask _groundLayer;
+
     private Vector2 _rawAimInput;
     private bool _isOnGamepad;
-
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
     private List<CharacterAbility> _activeAbilities = new();
     private ICoopCameraService _camService;
-
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
     private PlayerInput _playerInput;
-
     public Action TouchGroundEvent;
     public Action JumpPressedEvent;
     public Action JumpReleasedEvent;
+
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
     public bool IsIgnoringInput { get; set; }
     public bool IsBlockingRotation { get; set; }
-
     public Vector2 CurrentAimDir { get; private set; }
+
     public Rigidbody2D Rb => _rb;
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
@@ -61,7 +61,7 @@ public class Character : MonoBehaviour
         IsIgnoringInput = false;
         IsBlockingRotation = false;
 
-        Debug.Log(_rb);
+        //Debug.Log(_rb);
 
         CleanUpAbilities();
         _activeAbilities.Clear();
@@ -92,19 +92,24 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void SetInputDevice(InputDevice device)
+    {
+        _isOnGamepad = device is Gamepad;
+    }
+
     private void CleanUpAbilities()
     {
-        if (_activeMovement != null) 
+        if (_activeMovement != null)
             Destroy(_activeMovement);
 
-        if (_activeJump != null) 
+        if (_activeJump != null)
             Destroy(_activeJump);
 
         foreach (CharacterAbility ability in _activeAbilities)
         {
-            if (ability != null) 
+            if (ability != null)
                 Destroy(ability);
-        }         
+        }
     }
 
     public void OnAim(InputAction.CallbackContext context)
@@ -113,7 +118,6 @@ public class Character : MonoBehaviour
             return;
 
         _rawAimInput = context.ReadValue<Vector2>();
-
         _isOnGamepad = context.control.device is Gamepad;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -124,11 +128,10 @@ public class Character : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput) 
+        if (IsIgnoringInput)
             return;
 
         _isOnGamepad = context.control.device is Gamepad;
-
         _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -139,44 +142,58 @@ public class Character : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput) 
+        if (IsIgnoringInput)
             return;
 
         _isOnGamepad = context.control.device is Gamepad;
-
         _activeJump?.ProcessJump(context);
 
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessJump(context);
-        }       
+        }
     }
 
     public void OnPrimaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput) 
+        if (IsIgnoringInput)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessAction(context);
-        }      
+        }
     }
 
     public void OnSecondaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput) 
+        if (IsIgnoringInput)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
-        }         
+        }
+    }
+
+    public void OnShield(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput)
+            return;
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            if (ability is MechaCombat mechaCombat)
+            {
+                mechaCombat.ProcessShield(context);
+                break;
+            }
+        }
     }
 
     public void OnSkillAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput) 
+        if (IsIgnoringInput)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -189,7 +206,6 @@ public class Character : MonoBehaviour
     {
         CheckGrounded();
         CalculateAim();
-
         _activeMovement?.Tick();
         _activeJump?.Tick();
 
@@ -216,16 +232,12 @@ public class Character : MonoBehaviour
             if (Camera.main != null && Mouse.current != null)
             {
                 Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-
-                Debug.Log(mouseScreenPos);
-
+                //Debug.Log(mouseScreenPos);
                 float depthDist = Mathf.Abs(Camera.main.transform.position.z);
-
                 Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new(mouseScreenPos.x, mouseScreenPos.y, depthDist));
-                Debug.Log(mouseWorldPos);
-
+                //Debug.Log(mouseWorldPos);
                 CurrentAimDir = ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized;
-                Debug.Log(CurrentAimDir);
+                //Debug.Log(CurrentAimDir);
             }
         }
 
@@ -243,7 +255,6 @@ public class Character : MonoBehaviour
             ability.FixedTick();
         }
     }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         _activeMovement?.CharCollisionStay(collision);
@@ -254,30 +265,25 @@ public class Character : MonoBehaviour
             ability.CharCollisionStay(collision);
         }
     }
-
     private void CheckGrounded()
     {
-        var hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
-
+        Collider2D[] hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
         bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
-
         SetGrounded(grounded);
     }
-
     public void ForceSetGrounded(bool grounded)
     {
         IsGrounded = grounded;
 
-        if (!grounded) 
+        if (!grounded)
             LastGroundedTime = float.NegativeInfinity;
     }
-
     private void SetGrounded(bool grounded)
     {
         bool wasGrounded = IsGrounded;
         IsGrounded = grounded;
 
-        if (!grounded) 
+        if (!grounded)
             return;
 
         LastGroundedTime = Time.time;
@@ -285,7 +291,6 @@ public class Character : MonoBehaviour
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }
-
     private float ClampScreenMovement(float xVel)
     {
         CameraBounds bounds = _camService.GetBounds();
@@ -296,7 +301,6 @@ public class Character : MonoBehaviour
 
         return xVel;
     }
-
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);

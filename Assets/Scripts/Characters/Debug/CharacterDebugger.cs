@@ -11,10 +11,6 @@ public class CharacterDebugger : MonoBehaviour
     private CharacterDebugInfo _debugInfo;
     public CharacterDebugInfo DebugInfo { get => _debugInfo; set => _debugInfo = value; }
 
-    private void Awake()
-    {
-        UpdateInfo();
-    }
 
     public void UpdateInfo()
     {
@@ -26,8 +22,6 @@ public class CharacterDebugger : MonoBehaviour
         _collector.Filter = _debugInfo.ItemFilter;
 
         if (_character != null)
-        {
             _character.EquipCharacter(_debugInfo);
-        }
     }
 }

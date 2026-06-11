@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+[DefaultExecutionOrder(-100)]
 public class CharacterTypeSwitcher : MonoBehaviour
 {
     [SerializeField] private CharacterDebugInfo[] _charactersToSwitch;
