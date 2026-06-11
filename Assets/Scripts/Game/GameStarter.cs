@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.Users;
 
 [DefaultExecutionOrder(100)]
 public class GameStarter : MonoBehaviour
@@ -62,7 +64,19 @@ public class GameStarter : MonoBehaviour
             return;
         }
 
-        playerInput.SwitchCurrentControlScheme(device);
+        if (device is Keyboard)
+        {
+            InputUser.PerformPairingWithDevice(device, playerInput.user);
+
+            if (Mouse.current != null)
+                InputUser.PerformPairingWithDevice(Mouse.current, playerInput.user);
+
+            playerInput.SwitchCurrentControlScheme("Keyboard&Mouse", device, Mouse.current);
+        }
+        else
+        {
+            playerInput.SwitchCurrentControlScheme(device);
+        }
         character.SetInputDevice(device);
 
         //Debug.Log($"[GameStarter] {character.name} → {device.displayName} (gamepad: {device is Gamepad})");
