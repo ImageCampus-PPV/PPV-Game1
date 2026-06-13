@@ -12,12 +12,12 @@
   <ShowSpatialAudioWarningMsg>true</ShowSpatialAudioWarningMsg>
   <WwiseInstallationPathMac />
   <WwiseInstallationPathWindows>C:\Audiokinetic\Wwise2024.1.7.8863</WwiseInstallationPathWindows>
-  <WwiseProjectPath>../../PPV-Game1_WwiseIntegrationTemp/PPV-Game1_WwiseProject/PPV-Game1_WwiseProject.wproj</WwiseProjectPath>
+  <WwiseProjectPath>../PPV-Game1_WwiseProject/PPV-Game1_WwiseProject.wproj</WwiseProjectPath>
   <UseWaapi>true</UseWaapi>
   <WaapiPort>8080</WaapiPort>
   <WaapiIP>127.0.0.1</WaapiIP>
   <UseGitRepository>true</UseGitRepository>
-  <PackageSource />
+  <PackageSource>https://github.com/audiokinetic/WwiseUnityAddressables.git#v24.1.7</PackageSource>
   <AddressableBankFolder>WwiseData/Bank</AddressableBankFolder>
   <UseCustomBuildScript>false</UseCustomBuildScript>
   <AddressableAssetBuilderPath>Assets/AddressableAssetsData/DataBuilders/BuildScriptWwisePacked.asset</AddressableAssetBuilderPath>
