@@ -9,7 +9,7 @@ public class PlayersContainer : MonoBehaviour
 
     private void Awake()
     {
-        if (_players.Count == 0)
-            Debug.Log($"No players inserted in {nameof(PlayersContainer)}");
+        //if (_players.Count == 0)
+        //    Debug.Log($"No players inserted in {nameof(PlayersContainer)}");
     }
 }

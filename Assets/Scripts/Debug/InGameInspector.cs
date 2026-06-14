@@ -23,7 +23,6 @@ public class InGameInspector : MonoBehaviour
 
     private void Start()
     {
-        _menuPanel.SetActive(false);
         _openMenuButton.onClick.AddListener(OpenMenu);
         _switchPlayerButton.onClick.AddListener(SwitchPlayer);
     }
@@ -80,26 +79,43 @@ public class InGameInspector : MonoBehaviour
         foreach (var ability in targetPlayer.ActiveAbilities)
         {
             GenerateUIForObject(ability, ability.GetType().Name);
+            if (ability is ICombat)
+            {
+                var strategies = (ability as ICombat).Strategies;
+
+                foreach (var strategy in strategies)
+                {
+                    GenerateUIForObject(strategy, strategy.GetType().Name);
+                }
+            }
         }
     }
 
     private void GenerateUIForObject(object targetObj, string headerName)
     {
-        FieldInfo[] fields = targetObj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
         TextMeshProUGUI header = Instantiate(_debugHeaderPrefab, _contentContainer).GetComponentInChildren<TextMeshProUGUI>();
         header.text = headerName;
 
-        foreach (FieldInfo field in fields)
-        {
-            bool isNumber = field.FieldType == typeof(int) || field.FieldType == typeof(float);
-            bool isEditable = field.IsPublic || field.GetCustomAttribute<SerializeField>() != null;
+        Type currentType = targetObj.GetType();
 
-            if (isNumber && isEditable)
+        while (currentType != null && currentType != typeof(ScriptableObject) && currentType != typeof(object))
+        {
+            FieldInfo[] fields = currentType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+
+            foreach (FieldInfo field in fields)
             {
-                DebugField debugField = Instantiate(_debugFieldPrefab, _contentContainer);
-                debugField.Initialize(targetObj, field);
+                bool isNumber = field.FieldType == typeof(int) || field.FieldType == typeof(float);
+                bool isEditable = field.IsPublic || field.GetCustomAttribute<SerializeField>() != null;
+
+                if (isNumber && isEditable)
+                {
+                    DebugField debugField = Instantiate(_debugFieldPrefab, _contentContainer);
+                    debugField.Initialize(targetObj, field);
+                }
             }
+
+            currentType = currentType.BaseType;
         }
+
     }
 }

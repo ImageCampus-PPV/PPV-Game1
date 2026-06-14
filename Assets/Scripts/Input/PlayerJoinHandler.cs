@@ -25,7 +25,7 @@ public class PlayerJoinHandler : MonoBehaviour
         }
 
         _container.Players.Add(controller);
-        Debug.Log($"Jugador {playerInput.playerIndex + 1} se ha unido. Total de jugadores: {_container.Players.Count}");
+        //Debug.Log($"Jugador {playerInput.playerIndex + 1} se ha unido. Total de jugadores: {_container.Players.Count}");
     }
 
     public void OnPlayerLeft(PlayerInput playerInput)

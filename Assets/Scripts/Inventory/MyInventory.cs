@@ -9,19 +9,19 @@ using Inventory.Events;
 
 public class MyInventory : MonoBehaviour, IService
 {
-    [SerializeField] private int _capacity = 8;
+    [SerializeField] private int _capacity = 5;
     [SerializeField] private InventorySlotUI _slotPrefab;
     [SerializeField] private Transform _slotContainer;
 
-    private readonly List<Item> _items = new();
+    private readonly List<InventoryStack> _stacks = new();
     private InventorySlotUI[] _slots;
     private EventBus _eventBus;
 
     public bool IsPersistance => false;
 
-    public ReadOnlyCollection<Item> Items => _items.AsReadOnly();
-    public int Count => _items.Count;
-    public bool IsFull => _items.Count >= _capacity;
+    public ReadOnlyCollection<InventoryStack> Stacks => _stacks.AsReadOnly();
+    public int StackCount => _stacks.Count;
+    public bool IsFull => _stacks.Count >= _capacity;
 
     private void Awake()
     {
@@ -40,56 +40,39 @@ public class MyInventory : MonoBehaviour, IService
 
     public bool TryAdd(Item item)
     {
-        if (item == null || IsFull)
+        if (item == null) 
             return false;
 
-        _items.Add(item);
+        InventoryStack existing = _stacks.Find(s => s.Type == item.Type);
+
+        if (existing != null)
+        {
+            existing.Count++;
+        }
+        else
+        {
+            if (IsFull) return 
+                    false;
+
+            _stacks.Add(new InventoryStack(item));
+        }
+
         item.gameObject.SetActive(false);
 
         RefreshUI();
+
         _eventBus?.Raise<ItemAddedEvent>(item, this);
 
         return true;
     }
 
-    public void OnUseItem(InputAction.CallbackContext context)
-    {
-        if (!context.performed || _items.Count == 0) return;
-        UseItemAt(0);
-    }
-
-    public void UseItemAt(int index)
-    {
-        if (index < 0 || index >= _items.Count) return;
-
-        Item item = _items[index];
-        _items.RemoveAt(index);
-
-        item.UseItem();
-
-        RefreshUI();
-        _eventBus?.Raise<ItemRemovedEvent>(item, this);
-    }
-
-    public void DropItemAt(int index, Vector3 dropPosition)
-    {
-        if (index < 0 || index >= _items.Count) return;
-
-        Item item = _items[index];
-        _items.RemoveAt(index);
-
-        item.gameObject.SetActive(true);
-        item.transform.position = dropPosition;
-
-        RefreshUI();
-        _eventBus?.Raise<ItemRemovedEvent>(item, this);
-    }
-
     private void InitSlots()
     {
-        if (_slotPrefab == null || _slotContainer == null) return;
+        if (_slotPrefab == null || _slotContainer == null) 
+            return;
 
         _slots = new InventorySlotUI[_capacity];
+
         for (int i = 0; i < _capacity; i++)
         {
             _slots[i] = Instantiate(_slotPrefab, _slotContainer);
@@ -99,12 +82,13 @@ public class MyInventory : MonoBehaviour, IService
 
     private void RefreshUI()
     {
-        if (_slots == null) return;
+        if (_slots == null) 
+            return;
 
         for (int i = 0; i < _slots.Length; i++)
         {
-            if (i < _items.Count)
-                _slots[i].SetItem(_items[i]);
+            if (i < _stacks.Count)
+                _slots[i].SetStack(_stacks[i]);
             else
                 _slots[i].Clear();
         }
