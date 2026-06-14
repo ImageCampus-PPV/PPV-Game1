@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MechaJumpAbility
   m_EditorClassIdentifier: Assembly-CSharp::JumpAbility
   jumpForce: 5
-  _extraJumpsCount: 1
-  _jumpForceModifier: 1.3
+  jumpsCount: 2
+  holdForce: 13
+  maxHoldTime: 0.2
+  jumpForceModifier: 1.3

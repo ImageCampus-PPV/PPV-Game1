@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: DragonJumpAbility
   m_EditorClassIdentifier: Assembly-CSharp::JumpAbility
   jumpForce: 6
-  _extraJumpsCount: 4
-  _jumpForceModifier: 0.7
+  jumpsCount: 5
+  holdForce: 15
+  maxHoldTime: 0.2
+  jumpForceModifier: 0.5
