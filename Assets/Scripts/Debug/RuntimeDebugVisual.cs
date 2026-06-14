@@ -1,6 +1,4 @@
 using ImageCampus.ToolBox.Services;
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -134,6 +132,32 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
         line.SetPosition(2, center + new Vector2(extents.x, -extents.y));
         line.SetPosition(3, center + new Vector2(-extents.x, -extents.y));
         line.SetPosition(4, center + new Vector2(-extents.x, extents.y));
+
+        _activeTimedLines.Add(new TimedLine
+        {
+            line = line,
+            timeRemaining = duration,
+        });
+    }
+
+    internal void DrawOrientedBox(Vector2 center, Vector2 size, float angle, Color color, float duration, float thickness)
+    {
+        LineRenderer line = RequestPersistentLine(color, thickness);
+        line.positionCount = 5;
+
+        Vector2 half = size * 0.5f;
+        Quaternion rot = Quaternion.Euler(0f, 0f, angle);
+
+        Vector2 p0 = center + (Vector2)(rot * new Vector2(-half.x, half.y));
+        Vector2 p1 = center + (Vector2)(rot * new Vector2(half.x, half.y));
+        Vector2 p2 = center + (Vector2)(rot * new Vector2(half.x, -half.y));
+        Vector2 p3 = center + (Vector2)(rot * new Vector2(-half.x, -half.y));
+
+        line.SetPosition(0, p0);
+        line.SetPosition(1, p1);
+        line.SetPosition(2, p2);
+        line.SetPosition(3, p3);
+        line.SetPosition(4, p0);
 
         _activeTimedLines.Add(new TimedLine
         {
