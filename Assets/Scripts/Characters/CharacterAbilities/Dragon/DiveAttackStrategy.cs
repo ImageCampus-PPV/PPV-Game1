@@ -47,17 +47,6 @@ public class DiveAttackStrategy : AttackStrategy
         {
             _vulnerabilityTimer -= Time.deltaTime;
 
-            if (_calculatedAoe > 0f)
-            {
-                if (!_debugVisual)
-                    _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
-
-                _debugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.orange, Time.deltaTime);
-
-                Collider2D[] extraHits = Physics2D.OverlapCircleAll(character.transform.position, _calculatedAoe, enemyLayer);
-                DealDamageToTargets(extraHits, damage * Time.deltaTime);
-            }
-
             if (_vulnerabilityTimer < 0f)
                 Recover();
         }
