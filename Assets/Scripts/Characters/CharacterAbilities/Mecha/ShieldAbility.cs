@@ -28,6 +28,7 @@ public class ShieldAbility : CharacterAbility
     public bool IsOnCooldown => _isOnCooldown;
     public float CooldownProgress => _isOnCooldown && _currentCooldown > 0f ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
 
+
     public float ShieldHpProgress => _isActive && _lifetime > 0f ? _lifetimeTimer / _lifetime : 1f;
 
     public float ShieldArmorProgress => _activeDome != null ? _activeDome.HpPercent : 1f;
@@ -62,6 +63,7 @@ public class ShieldAbility : CharacterAbility
         if (!_isOnCooldown) return;
 
         _cooldownTimer -= Time.deltaTime;
+
         if (_cooldownTimer <= 0f)
             _isOnCooldown = false;
     }
@@ -120,8 +122,9 @@ public class ShieldAbility : CharacterAbility
             _activeDome = null;
         }
 
+        float lifetimeUsed = _lifetime > 0f ? 1f - (_lifetimeTimer / _lifetime) : 1f;
         _currentCooldown = broken ? _cooldown * _brokenCooldownMultiplier : _cooldown;
-        _cooldownTimer = _currentCooldown;
+        _cooldownTimer = _currentCooldown * lifetimeUsed;
         _isOnCooldown = true;
 
         Debug.Log($"[ShieldAbility] Deactivated. Broken: {broken}. Cooldown: {_currentCooldown}s");

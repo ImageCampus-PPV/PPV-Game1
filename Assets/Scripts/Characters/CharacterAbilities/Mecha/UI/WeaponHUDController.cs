@@ -94,11 +94,13 @@ public class WeaponHUDController : MonoBehaviour
 
         slotUI.UpdateSlot(weapon, cooldownProgress, chargeProgress);
         slotUI.UpdateCharge(chargeProgress, showCharge: hasCharge);
+        //slotUI.UpdateSlot(weapon, cooldownProgress);
     }
 
     private void RefreshShieldSlot()
     {
-        if (_shieldSlotUI == null || _shieldAbility == null) return;
+        if (_shieldSlotUI == null || _shieldAbility == null) 
+            return;
 
         float cooldown = _shieldAbility.IsOnCooldown ? _shieldAbility.CooldownProgress : 1f;
         _shieldSlotUI.UpdateCooldown(cooldown);

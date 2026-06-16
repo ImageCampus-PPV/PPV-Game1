@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 [CreateAssetMenu(menuName = "Abilities/Weapons/Gatling")]
 public class GatlingWeapon : WeaponStrategy
 {
@@ -34,7 +33,6 @@ public class GatlingWeapon : WeaponStrategy
     public override void Initialize(Character character)
     {
         base.Initialize(character);
-
         if (_currentAmmo == 0)
             _currentAmmo = _magazineSize;
     }
@@ -43,7 +41,6 @@ public class GatlingWeapon : WeaponStrategy
     {
         if (context.started || context.performed)
             _isTriggerHeld = true;
-
     }
 
     public void UpdateAimDir(Vector2 aimDir)
@@ -55,11 +52,8 @@ public class GatlingWeapon : WeaponStrategy
     public override void OnReleased(InputAction.CallbackContext context, Vector2 aimDir)
     {
         _isTriggerHeld = false;
-
-
         if (!_isReloading)
-            lastFireTime = Time.time;
-        StartReload();
+            StartReload();
     }
 
     public override void Cancel()
@@ -72,32 +66,27 @@ public class GatlingWeapon : WeaponStrategy
         if (_isReloading)
         {
             _reloadTimer -= Time.deltaTime;
-
             if (_reloadTimer <= 0f)
             {
                 _isReloading = false;
                 _currentAmmo = _magazineSize;
                 Debug.Log("[GatlingWeapon] Recarga completa.");
             }
-
             return;
         }
 
-        if (!_isTriggerHeld) 
+        if (!_isTriggerHeld)
             return;
 
         _fireTimer += Time.deltaTime;
-
         while (_fireTimer >= _fireRate)
         {
             _fireTimer -= _fireRate;
-
             if (_currentAmmo <= 0)
             {
                 StartReload();
                 return;
             }
-
             Fire();
         }
     }
@@ -114,9 +103,7 @@ public class GatlingWeapon : WeaponStrategy
 
         float spread = Random.Range(-3f, 3f);
         Vector2 dir = Quaternion.Euler(0, 0, spread) * _currentAimDir;
-
         Projectile proj = Object.Instantiate(_projectilePrefab, character.transform.position, Quaternion.identity);
-
         proj.Initialize(damage, _projectileSpeed, range, enemyLayer, dir);
 
         if (_currentAmmo <= 0)
@@ -127,9 +114,11 @@ public class GatlingWeapon : WeaponStrategy
     {
         _isTriggerHeld = false;
         _isReloading = true;
-        _reloadTimer = _reloadTime;
         _fireTimer = 0f;
 
-        Debug.Log($"[GatlingWeapon] Recargando... ({_reloadTime}s)");
+        float ammoMissing = (float)(_magazineSize - _currentAmmo) / _magazineSize;
+        _reloadTimer = _reloadTime * ammoMissing;
+
+        Debug.Log($"[GatlingWeapon] Recargando {_magazineSize - _currentAmmo} balas... ({_reloadTimer:F1}s)");
     }
 }
