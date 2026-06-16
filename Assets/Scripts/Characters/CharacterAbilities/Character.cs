@@ -5,8 +5,6 @@ using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-
-
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(PlayerInput))]
 public class Character : MonoBehaviour
 {
@@ -34,13 +32,12 @@ public class Character : MonoBehaviour
     public float CoyoteTime => _coyoteTime;
     public bool IsIgnoringInput { get; set; }
     public bool IsBlockingRotation { get; set; }
+    public bool IsBlockingJump { get; set; }
     public Vector2 CurrentAimDir { get; private set; }
-
     public Rigidbody2D Rb => _rb;
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -48,14 +45,12 @@ public class Character : MonoBehaviour
         CurrentAimDir = Vector2.right;
         _playerInput = GetComponent<PlayerInput>();
     }
-
     protected virtual void Start()
     {
         _camService = ServiceProvider.Instance.ContainsService<ICoopCameraService>() ?
             ServiceProvider.Instance.GetService<ICoopCameraService>() :
             null;
     }
-
     public void EquipCharacter(CharacterDebugInfo info)
     {
         IsIgnoringInput = false;
@@ -71,7 +66,6 @@ public class Character : MonoBehaviour
             _activeMovement = Instantiate(info.MovementAbility);
             _activeMovement.Initialize(this, _rb);
         }
-
         if (info.JumpAbility != null)
         {
             _activeJump = Instantiate(info.JumpAbility);
@@ -240,7 +234,6 @@ public class Character : MonoBehaviour
                 //Debug.Log(CurrentAimDir);
             }
         }
-
         if (CurrentAimDir == Vector2.zero)
             CurrentAimDir = Vector2.right;
     }
@@ -255,6 +248,7 @@ public class Character : MonoBehaviour
             ability.FixedTick();
         }
     }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         _activeMovement?.CharCollisionStay(collision);
@@ -278,6 +272,7 @@ public class Character : MonoBehaviour
         if (!grounded)
             LastGroundedTime = float.NegativeInfinity;
     }
+
     private void SetGrounded(bool grounded)
     {
         bool wasGrounded = IsGrounded;
@@ -291,6 +286,7 @@ public class Character : MonoBehaviour
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }
+
     private float ClampScreenMovement(float xVel)
     {
         CameraBounds bounds = _camService.GetBounds();
@@ -301,6 +297,7 @@ public class Character : MonoBehaviour
 
         return xVel;
     }
+
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);

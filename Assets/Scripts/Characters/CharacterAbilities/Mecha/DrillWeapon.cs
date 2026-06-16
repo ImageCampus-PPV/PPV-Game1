@@ -2,13 +2,13 @@ using ImageCampus.ToolBox.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 [CreateAssetMenu(menuName = "Abilities/Weapons/Drill")]
 public class DrillWeapon : WeaponStrategy
 {
     [Header("Drill Config")]
     [SerializeField] private float _maxDuration = 5f;
     [SerializeField] private float _damageTickRate = 0.1f;
+    [SerializeField] private float _movementSlowMultiplier = 0.5f;
 
     private bool _isActive;
     private float _activeTimer;
@@ -27,6 +27,11 @@ public class DrillWeapon : WeaponStrategy
             _activeTimer = 0f;
             _tickTimer = 0f;
             _aimDir = GetFrontDirection();
+
+            if (character.ActiveMovement != null)
+                character.ActiveMovement.SpeedMultiplier = _movementSlowMultiplier;
+
+            character.IsBlockingJump = true;
         }
     }
 
@@ -37,7 +42,14 @@ public class DrillWeapon : WeaponStrategy
 
     public override void Cancel()
     {
+        if (!_isActive) return;
+
         _isActive = false;
+
+        if (character.ActiveMovement != null)
+            character.ActiveMovement.SpeedMultiplier = 1f;
+
+        character.IsBlockingJump = false;
     }
 
     public override void Tick()

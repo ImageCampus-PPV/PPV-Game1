@@ -1,21 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using ImageCampus.ToolBox.Services;
+
 [CreateAssetMenu(menuName = "Abilities/MechaCombat")]
 public class MechaCombat : CharacterAbility
 {
     [Header("Weapon Slots")]
     [SerializeField] private WeaponStrategy _slot1Weapon;
     [SerializeField] private WeaponStrategy _slot2Weapon;
+
     [Header("Aim Debug")]
     [SerializeField] private bool _showAim = true;
-
     [SerializeField] private float _aimLineLength = 1.5f;
 
-    private ShieldAbility _shieldAbility; 
+    private ShieldAbility _shieldAbility;
     private Vector2 _aimDir = Vector2.right;
     private Vector2 _stickAimDir = Vector2.zero;
     private RuntimeDebugVisual _debugVisual;
+
     public WeaponStrategy Slot1Weapon => _slot1Weapon;
     public WeaponStrategy Slot2Weapon => _slot2Weapon;
 
@@ -26,9 +28,39 @@ public class MechaCombat : CharacterAbility
         _slot2Weapon?.Initialize(character);
     }
 
+    public bool TryEquipSlot1(WeaponStrategy weapon)
+    {
+        if (weapon == null || weapon.AllowedSlot != WeaponSlot.Melee)
+        {
+            Debug.LogWarning($"[MechaCombat] {weapon?.name} no es un arma Melee y no puede ir en el slot 1.");
+            return false;
+        }
+
+        _slot1Weapon?.Cancel();
+        _slot1Weapon = weapon;
+        _slot1Weapon.Initialize(Character);
+
+        return true;
+    }
+
+    public bool TryEquipSlot2(WeaponStrategy weapon)
+    {
+        if (weapon == null || weapon.AllowedSlot != WeaponSlot.Ranged)
+        {
+            Debug.LogWarning($"[MechaCombat] {weapon?.name} no es un arma de rango y no puede ir en el slot 2.");
+            return false;
+        }
+
+        _slot2Weapon?.Cancel();
+        _slot2Weapon = weapon;
+        _slot2Weapon.Initialize(Character);
+
+        return true;
+    }
+
     public override void ProcessAction(InputAction.CallbackContext context)
     {
-        if (_slot1Weapon == null)
+        if (_slot1Weapon == null) 
             return;
 
         Vector2 aim = Character.CurrentAimDir;
@@ -41,7 +73,7 @@ public class MechaCombat : CharacterAbility
 
     public override void ProcessSkill(InputAction.CallbackContext context)
     {
-        if (_slot2Weapon == null)
+        if (_slot2Weapon == null) 
             return;
 
         Vector2 aim = Character.CurrentAimDir;
@@ -65,7 +97,6 @@ public class MechaCombat : CharacterAbility
                 }
             }
         }
-
         _shieldAbility?.OnShieldInput(context);
     }
 

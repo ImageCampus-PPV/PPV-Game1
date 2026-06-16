@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 [CreateAssetMenu(menuName = "Abilities/Jump")]
 public class JumpAbility : CharacterAbility
 {
@@ -10,7 +9,8 @@ public class JumpAbility : CharacterAbility
     [SerializeField] protected int jumpsCount;
     [SerializeField] protected float holdForce = 15f;
     [SerializeField] protected float maxHoldTime = 0.2f;
-    //if it's > 1, jump force increases in each jump, if < 1, jump force decreases in each jump.
+
+    [Header("If > 1 force increases in each jump, if < 1 force it decreases")]
     [SerializeField] private float jumpForceModifier;
 
     protected int currentJumpCount = 0;
@@ -20,6 +20,7 @@ public class JumpAbility : CharacterAbility
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
+
         Character.TouchGroundEvent -= ResetJumps;
         Character.TouchGroundEvent += ResetJumps;
     }
@@ -29,10 +30,8 @@ public class JumpAbility : CharacterAbility
         if (context.started)
         {
             Character.JumpPressedEvent?.Invoke();
-
             RequestJump();
         }
-
         if (context.canceled)
         {
             Character.JumpReleasedEvent?.Invoke();
@@ -60,7 +59,6 @@ public class JumpAbility : CharacterAbility
         float force = (jumpForce * (float)Math.Pow(jumpForceModifier, currentJumpCount));
         ApplyJumpForce(force);
         currentJumpCount++;
-
         Character.ForceSetGrounded(false);
     }
 
@@ -86,7 +84,6 @@ public class JumpAbility : CharacterAbility
             {
                 int activeJumpIndex = Mathf.Max(0, currentJumpCount - 1);
                 float multiplier = (float)Math.Pow(jumpForceModifier, activeJumpIndex);
-
                 float addedForce = holdForce * multiplier;
                 Rb.AddForce(Vector2.up * addedForce, ForceMode2D.Force);
             }
@@ -95,8 +92,11 @@ public class JumpAbility : CharacterAbility
 
     public virtual bool CanJump()
     {
-        bool canUseCoyote = Time.time - Character.LastGroundedTime <= Character.CoyoteTime &&
-                            currentJumpCount == 0;
+        if (Character.IsBlockingJump)
+            return false;
+
+        bool canUseCoyote = Time.time - Character.LastGroundedTime <= Character.CoyoteTime && currentJumpCount == 0;
+
         return Character.IsGrounded || canUseCoyote || currentJumpCount < jumpsCount;
     }
 
@@ -105,7 +105,6 @@ public class JumpAbility : CharacterAbility
         Vector2 vel = Rb.linearVelocity;
         vel.y = 0f;
         Rb.linearVelocity = vel;
-
         Rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 }
