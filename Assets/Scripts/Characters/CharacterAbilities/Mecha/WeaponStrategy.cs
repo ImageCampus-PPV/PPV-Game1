@@ -19,7 +19,7 @@ public abstract class WeaponStrategy : ScriptableObject
 
     public bool IsOnCooldown => Time.time - lastFireTime < cooldown;
 
-    public float CooldownProgress
+    public virtual float CooldownProgress
     {
         get
         {
@@ -29,6 +29,9 @@ public abstract class WeaponStrategy : ScriptableObject
         }
     }
     public WeaponSlot AllowedSlot => _allowedSlot;
+
+    public virtual bool HasCharge => false;
+    public virtual float ChargeProgress => 1f;
 
     public virtual void Initialize(Character character)
     {

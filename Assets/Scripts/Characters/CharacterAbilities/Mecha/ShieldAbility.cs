@@ -28,6 +28,10 @@ public class ShieldAbility : CharacterAbility
     public bool IsOnCooldown => _isOnCooldown;
     public float CooldownProgress => _isOnCooldown && _currentCooldown > 0f ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
 
+    public float ShieldHpProgress => _isActive && _lifetime > 0f ? _lifetimeTimer / _lifetime : 1f;
+
+    public float ShieldArmorProgress => _activeDome != null ? _activeDome.HpPercent : 1f;
+
 
     public void OnShieldInput(InputAction.CallbackContext context)
     {

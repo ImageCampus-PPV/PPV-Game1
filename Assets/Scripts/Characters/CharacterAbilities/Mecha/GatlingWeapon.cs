@@ -22,7 +22,14 @@ public class GatlingWeapon : WeaponStrategy
     public int CurrentAmmo => _currentAmmo;
     public int MagazineSize => _magazineSize;
     public bool IsReloading => _isReloading;
-    public float ReloadProgress => _isReloading ? 1f - (_reloadTimer / _reloadTime) : 1f;
+
+    public override float CooldownProgress =>
+        _isReloading && _reloadTime > 0f ? 1f - (_reloadTimer / _reloadTime) : 1f;
+
+    public override bool HasCharge => true;
+
+    public override float ChargeProgress =>
+        _magazineSize > 0 ? (float)_currentAmmo / _magazineSize : 1f;
 
     public override void Initialize(Character character)
     {
@@ -48,6 +55,11 @@ public class GatlingWeapon : WeaponStrategy
     public override void OnReleased(InputAction.CallbackContext context, Vector2 aimDir)
     {
         _isTriggerHeld = false;
+
+
+        if (!_isReloading)
+            lastFireTime = Time.time;
+        StartReload();
     }
 
     public override void Cancel()

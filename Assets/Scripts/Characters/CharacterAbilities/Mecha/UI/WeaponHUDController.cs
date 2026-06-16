@@ -71,6 +71,7 @@ public class WeaponHUDController : MonoBehaviour
 
                 if (_shieldSlotUI != null)
                 {
+                    //_shieldSlotUI.SetIcon(_shieldIcon);
                     _shieldSlotUI.SetName("Escudo");
                 }
             }
@@ -87,23 +88,23 @@ public class WeaponHUDController : MonoBehaviour
     {
         if (slotUI == null) return;
 
-        float cooldownProgress = 1f;
+        float cooldownProgress = weapon != null ? weapon.CooldownProgress : 1f;
+        bool hasCharge = weapon != null && weapon.HasCharge;
+        float chargeProgress = hasCharge ? weapon.ChargeProgress : 1f;
 
-        if (weapon != null)
-        {
-            cooldownProgress = weapon.CooldownProgress;
-        }
-
-        slotUI.UpdateSlot(weapon, cooldownProgress);
+        slotUI.UpdateSlot(weapon, cooldownProgress, chargeProgress);
+        slotUI.UpdateCharge(chargeProgress, showCharge: hasCharge);
     }
 
     private void RefreshShieldSlot()
     {
         if (_shieldSlotUI == null || _shieldAbility == null) return;
 
-        float progress = _shieldAbility.IsOnCooldown ? _shieldAbility.CooldownProgress : 1f;
+        float cooldown = _shieldAbility.IsOnCooldown ? _shieldAbility.CooldownProgress : 1f;
+        _shieldSlotUI.UpdateCooldown(cooldown);
 
-        _shieldSlotUI.UpdateCooldown(progress);
+        float charge = _shieldAbility.IsActive ? _shieldAbility.ShieldHpProgress : 1f;
+        _shieldSlotUI.UpdateCharge(charge, showCharge: true);
 
         if (_shieldAbility.IsActive)
             _shieldSlotUI.SetName("Activo");
