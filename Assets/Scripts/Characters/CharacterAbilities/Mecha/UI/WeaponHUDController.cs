@@ -6,12 +6,14 @@ public class WeaponHUDController : MonoBehaviour
     [Header("Slots")]
     [SerializeField] private WeaponSlotUI _slot1UI;
     [SerializeField] private WeaponSlotUI _slot2UI;
+    [SerializeField] private WeaponSlotUI _shieldSlotUI;
 
     [Header("Mecha")]
     [SerializeField] private Character _mechaCharacter;
 
     [Header("Weapon Icons (opcional)")]
     [SerializeField] private WeaponIconEntry[] _weaponIcons;
+    [SerializeField] private Sprite _shieldIcon;
 
     [System.Serializable]
     public struct WeaponIconEntry
@@ -21,11 +23,13 @@ public class WeaponHUDController : MonoBehaviour
     }
 
     private MechaCombat _mechaCombat;
+    private ShieldAbility _shieldAbility;
 
     private void Start()
     {
         _slot1UI?.SetSlotLabel("1");
         _slot2UI?.SetSlotLabel("2");
+        _shieldSlotUI?.SetSlotLabel("E");
 
         if (_mechaCharacter == null)
         {
@@ -46,6 +50,7 @@ public class WeaponHUDController : MonoBehaviour
 
         RefreshSlot(_slot1UI, _mechaCombat.Slot1Weapon);
         RefreshSlot(_slot2UI, _mechaCombat.Slot2Weapon);
+        RefreshShieldSlot();
     }
 
     private void FindMechaCombat()
@@ -58,7 +63,16 @@ public class WeaponHUDController : MonoBehaviour
             {
                 _mechaCombat = combat;
                 OnWeaponsFound();
-                break;
+            }
+
+            if (ability is ShieldAbility shield)
+            {
+                _shieldAbility = shield;
+
+                if (_shieldSlotUI != null)
+                {
+                    _shieldSlotUI.SetName("Escudo");
+                }
             }
         }
     }
@@ -83,13 +97,27 @@ public class WeaponHUDController : MonoBehaviour
         slotUI.UpdateSlot(weapon, cooldownProgress);
     }
 
+    private void RefreshShieldSlot()
+    {
+        if (_shieldSlotUI == null || _shieldAbility == null) return;
+
+        float progress = _shieldAbility.IsOnCooldown ? _shieldAbility.CooldownProgress : 1f;
+
+        _shieldSlotUI.UpdateCooldown(progress);
+
+        if (_shieldAbility.IsActive)
+            _shieldSlotUI.SetName("Activo");
+        else if (_shieldAbility.IsOnCooldown)
+            _shieldSlotUI.SetName("Recargando");
+        else
+            _shieldSlotUI.SetName("Escudo");
+    }
+
     private void ApplyIcon(WeaponSlotUI slotUI, WeaponStrategy weapon)
     {
-        if (slotUI == null || weapon == null || _weaponIcons == null) 
-            return;
+        if (slotUI == null || weapon == null || _weaponIcons == null) return;
 
         string typeName = weapon.GetType().Name;
-
         foreach (var entry in _weaponIcons)
         {
             if (entry.weaponTypeName == typeName)

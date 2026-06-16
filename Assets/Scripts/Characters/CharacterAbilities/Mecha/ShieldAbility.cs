@@ -26,7 +26,8 @@ public class ShieldAbility : CharacterAbility
 
     public bool IsActive => _isActive;
     public bool IsOnCooldown => _isOnCooldown;
-    public float CooldownProgress => _isOnCooldown ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
+    public float CooldownProgress => _isOnCooldown && _currentCooldown > 0f ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
+
 
     public void OnShieldInput(InputAction.CallbackContext context)
     {
@@ -48,18 +49,15 @@ public class ShieldAbility : CharacterAbility
         if (!_isActive) return;
 
         _lifetimeTimer -= Time.deltaTime;
-
         if (_lifetimeTimer <= 0f)
             DeactivateShield(broken: false);
     }
 
     private void HandleCooldown()
     {
-        if (!_isOnCooldown) 
-            return;
+        if (!_isOnCooldown) return;
 
         _cooldownTimer -= Time.deltaTime;
-
         if (_cooldownTimer <= 0f)
             _isOnCooldown = false;
     }
@@ -72,8 +70,7 @@ public class ShieldAbility : CharacterAbility
 
     private void TryActivateShield()
     {
-        if (_isActive || _isOnCooldown) 
-            return;
+        if (_isActive || _isOnCooldown) return;
 
         if (_shieldPrefab == null)
         {

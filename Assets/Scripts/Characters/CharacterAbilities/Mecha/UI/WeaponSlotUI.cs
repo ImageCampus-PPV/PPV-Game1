@@ -40,7 +40,6 @@ public class WeaponSlotUI : MonoBehaviour
     {
         if (_icon == null) 
             return;
-
         _icon.sprite = sprite;
         _icon.color = Color.white;
     }
@@ -51,21 +50,28 @@ public class WeaponSlotUI : MonoBehaviour
             _slotLabel.text = label;
     }
 
-    private void SetEmpty()
+    public void SetName(string name)
     {
-        if (_nameText != null) 
-            _nameText.text = "Vacío";
+        if (_nameText != null)
+            _nameText.text = name;
+    }
 
-        if (_icon != null)
-        { 
-            _icon.sprite = null; 
-            _icon.color = new Color(0.2f, 0.2f, 0.2f, 1f); 
-        }
+    public void UpdateCooldown(float cooldownProgress)
+    {
+        bool isOnCooldown = cooldownProgress < 1f;
 
-        if (_cooldownFill != null) 
-            _cooldownFill.fillAmount = 1f;
+        if (_cooldownFill != null)
+            _cooldownFill.fillAmount = cooldownProgress;
 
         if (_cooldownOverlay != null)
-            _cooldownOverlay.SetActive(false);
+            _cooldownOverlay.SetActive(isOnCooldown);
+    }
+
+    private void SetEmpty()
+    {
+        if (_nameText != null) _nameText.text = "Vacío";
+        if (_icon != null) { _icon.sprite = null; _icon.color = new Color(0.2f, 0.2f, 0.2f, 1f); }
+        if (_cooldownFill != null) _cooldownFill.fillAmount = 1f;
+        if (_cooldownOverlay != null) _cooldownOverlay.SetActive(false);
     }
 }

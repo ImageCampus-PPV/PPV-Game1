@@ -23,15 +23,11 @@ public abstract class WeaponStrategy : ScriptableObject
     {
         get
         {
-            if (cooldown <= 0f) 
-                return 1f;
-
+            if (cooldown <= 0f) return 1f;
             float elapsed = Time.time - lastFireTime;
-
             return Mathf.Clamp01(elapsed / cooldown);
         }
     }
-
     public WeaponSlot AllowedSlot => _allowedSlot;
 
     public virtual void Initialize(Character character)
@@ -48,7 +44,6 @@ public abstract class WeaponStrategy : ScriptableObject
     protected void DealDamageInArea(Vector2 center, float radius)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius, enemyLayer);
-
         foreach (var hit in hits)
             hit.GetComponent<IDamageable>()?.TakeDamage(damage);
     }
