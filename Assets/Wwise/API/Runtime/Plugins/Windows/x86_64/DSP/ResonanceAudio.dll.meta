@@ -1,8 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-guid: ee9a17f6215623540adcee73320da4ab
-=======
-guid: f066ca1f65c7eed4aa892c4ddafd0d82
+guid: 2df1a9bd668737746aff24c883074c4d
 PluginImporter:
   externalObjects: {}
   serializedVersion: 3
@@ -18,9 +15,9 @@ PluginImporter:
       enabled: 0
       settings: {}
     Editor:
-      enabled: 0
+      enabled: 1
       settings:
-        CPU: x86
+        CPU: x86_64
         DefaultValueInitialized: true
     Linux64:
       enabled: 0
@@ -31,18 +28,17 @@ PluginImporter:
       settings:
         CPU: None
     Win:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-    Win64:
       enabled: 0
       settings:
         CPU: None
+    Win64:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
     WindowsStoreApps:
       enabled: 0
       settings:
-        CPU: x86
+        CPU: x64
   userData: 
   assetBundleName: 
   assetBundleVariant: 
->>>>>>> Stashed changes
