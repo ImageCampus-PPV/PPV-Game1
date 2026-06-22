@@ -9,9 +9,8 @@ public class PlayerJoinHandler : MonoBehaviour
     private void Awake()
     {
         if (_container == null)
-        {
             Debug.LogError($"{nameof(PlayersContainer)} no asignado {nameof(PlayerJoinHandler)}");
-        }     
+        
     }
 
     public void OnPlayerJoined(PlayerInput playerInput)
@@ -24,7 +23,7 @@ public class PlayerJoinHandler : MonoBehaviour
             return;
         }
 
-        _container.Players.Add(controller);
+        _container.AddPlayer(controller);
         //Debug.Log($"Jugador {playerInput.playerIndex + 1} se ha unido. Total de jugadores: {_container.Players.Count}");
     }
 
@@ -33,8 +32,6 @@ public class PlayerJoinHandler : MonoBehaviour
         Character controller = playerInput.GetComponent<Character>();
 
         if (controller != null)
-        {
-            _container.Players.Remove(controller);
-        }
+            _container.RemovePlayer(controller);
     }
 }
