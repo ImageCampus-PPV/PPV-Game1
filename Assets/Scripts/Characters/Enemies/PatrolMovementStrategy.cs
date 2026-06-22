@@ -60,7 +60,7 @@ public class PatrolMovementStrategy : EnemyMovementStrategy
         _rb.linearVelocity = Vector2.zero;
     }
 
-    public void Resume()
+    public override void Resume()
     {
         _isMoving = true;
     }

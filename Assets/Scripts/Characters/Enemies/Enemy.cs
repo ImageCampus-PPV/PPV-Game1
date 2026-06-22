@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour, IDamageable, IStunnable, IStatusEffectReceiv
     [SerializeField] private Transform _attackOffset;
     [SerializeField] private LayerMask _toAttack;
 
+    private FSM _fsm;
     private DamageResponse _reaction;
     private readonly List<StatusEffect> _effects = new();
     private Rigidbody2D _rb;
@@ -22,6 +23,9 @@ public class Enemy : MonoBehaviour, IDamageable, IStunnable, IStatusEffectReceiv
 
     public bool IsStunned { get; set; }
     public Action<float> OnTakeDamage { get; set; }
+    public EnemyMovementStrategy MovementStrategy => _movementStrategy;
+    public EnemyAttackStrategy AttackStrategy => _attackStrategy;
+    public Transform AttackOffset => _attackOffset;
 
     private void Awake()
     {
@@ -37,53 +41,31 @@ public class Enemy : MonoBehaviour, IDamageable, IStunnable, IStatusEffectReceiv
             _attackStrategy = Instantiate(_attackStrategy);
 
         _movementStrategy?.Initialize(_rb, transform.position);
+
+        _fsm = new FSM(typeof(EnemyPatrolState));
+
+        _fsm.AddState<EnemyPatrolState>(
+            () => new object[] { this },
+            () => new object[] { this });
+
+        _fsm.AddState<EnemyAttackState>(
+            () => new object[] { this },
+            () => new object[] { this },
+            () => new object[] { this });
+
+        _fsm.Transition(typeof(EnemyPatrolState));
     }
     private void Update()
     {
-        IsStunned = false;
         EffectsTick();
 
         if (IsStunned)
             return;
 
-        ExecuteLogic();
+        _fsm.Tick();
     }
 
-    private void ExecuteLogic()
-    {
-        _target = FindTarget();
-
-        if (_attackCooldownTimer > 0)
-            _attackCooldownTimer -= Time.deltaTime;
-
-        if (_isAnticipating)
-        {
-            _anticipationTimer -= Time.deltaTime;
-
-            if (_anticipationTimer <= 0)
-            {
-                _isAnticipating = false;
-                _attackStrategy?.Execute(transform, _attackOffset, _target);
-                _attackCooldownTimer = _attackStrategy.AttackCooldown;
-            }
-            return;
-        }
-
-        if (_target != null && _attackCooldownTimer <= 0 && _attackStrategy != null)
-        {
-            if (_attackStrategy.CanAttack(transform, _target))
-            {
-                _movementStrategy?.Stop();
-                _isAnticipating = true;
-                _anticipationTimer = _attackStrategy.AnticipationTime;
-                return;
-            }
-        }
-
-        _movementStrategy?.Move();
-    }
-
-    private Transform FindTarget()
+    public Transform FindTarget()
     {
         return TargetSelector.GetBestTarget(transform.position, _attackRange, _toAttack);
     }
@@ -127,6 +109,16 @@ public class Enemy : MonoBehaviour, IDamageable, IStunnable, IStatusEffectReceiv
 
     public void StopMovement()
     {
-        _movementStrategy.Stop();
+        _movementStrategy?.Stop();
+    }
+
+    public void ResumeMovement()
+    {
+        _movementStrategy?.Resume();
+    }
+
+    public void PatrolMove()
+    {
+        _movementStrategy?.Move();
     }
 }
