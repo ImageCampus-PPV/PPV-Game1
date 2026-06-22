@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using ImageCampus.ToolBox.Services;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 [Serializable]
 public class CoopCameraSettings
@@ -22,6 +24,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
     [SerializeField] private float _boundsMargin = 0.5f;
 
     private CoopCameraModel _model;
+    private readonly List<Vector3> _positions = new();
 
     public bool IsPersistance => false;
 
@@ -39,14 +42,23 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
 
         SnapToPlayer();
     }
+
+    private void OnDestroy()
+    {
+        ServiceProvider.Instance.RemoveService<ICoopCameraService>();
+    }
+
     private void LateUpdate()
     {
         if (_container == null || _container.Players.Count == 0)
             return;
 
-        var positions = _container.Players.ConvertAll(player => player.transform.position);
+        _positions.Clear();
 
-        Vector3 targetCentroid = _model.FindCentroid(positions);
+        foreach (var player in _container.Players)
+            _positions.Add(player.transform.position);
+
+        Vector3 targetCentroid = _model.FindCentroid(_positions);
 
         GoToPos(targetCentroid);
     }
