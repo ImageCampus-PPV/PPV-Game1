@@ -1,12 +1,11 @@
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(PlayerInput))]
-public class Character : MonoBehaviour
+
+[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
+public class Character : MonoBehaviour, IDamageable
 {
     [Header("Ground checks")]
     [SerializeField] private float _coyoteTime = 0.12f;
@@ -22,7 +21,6 @@ public class Character : MonoBehaviour
     private ICoopCameraService _camService;
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
-    private PlayerInput _playerInput;
     public Action TouchGroundEvent;
     public Action JumpPressedEvent;
     public Action JumpReleasedEvent;
@@ -31,6 +29,7 @@ public class Character : MonoBehaviour
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
     public bool IsIgnoringInput { get; set; }
+    public bool IsBlockingAbilities { get; set; }
     public bool IsBlockingRotation { get; set; }
     public bool IsBlockingJump { get; set; }
     public Vector2 CurrentAimDir { get; private set; }
@@ -38,12 +37,14 @@ public class Character : MonoBehaviour
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
+
+    public Action<float> OnTakeDamage { get; set; }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _ownCollider = GetComponent<Collider2D>();
         CurrentAimDir = Vector2.right;
-        _playerInput = GetComponent<PlayerInput>();
     }
     protected virtual void Start()
     {
@@ -136,7 +137,7 @@ public class Character : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput || IsBlockingAbilities)
             return;
 
         _isOnGamepad = context.control.device is Gamepad;
@@ -150,7 +151,7 @@ public class Character : MonoBehaviour
 
     public void OnPrimaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput ||IsBlockingAbilities)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -161,7 +162,7 @@ public class Character : MonoBehaviour
 
     public void OnSecondaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput || IsBlockingAbilities)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -172,7 +173,7 @@ public class Character : MonoBehaviour
 
     public void OnShield(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput || IsBlockingAbilities)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -187,7 +188,7 @@ public class Character : MonoBehaviour
 
     public void OnSkillAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput)
+        if (IsIgnoringInput || IsBlockingAbilities)
             return;
 
         foreach (CharacterAbility ability in _activeAbilities)
@@ -304,5 +305,10 @@ public class Character : MonoBehaviour
         Vector2 vel = _rb.linearVelocity;
         vel.x = xVel;
         _rb.linearVelocity = vel;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        OnTakeDamage?.Invoke(damage);
     }
 }
