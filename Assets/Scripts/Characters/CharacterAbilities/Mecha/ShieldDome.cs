@@ -64,7 +64,7 @@ public class ShieldDome : MonoBehaviour, IDamageable
         if (_currentHp <= _minHp)
             OnShieldBroken?.Invoke();
 
-        OnTakeDamage.Invoke(damage);
+        OnTakeDamage?.Invoke(damage);
     }
 
     public void Restore()
