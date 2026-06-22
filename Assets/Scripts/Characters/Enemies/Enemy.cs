@@ -15,10 +15,7 @@ public class Enemy : MonoBehaviour, IDamageable, IStunnable, IStatusEffectReceiv
     private DamageResponse _reaction;
     private readonly List<StatusEffect> _effects = new();
     private Rigidbody2D _rb;
-    private Transform _target;
-    private float _attackCooldownTimer;
-    private bool _isAnticipating;
-    private float _anticipationTimer;
+
     public List<StatusEffect> ActiveEffects => _effects;
 
     public bool IsStunned { get; set; }
