@@ -6,5 +6,5 @@ public abstract class StatusEffect
     public bool IsFinished => remainingTime <= 0f;
     public virtual string DisplayName => GetType().Name;
 
-    public abstract void Tick(IDamageable target, float dt);
+    public abstract void Tick(IStatusEffectReceiver target, float dt);
 }

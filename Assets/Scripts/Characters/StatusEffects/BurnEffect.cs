@@ -2,7 +2,7 @@ public class BurnEffect : StatusEffect
 {
     private float _damagePerSecond;
 
-    public override string DisplayName => "Burning!";
+    public override string DisplayName => "Burning";
 
     public BurnEffect(float duration, float damagePerSecond)
     {
@@ -10,11 +10,11 @@ public class BurnEffect : StatusEffect
         _damagePerSecond = damagePerSecond;
     }
 
-    public override void Tick(IDamageable target, float dt)
+    public override void Tick(IStatusEffectReceiver target, float dt)
     {
         remainingTime -= dt;
 
-        target.TakeDamage(_damagePerSecond * dt);
+        if (target is IDamageable damageable)
+            damageable.TakeDamage(_damagePerSecond * dt);
     }
 }
-
