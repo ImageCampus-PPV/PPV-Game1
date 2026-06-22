@@ -13,7 +13,6 @@ public class MovementAbility : CharacterAbility
     [SerializeField] private float _revDecelerationMultiplier = 2f;
 
     private float _currentXInput = 0;
-    private float _currentAccelerationTime = 0f;
     private float _currentXVelocity;
     
     public float SpeedMultiplier { get; set; }
