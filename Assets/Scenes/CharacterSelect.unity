@@ -1535,7 +1535,7 @@ GameObject:
   - component: {fileID: 2042178258}
   - component: {fileID: 2042178257}
   m_Layer: 5
-  m_Name: DragonTxt
+  m_Name: MonoTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

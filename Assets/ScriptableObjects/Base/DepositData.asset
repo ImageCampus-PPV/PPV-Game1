@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451053a0a04eed445a1332fe28f7ac9e, type: 3}
   m_Name: DepositData
   m_EditorClassIdentifier: Assembly-CSharp::DepositData
-  _materialSlots: 10
-  _weaponSlots: 4
+  _materialSlots: 7
+  _allWeapons:
+  - {fileID: 11400000, guid: dfd7096c31b78ef4a9a2c92bc5436144, type: 2}
+  - {fileID: 11400000, guid: 3856ea726d0da164581f5a446bf32d03, type: 2}
+  - {fileID: 11400000, guid: a30469d3f1b823b4ab0c20eba5e6047c, type: 2}
+  - {fileID: 11400000, guid: 29463313d66f7c74e85565090b49f72a, type: 2}
