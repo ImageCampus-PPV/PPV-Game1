@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ShieldDome : MonoBehaviour, IDamageable
@@ -15,6 +16,8 @@ public class ShieldDome : MonoBehaviour, IDamageable
     public float CurrentHp => _currentHp;
     public float MaxHp => _maxHp;
     public float HpPercent => _currentHp / _maxHp;
+
+    public Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -60,6 +63,8 @@ public class ShieldDome : MonoBehaviour, IDamageable
 
         if (_currentHp <= _minHp)
             OnShieldBroken?.Invoke();
+
+        OnTakeDamage?.Invoke(damage);
     }
 
     public void Restore()

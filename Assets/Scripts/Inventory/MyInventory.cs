@@ -93,4 +93,31 @@ public class MyInventory : MonoBehaviour, IService
                 _slots[i].Clear();
         }
     }
+
+    public bool RemoveStack(ItemType type)
+    {
+        InventoryStack stack = _stacks.Find(s => s.Type == type);
+
+        if (stack == null) 
+            return false;
+
+        stack.Count--;
+
+        if (stack.Count <= 0)
+            _stacks.Remove(stack);
+
+        RefreshUI();
+        return true;
+    }
+
+    public InventoryStack RemoveStackAt(int index)
+    {
+        if (index < 0 || index >= _stacks.Count) 
+            return null;
+
+        InventoryStack stack = _stacks[index];
+        _stacks.RemoveAt(index);
+        RefreshUI();
+        return stack;
+    }
 }

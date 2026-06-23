@@ -19,7 +19,9 @@ public class CharacterSelectManager : MonoBehaviour
     private void OnEnable()
     {
         _assignment.Reset();
+
         InputSystem.onAnyButtonPress.CallOnce(OnAnyButton);
+
         RefreshUI();
     }
 
@@ -28,11 +30,35 @@ public class CharacterSelectManager : MonoBehaviour
         InputSystem.onAnyButtonPress.CallOnce(_ => { });
     }
 
+    private void Update()
+    {
+        if (Keyboard.current != null && Keyboard.current.f1Key.wasPressedThisFrame)
+            ActivateKeyboardDebugMode();
+    }
+
+    private void ActivateKeyboardDebugMode()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            Debug.LogWarning("[CharacterSelect] No se encontro teclado.");
+            return;
+        }
+
+        _assignment.DragonDeviceId = keyboard.deviceId;
+        _assignment.MechaDeviceId = keyboard.deviceId;
+
+        Debug.Log("[CharacterSelect] Modo debug activado: ambos jugadores usan el teclado.");
+
+        RefreshUI();
+        SceneManager.LoadScene(_gameSceneName);
+    }
+
     private void OnAnyButton(InputControl control)
     {
         InputDevice device = control.device;
 
-        if (control.name == "escape") 
+        if (control.name == "escape")
             return;
 
         HandleDeviceInput(device, control);
@@ -53,25 +79,18 @@ public class CharacterSelectManager : MonoBehaviour
                 RefreshUI();
                 InputSystem.onAnyButtonPress.CallOnce(OnAnyButton);
             }
-
             return;
         }
 
         if (control.name is "buttonWest" or "q")
         {
             if (_assignment.DragonDeviceId < 0)
-            {
                 _assignment.DragonDeviceId = deviceId;
-                //Debug.Log($"[CharacterSelect] Dragon → {device.displayName} (id:{deviceId})");
-            }
         }
         else if (control.name is "buttonEast" or "e")
         {
             if (_assignment.MechaDeviceId < 0)
-            {
                 _assignment.MechaDeviceId = deviceId;
-                //Debug.Log($"[CharacterSelect] Mecha → {device.displayName} (id:{deviceId})");
-            }
         }
 
         RefreshUI();
