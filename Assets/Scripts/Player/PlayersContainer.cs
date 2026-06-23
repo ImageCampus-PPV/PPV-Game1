@@ -18,8 +18,8 @@ public class PlayersContainer : MonoBehaviour, IService
     {
         ServiceProvider.Instance.AddService<PlayersContainer>(this);
 
-        if (_players.Count == 0)
-            Debug.Log($"No players inserted in {nameof(PlayersContainer)}");
+        //if (_players.Count == 0)
+            //Debug.Log($"No players inserted in {nameof(PlayersContainer)}");
     }
 
     private void OnDestroy()
