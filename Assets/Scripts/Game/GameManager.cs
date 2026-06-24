@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
-            QuitOrReturnToSelect();
+        //if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        //    QuitOrReturnToSelect();
     }
 
     private void QuitOrReturnToSelect()
