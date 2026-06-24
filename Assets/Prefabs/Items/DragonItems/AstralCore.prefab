@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3593796010214114859}
   - component: {fileID: 475264626078929790}
   m_Layer: 0
-  m_Name: SapFruit
+  m_Name: AstralCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -221,7 +221,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.042650223, a: 1}
+  m_Color: {r: 0, g: 0.30713964, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83bd9f1e15b0fb94c97f86d1d2479e29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingItem
-  _itemType: {fileID: 11400000, guid: 38826027cc9d2a54bac23515ee3ddf5c, type: 2}
+  _itemType: {fileID: 11400000, guid: 67b4ff073a1f7fb469aeed22d245250d, type: 2}
 --- !u!61 &1204100032148138583
 BoxCollider2D:
   m_ObjectHideFlags: 0

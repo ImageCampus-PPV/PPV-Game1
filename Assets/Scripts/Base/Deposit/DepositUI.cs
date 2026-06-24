@@ -19,10 +19,12 @@ public class DepositUI : MonoBehaviour
     private ItemCollector _player;
     private PlayerInput _playerInput;
     private MechaCombat _mechaCombat;
+    private InventoryDepositMediator _mediator;
 
     private void Awake()
     {
         gameObject.SetActive(false);
+        // NO buscar el mediador aqui — Awake no corre si el objeto arranca desactivado
     }
 
     public void Open(DepositData data, ItemCollector player)
@@ -32,19 +34,44 @@ public class DepositUI : MonoBehaviour
         _playerInput = player?.GetComponent<PlayerInput>();
         _mechaCombat = FindMechaCombat(player);
 
+        // Buscar el mediador aqui, cuando el objeto ya esta activo
+        if (_mediator == null)
+            _mediator = GetComponent<InventoryDepositMediator>();
+
+        if (_mediator == null)
+        {
+            Debug.LogError("[DepositUI] InventoryDepositMediator no encontrado. Agregalo al mismo GameObject que DepositUI.");
+            return;
+        }
+
+        _mediator.Initialize(_inventory, _data);
+        _inventory.SetMediator(_mediator);
+
         gameObject.SetActive(true);
         _data.OnChanged += Refresh;
 
         InitSlotStates();
         SubscribeCancelInput();
         Refresh();
+
+        BlockPlayerInput(true);
     }
 
     public void Close()
     {
-        if (_data != null) _data.OnChanged -= Refresh;
+        if (_data != null)
+            _data.OnChanged -= Refresh;
+
         UnsubscribeCancelInput();
         gameObject.SetActive(false);
+
+        BlockPlayerInput(false);
+    }
+
+    private void BlockPlayerInput(bool block)
+    {
+        foreach (var character in FindObjectsByType<Character>(FindObjectsSortMode.None))
+            character.IsIgnoringInput = block;
     }
 
     private void InitSlotStates()
@@ -55,7 +82,9 @@ public class DepositUI : MonoBehaviour
 
     public void UnlockNextMaterialSlot()
     {
-        if (_unlockedMaterialSlots >= _materialSlots.Length) return;
+        if (_unlockedMaterialSlots >= _materialSlots.Length)
+            return;
+
         _materialSlots[_unlockedMaterialSlots].Unlock();
         _unlockedMaterialSlots++;
         Refresh();
@@ -75,9 +104,10 @@ public class DepositUI : MonoBehaviour
         {
             if (_materialSlots[i].IsBlocked) continue;
 
-            if (i < materials.Count)
+            InventoryStack stack = i < materials.Count ? materials[i] : null;
+
+            if (stack != null)
             {
-                InventoryStack stack = materials[i];
                 _materialSlots[i].SetMaterial(
                     stack,
                     onWithdraw: () => WithdrawMaterial(stack.Type),
@@ -87,18 +117,19 @@ public class DepositUI : MonoBehaviour
             {
                 _materialSlots[i].Clear();
             }
-        }
 
-        int firstEmpty = materials.Count;
-        if (firstEmpty < _unlockedMaterialSlots &&
-            firstEmpty < _materialSlots.Length &&
-            _inventory != null &&
-            _inventory.StackCount > 0)
-        {
-            _materialSlots[firstEmpty].SetMaterial(
-                _inventory.Stacks[0],
-                onWithdraw: () => DepositFromInventory(),
-                onDestroy: null);
+            var slotData = new SlotData { Stack = stack, Owner = SlotOwner.Deposit, Index = i };
+
+            DraggableSlot draggable = _materialSlots[i].GetComponent<DraggableSlot>();
+            DroppableSlot droppable = _materialSlots[i].GetComponent<DroppableSlot>();
+
+            if (draggable != null) draggable.SlotData = slotData;
+
+            if (droppable != null)
+            {
+                droppable.SlotData = slotData;
+                droppable.Mediator = _mediator;
+            }
         }
     }
 
@@ -156,14 +187,6 @@ public class DepositUI : MonoBehaviour
         }
 
         _data.SetWeaponEquipped(depositSlotIndex, true);
-    }
-
-    private void DepositFromInventory()
-    {
-        if (_inventory == null || _inventory.StackCount == 0) return;
-        InventoryStack stack = _inventory.Stacks[0];
-        if (_data.TryDeposit(stack))
-            _inventory.RemoveStackAt(0);
     }
 
     private void WithdrawMaterial(ItemType type) => _data.TryWithdraw(type);

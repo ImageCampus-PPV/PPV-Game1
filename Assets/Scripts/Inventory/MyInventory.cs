@@ -6,12 +6,12 @@ using ImageCampus.ToolBox.Services;
 using ImageCampus.ToolBox.Events;
 using Inventory.Events;
 
-
 public class MyInventory : MonoBehaviour, IService
 {
     [SerializeField] private int _capacity = 5;
     [SerializeField] private InventorySlotUI _slotPrefab;
     [SerializeField] private Transform _slotContainer;
+    [SerializeField] private DragVisual _dragVisual; // arrastrá el DragVisual del Canvas
 
     private readonly List<InventoryStack> _stacks = new();
     private InventorySlotUI[] _slots;
@@ -40,7 +40,7 @@ public class MyInventory : MonoBehaviour, IService
 
     public bool TryAdd(Item item)
     {
-        if (item == null) 
+        if (item == null)
             return false;
 
         InventoryStack existing = _stacks.Find(s => s.Type == item.Type);
@@ -51,16 +51,12 @@ public class MyInventory : MonoBehaviour, IService
         }
         else
         {
-            if (IsFull) return 
-                    false;
-
+            if (IsFull) return false;
             _stacks.Add(new InventoryStack(item));
         }
 
         item.gameObject.SetActive(false);
-
         RefreshUI();
-
         _eventBus?.Raise<ItemAddedEvent>(item, this);
 
         return true;
@@ -68,7 +64,7 @@ public class MyInventory : MonoBehaviour, IService
 
     private void InitSlots()
     {
-        if (_slotPrefab == null || _slotContainer == null) 
+        if (_slotPrefab == null || _slotContainer == null)
             return;
 
         _slots = new InventorySlotUI[_capacity];
@@ -77,20 +73,51 @@ public class MyInventory : MonoBehaviour, IService
         {
             _slots[i] = Instantiate(_slotPrefab, _slotContainer);
             _slots[i].Clear();
+
+            DraggableSlot draggable = _slots[i].GetComponent<DraggableSlot>();
+
+            if (draggable != null)
+                draggable.SetDragVisual(_dragVisual);
         }
     }
 
     private void RefreshUI()
     {
-        if (_slots == null) 
+        if (_slots == null)
             return;
 
         for (int i = 0; i < _slots.Length; i++)
         {
             if (i < _stacks.Count)
+            {
                 _slots[i].SetStack(_stacks[i]);
+
+                DraggableSlot draggable = _slots[i].GetComponentInChildren<DraggableSlot>();
+                DroppableSlot droppable = _slots[i].GetComponentInChildren<DroppableSlot>();
+
+                SlotData data = new SlotData { Stack = _stacks[i], Owner = SlotOwner.Inventory, Index = i };
+
+                if (draggable != null) 
+                    draggable.SlotData = data;
+
+                if (droppable != null) 
+                    droppable.SlotData = data;
+            }
             else
+            {
                 _slots[i].Clear();
+
+                DraggableSlot draggable = _slots[i].GetComponentInChildren<DraggableSlot>();
+                DroppableSlot droppable = _slots[i].GetComponentInChildren<DroppableSlot>();
+
+                SlotData data = new SlotData { Stack = null, Owner = SlotOwner.Inventory, Index = i };
+
+                if (draggable != null) 
+                    draggable.SlotData = data;
+
+                if (droppable != null) 
+                    droppable.SlotData = data;
+            }
         }
     }
 
@@ -112,12 +139,49 @@ public class MyInventory : MonoBehaviour, IService
 
     public InventoryStack RemoveStackAt(int index)
     {
-        if (index < 0 || index >= _stacks.Count) 
+        if (index < 0 || index >= _stacks.Count)
             return null;
 
         InventoryStack stack = _stacks[index];
         _stacks.RemoveAt(index);
         RefreshUI();
         return stack;
+    }
+
+    public void SetStackAt(int index, InventoryStack stack)
+    {
+        if (index < 0 || index >= _stacks.Count)
+        {
+            if (stack != null)
+                _stacks.Add(stack);
+        }
+        else
+        {
+            if (stack == null)
+                _stacks.RemoveAt(index);
+            else
+                _stacks[index] = stack;
+        }
+
+        RefreshUI();
+    }
+
+    public void NotifyChanged()
+    {
+        RefreshUI();
+    }
+
+    public void SetMediator(InventoryDepositMediator mediator)
+    {
+        if (_slots == null) 
+            return;
+
+        foreach (InventorySlotUI slot in _slots)
+        {
+            DroppableSlot droppable = slot.GetComponent<DroppableSlot>();
+
+            if (droppable != null)
+                droppable.Mediator = mediator;
+        }
     }
 }

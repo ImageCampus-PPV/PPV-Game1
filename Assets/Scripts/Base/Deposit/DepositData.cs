@@ -105,4 +105,27 @@ public class DepositData : ScriptableObject
         _weaponEquipped = new bool[_allWeapons.Length];
         OnChanged?.Invoke();
     }
+
+    public void SetStackAt(int index, InventoryStack stack)
+    {
+        while (_materials.Count <= index)
+            _materials.Add(null);
+
+        _materials[index] = stack;
+
+        for (int i = _materials.Count - 1; i >= 0; i--)
+        {
+            if (_materials[i] == null)
+                _materials.RemoveAt(i);
+            else
+                break;
+        }
+
+        OnChanged?.Invoke();
+    }
+
+    public void NotifyChanged()
+    {
+        OnChanged?.Invoke();
+    }
 }

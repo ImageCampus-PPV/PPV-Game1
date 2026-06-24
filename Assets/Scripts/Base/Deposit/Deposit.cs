@@ -13,7 +13,7 @@ public class Deposit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"[Deposit] OnTriggerEnter2D: {other.gameObject.name}");
+        Debug.Log($"[Deposit] TriggerEnter: {other.gameObject.name}");
 
         if (_playerInRange != null)
         {
@@ -45,7 +45,7 @@ public class Deposit : MonoBehaviour
         if (!other.TryGetComponent<ItemCollector>(out var collector)) return;
         if (collector != _playerInRange) return;
 
-        Debug.Log($"[Deposit] Jugador salio del rango.");
+        //Debug.Log($"[Deposit] Jugador salio del rango.");
         UnsubscribeInput();
         CloseUI();
 
@@ -88,6 +88,8 @@ public class Deposit : MonoBehaviour
 
     private void OpenUI()
     {
+        Debug.Log("[Deposit] OpenUI llamado");
+
         if (_depositUI == null)
         {
             Debug.LogWarning("[Deposit] _depositUI no asignado.");
