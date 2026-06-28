@@ -70,7 +70,7 @@ public class GatlingWeapon : WeaponStrategy
             {
                 _isReloading = false;
                 _currentAmmo = _magazineSize;
-                Debug.Log("[GatlingWeapon] Recarga completa.");
+                //Debug.Log("[GatlingWeapon] Recarga completa.");
             }
             return;
         }
@@ -119,6 +119,6 @@ public class GatlingWeapon : WeaponStrategy
         float ammoMissing = (float)(_magazineSize - _currentAmmo) / _magazineSize;
         _reloadTimer = _reloadTime * ammoMissing;
 
-        Debug.Log($"[GatlingWeapon] Recargando {_magazineSize - _currentAmmo} balas... ({_reloadTimer:F1}s)");
+        //.Log($"[GatlingWeapon] Recargando {_magazineSize - _currentAmmo} balas... ({_reloadTimer:F1}s)");
     }
 }

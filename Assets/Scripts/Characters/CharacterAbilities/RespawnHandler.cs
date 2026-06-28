@@ -6,23 +6,22 @@ public class RespawnHandler : MonoBehaviour
 {
     [SerializeField] private Transform[] _respawnPoint;
 
-    private PlayersContainer container => ServiceProvider.Instance.GetService<PlayersContainer>();
+    private PlayersContainer _container;
 
     private void Start()
     {
-        foreach (Character player in container.Players)
-        {
-            AddCheckTeamWipe(player);
-        }
+        _container = ServiceProvider.Instance.GetService<PlayersContainer>();
 
-        container.OnPlayerAdded += OnPlayerJoin;
-        container.OnPlayerRemoved += OnPlayerLeft;
+        foreach (Character player in _container.Players)
+            AddCheckTeamWipe(player);
+
+        _container.OnPlayerAdded += OnPlayerJoin;
+        _container.OnPlayerRemoved += OnPlayerLeft;
     }
 
     private void OnPlayerLeft(Character character)
     {
         RemoveCheckTeamWipe(character);
-
     }
 
     private void RemoveCheckTeamWipe(Character character)
@@ -44,15 +43,15 @@ public class RespawnHandler : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach (Character player in container.Players)
-        {
+        if (_container == null) return;
+
+        foreach (Character player in _container.Players)
             RemoveCheckTeamWipe(player);
-        }
     }
 
     private void CheckTeamWipe()
     {
-        foreach (Character player in container.Players)
+        foreach (Character player in _container.Players)
             if (player.TryGetComponent(out Health health))
                 if (!health.IsDowned)
                     return;
@@ -69,10 +68,9 @@ public class RespawnHandler : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < container.Players.Count; i++)
+        for (int i = 0; i < _container.Players.Count; i++)
         {
-            Character player = container.Players[i];
-
+            Character player = _container.Players[i];
             Transform spawnPoint = _respawnPoint[i % _respawnPoint.Length];
             player.transform.position = spawnPoint.position;
 
