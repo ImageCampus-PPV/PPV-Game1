@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8703947}
   - component: {fileID: 8703945}
+  - component: {fileID: 8703948}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -247,6 +248,23 @@ Transform:
   - {fileID: 164351230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8703948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8703944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd070414e759ab14b9a73a81b6a6df9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  _spawners:
+  - {fileID: 1961406921}
+  - {fileID: 24787872}
+  - {fileID: 164351231}
+  _activeEnemies: []
 --- !u!1001 &9670102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -810,6 +828,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1119014930}
     m_Modifications:
+    - target: {fileID: -2758607544389005754, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 1151643148740698831, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2825,11 +2847,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1842387136307188687, guid: a74f46f079cdd9e41ac3166d63903d04, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2969340452907848065, guid: a74f46f079cdd9e41ac3166d63903d04, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5159862011023224183, guid: a74f46f079cdd9e41ac3166d63903d04, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2841,11 +2863,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8141914346061251331, guid: a74f46f079cdd9e41ac3166d63903d04, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8487554444545264996, guid: a74f46f079cdd9e41ac3166d63903d04, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3445,7 +3467,7 @@ GameObject:
   - component: {fileID: 754048262}
   - component: {fileID: 754048264}
   - component: {fileID: 754048263}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3622,6 +3644,10 @@ PrefabInstance:
     - target: {fileID: 5889635662476064506, guid: af7f2798d3255444db1599d8d2597887, type: 3}
       propertyPath: m_Name
       value: FloatingItem (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129048496669258925, guid: af7f2798d3255444db1599d8d2597887, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4877,6 +4903,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PunchingBag (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 3153612450362442465, guid: 50311b042622daa40ba54cdd03dbf073, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5491,6 +5521,10 @@ PrefabInstance:
     - target: {fileID: 3153612450362442465, guid: 50311b042622daa40ba54cdd03dbf073, type: 3}
       propertyPath: m_Name
       value: PunchingBag (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153612450362442465, guid: 50311b042622daa40ba54cdd03dbf073, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6724,7 +6758,7 @@ GameObject:
   - component: {fileID: 1283185182}
   - component: {fileID: 1283185181}
   - component: {fileID: 1283185180}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7296,6 +7330,10 @@ PrefabInstance:
     - target: {fileID: 3153612450362442465, guid: 50311b042622daa40ba54cdd03dbf073, type: 3}
       propertyPath: m_Name
       value: PunchingBag (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153612450362442465, guid: 50311b042622daa40ba54cdd03dbf073, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8204,7 +8242,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6037299}
   m_HandleRect: {fileID: 6037298}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.49607542
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9275,6 +9313,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1119014930}
     m_Modifications:
+    - target: {fileID: -2758607544389005754, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 1151643148740698831, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -9350,6 +9392,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1119014930}
     m_Modifications:
+    - target: {fileID: -2758607544389005754, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 1151643148740698831, guid: 0d6ccd4c090f8d74ea62dc85deee54d2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -9463,6 +9509,10 @@ PrefabInstance:
     - target: {fileID: 5889635662476064506, guid: af7f2798d3255444db1599d8d2597887, type: 3}
       propertyPath: m_Name
       value: FloatingItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129048496669258925, guid: af7f2798d3255444db1599d8d2597887, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
