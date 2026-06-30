@@ -12,7 +12,7 @@ public class Health : MonoBehaviour
     public float CurrentHealth => _currentHealth;
     public bool IsDowned => _currentHealth <= 0f;
     public event Action<float, float> OnHealthChanged;
-    public event Action OnDowned;
+    public event Action<MonoBehaviour> OnDowned;
     public event Action OnRevived;
     private IDamageable _damageable;
 
@@ -41,7 +41,8 @@ public class Health : MonoBehaviour
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            OnDowned?.Invoke();
+            Debug.Log($"{_damageableComp.name} is down");
+            OnDowned?.Invoke(_damageableComp);
         }
 
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);

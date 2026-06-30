@@ -49,7 +49,7 @@ public class RespawnHandler : MonoBehaviour
             RemoveCheckTeamWipe(player);
     }
 
-    private void CheckTeamWipe()
+    private void CheckTeamWipe(MonoBehaviour damageable)
     {
         foreach (Character player in _container.Players)
             if (player.TryGetComponent(out Health health))

@@ -13,7 +13,6 @@ public class StunStatusEffect : StatusEffect
 
         if (target is IStunnable stunnable)
         {
-            stunnable.IsStunned = true;
             stunnable.StopMovement();
         }
     }

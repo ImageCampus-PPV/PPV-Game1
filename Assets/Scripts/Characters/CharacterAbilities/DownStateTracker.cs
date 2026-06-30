@@ -33,7 +33,7 @@ public class DownStateTracker : MonoBehaviour
         Debug.Log("Revived.");
     }
 
-    private void HandleDowned()
+    private void HandleDowned(MonoBehaviour damageable)
     {
         _character.IsBlockingAbilities = true;
         _character.ActiveMovement.SpeedMultiplier = _downedSpeedMultiplier;
