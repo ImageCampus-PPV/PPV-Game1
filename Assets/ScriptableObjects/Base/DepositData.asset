@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451053a0a04eed445a1332fe28f7ac9e, type: 3}
   m_Name: DepositData
   m_EditorClassIdentifier: Assembly-CSharp::DepositData
-  _materials: []
+  _requiredTypes:
+  - {fileID: 11400000, guid: e7f49b2b50696bf49bc2f7a53d069bd4, type: 2}
+  - {fileID: 11400000, guid: fb38abac46568d049ae0029d3d27ad68, type: 2}
+  - {fileID: 11400000, guid: 55d12f7fc798b6944863c26ba2cd608f, type: 2}

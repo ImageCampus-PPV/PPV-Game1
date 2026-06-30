@@ -1,55 +1,92 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Base/DepositData")]
 public class DepositData : ScriptableObject
 {
-    [Serializable]
-    public class MaterialCount
+    [Header("Materiales requeridos (orden = orden de los slots)")]
+    [SerializeField] private ItemType[] _requiredTypes = new ItemType[3];
+
+    // true = ese material ya fue depositado
+    private bool[] _hasMaterial;
+
+    public Action OnChanged;
+    public Action OnBombUnlocked;
+
+    public int RequiredCount => _requiredTypes.Length;
+    public bool IsBombUnlocked { get; private set; }
+    public bool IsBombBuilt { get; private set; }
+
+    private void EnsureInitialized()
     {
-        public ItemType Type;
-        public int Count;
+        if (_hasMaterial == null || _hasMaterial.Length != _requiredTypes.Length)
+            _hasMaterial = new bool[_requiredTypes.Length];
     }
 
-    [SerializeField] private List<MaterialCount> _materials = new();
-
-    public IReadOnlyList<MaterialCount> Materials => _materials;
-    public Action OnChanged;
-
-    public void Deposit(ItemType type)
+    public ItemType GetRequiredType(int index)
     {
-        if (type == null) return;
+        if (index < 0 || index >= _requiredTypes.Length) return null;
+        return _requiredTypes[index];
+    }
 
-        var entry = _materials.Find(m => m.Type == type);
-        if (entry != null)
-            entry.Count++;
-        else
-            _materials.Add(new MaterialCount { Type = type, Count = 1 });
+    public bool HasMaterial(int index)
+    {
+        EnsureInitialized();
+        if (index < 0 || index >= _hasMaterial.Length) return false;
+        return _hasMaterial[index];
+    }
 
+    public bool Deposit(ItemType type)
+    {
+        EnsureInitialized();
+
+        int index = Array.IndexOf(_requiredTypes, type);
+        if (index < 0) return false;
+
+        _hasMaterial[index] = true;
+        OnChanged?.Invoke();
+
+        CheckBombUnlock();
+        return true;
+    }
+
+    private void CheckBombUnlock()
+    {
+        if (IsBombUnlocked) return;
+
+        EnsureInitialized();
+        foreach (bool has in _hasMaterial)
+            if (!has) return;
+
+        IsBombUnlocked = true;
+        OnBombUnlocked?.Invoke();
         OnChanged?.Invoke();
     }
 
-    public int GetCount(ItemType type)
+    public bool TryBuildBomb()
     {
-        var entry = _materials.Find(m => m.Type == type);
-        return entry != null ? entry.Count : 0;
-    }
+        if (!IsBombUnlocked || IsBombBuilt) return false;
 
-    public bool TrySpend(ItemType type, int amount)
-    {
-        var entry = _materials.Find(m => m.Type == type);
-        if (entry == null || entry.Count < amount) return false;
+        EnsureInitialized();
+        for (int i = 0; i < _hasMaterial.Length; i++)
+            _hasMaterial[i] = false;
 
-        entry.Count -= amount;
+        IsBombUnlocked = false;
+        IsBombBuilt = true;
+
         OnChanged?.Invoke();
         return true;
     }
 
     public void Reset()
     {
-        _materials.Clear();
+        EnsureInitialized();
+        for (int i = 0; i < _hasMaterial.Length; i++)
+            _hasMaterial[i] = false;
+
+        IsBombUnlocked = false;
+        IsBombBuilt = false;
         OnChanged?.Invoke();
     }
 }

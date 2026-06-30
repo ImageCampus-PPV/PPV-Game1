@@ -6,14 +6,20 @@ public class Deposit : MonoBehaviour
 {
     [SerializeField] private DepositData _depositData;
     [SerializeField] private string _collectActionName = "Collect";
+    [SerializeField] private string _cancelActionName = "Cancel";
     [SerializeField] private ItemPickupPrompt _prompt;
+    [SerializeField] private DepositUI _depositUI;
 
     private ItemCollector _playerInRange;
     private PlayerInput _playerInput;
+    private bool _uiOpen;
 
     private void Awake()
     {
         _prompt?.Hide();
+
+        if (_depositUI != null)
+            _depositUI.gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -36,6 +42,7 @@ public class Deposit : MonoBehaviour
 
         UnsubscribeInput();
         _prompt?.Hide();
+        CloseUI();
 
         _playerInRange = null;
         _playerInput = null;
@@ -44,44 +51,108 @@ public class Deposit : MonoBehaviour
     private void SubscribeInput()
     {
         if (_playerInput == null) return;
-        var action = _playerInput.actions.FindAction(_collectActionName);
-        if (action != null)
-            action.performed += OnInteract;
+
+        var collectAction = _playerInput.actions.FindAction(_collectActionName);
+        if (collectAction != null)
+            collectAction.performed += OnInteract;
+
+        var cancelAction = _playerInput.actions.FindAction(_cancelActionName);
+        if (cancelAction != null)
+            cancelAction.performed += OnCancel;
     }
 
     private void UnsubscribeInput()
     {
         if (_playerInput == null) return;
-        var action = _playerInput.actions.FindAction(_collectActionName);
-        if (action != null)
-            action.performed -= OnInteract;
+
+        var collectAction = _playerInput.actions.FindAction(_collectActionName);
+        if (collectAction != null)
+            collectAction.performed -= OnInteract;
+
+        var cancelAction = _playerInput.actions.FindAction(_cancelActionName);
+        if (cancelAction != null)
+            cancelAction.performed -= OnCancel;
     }
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
-        if (inventory == null || !inventory.IsFull) return;
+        if (_uiOpen)
+        {
+            CloseUI();
+            return;
+        }
 
-        Item item = inventory.TakeItem();
-        if (item == null) return;
-
-        _depositData.Deposit(item.Type);
-
-        Destroy(item.gameObject);
-
-        UpdatePrompt();
-    }
-
-    private void UpdatePrompt()
-    {
         var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
             ? ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>()
             : null;
 
         if (inventory != null && inventory.IsFull)
-            _prompt?.Show(GetActionButtonName(), "Depositar");
+        {
+            Item item = inventory.TakeItem();
+            if (item == null) return;
+
+            _depositData.Deposit(item.Type);
+            Destroy(item.gameObject);
+
+            UpdatePrompt();
+        }
         else
-            _prompt?.Hide();
+        {
+            OpenUI();
+        }
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        if (_uiOpen)
+            CloseUI();
+    }
+
+    private void OpenUI()
+    {
+        if (_depositUI == null) return;
+
+        _uiOpen = true;
+        _depositUI.gameObject.SetActive(true);
+        _prompt?.Hide();
+
+        Time.timeScale = 0f;
+        BlockPlayerInput(true);
+    }
+
+    private void CloseUI()
+    {
+        if (!_uiOpen) return;
+
+        _uiOpen = false;
+        _depositUI?.gameObject.SetActive(false);
+
+        Time.timeScale = 1f;
+        BlockPlayerInput(false);
+
+        UpdatePrompt();
+    }
+
+    private void BlockPlayerInput(bool block)
+    {
+        foreach (var character in FindObjectsByType<Character>(FindObjectsSortMode.None))
+            character.IsIgnoringInput = block;
+    }
+
+    private void UpdatePrompt()
+    {
+        if (_uiOpen) return;
+
+        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
+            ? ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>()
+            : null;
+
+        string buttonName = GetActionButtonName();
+
+        if (inventory != null && inventory.IsFull)
+            _prompt?.Show(buttonName, "Depositar");
+        else
+            _prompt?.Show(buttonName, "Ver Depósito");
     }
 
     private string GetActionButtonName()
@@ -97,9 +168,9 @@ public class Deposit : MonoBehaviour
             if (binding.isComposite || binding.isPartOfComposite) continue;
             if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) continue;
 
-            string display = UnityEngine.InputSystem.InputControlPath.ToHumanReadableString(
+            string display = InputControlPath.ToHumanReadableString(
                 binding.effectivePath,
-                UnityEngine.InputSystem.InputControlPath.HumanReadableStringOptions.UseShortNames);
+                InputControlPath.HumanReadableStringOptions.UseShortNames);
 
             if (!string.IsNullOrEmpty(display))
                 return display;
