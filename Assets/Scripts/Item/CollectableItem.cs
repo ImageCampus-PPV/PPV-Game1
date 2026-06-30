@@ -1,5 +1,4 @@
 using UnityEngine;
-using ImageCampus.ToolBox.Services;
 
 
 public class CollectableItem : Item
@@ -11,13 +10,10 @@ public class CollectableItem : Item
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_collectionMode != CollectionMode.Automatic) 
+        if (_collectionMode != CollectionMode.Automatic)
             return;
 
-        if (!other.TryGetComponent<ItemCollector>(out var collector)) 
-            return;
-
-        if (!collector.Filter.CanCollect(this)) 
+        if (!other.TryGetComponent<ItemCollector>(out var collector))
             return;
 
         Collect();

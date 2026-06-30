@@ -6,7 +6,7 @@ public class CharacterDebugInfo : ScriptableObject
     [Header("Visual")]
     [SerializeField] private Color _debugColor;
     [SerializeField] private string _characterName;
-    [SerializeField] private ItemFilter _filter;
+    //[SerializeField] private ItemFilter _filter;
 
     [Header("Abilities")]
     [SerializeField] private MovementAbility _movementAbility;
@@ -15,7 +15,7 @@ public class CharacterDebugInfo : ScriptableObject
 
     public string CharacterName => _characterName;
     public Color DebugColor => _debugColor;
-    public ItemFilter ItemFilter => _filter;
+    //public ItemFilter ItemFilter => _filter;
     public MovementAbility MovementAbility => _movementAbility;
     public JumpAbility JumpAbility => _jumpAbility;
     public CharacterAbility[] Abilities => _abilities;

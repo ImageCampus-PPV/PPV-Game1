@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 9119693353735329710}
   - component: {fileID: 1175798609178527218}
   - component: {fileID: 1151643148740698831}
-  - component: {fileID: 6760193854735121635}
   - component: {fileID: -2758607544389005754}
   - component: {fileID: 3186167218000185966}
   m_Layer: 0
@@ -276,19 +275,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6760193854735121635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2197444960410517365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ded5c4a84adad44785700c5cc2010e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FallingItem
-  _itemType: {fileID: 11400000, guid: 9f6eef2139c80174f9c67db5df9eb7f2, type: 2}
 --- !u!58 &-2758607544389005754
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -337,7 +323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d771798a95211c44ba45590d4dd18bf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickupArea
-  _itemDisplayName: Mecha Item
   _prompt: {fileID: 4617970063986469577}
 --- !u!1001 &1282256684582336375
 PrefabInstance:

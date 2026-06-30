@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
 public class Character : MonoBehaviour, IDamageable
 {
@@ -37,9 +36,7 @@ public class Character : MonoBehaviour, IDamageable
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
-
     public Action<float> OnTakeDamage { get; set; }
-
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -56,12 +53,9 @@ public class Character : MonoBehaviour, IDamageable
     {
         IsIgnoringInput = false;
         IsBlockingRotation = false;
-
         //Debug.Log(_rb);
-
         CleanUpAbilities();
         _activeAbilities.Clear();
-
         if (info.MovementAbility != null)
         {
             _activeMovement = Instantiate(info.MovementAbility);
@@ -80,102 +74,82 @@ public class Character : MonoBehaviour, IDamageable
                 Debug.LogError($"Null ability in {info.name}");
                 continue;
             }
-
             CharacterAbility clonedAbility = Instantiate(ability);
             clonedAbility.Initialize(this, _rb);
             _activeAbilities.Add(clonedAbility);
         }
     }
-
     public void SetInputDevice(InputDevice device)
     {
         _isOnGamepad = device is Gamepad;
     }
-
     private void CleanUpAbilities()
     {
         if (_activeMovement != null)
             Destroy(_activeMovement);
-
         if (_activeJump != null)
             Destroy(_activeJump);
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             if (ability != null)
                 Destroy(ability);
         }
     }
-
     public void OnAim(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingRotation)
             return;
-
         _rawAimInput = context.ReadValue<Vector2>();
         _isOnGamepad = context.control.device is Gamepad;
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessAim(_rawAimInput);
         }
     }
-
     public void OnMove(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput)
             return;
-
         _isOnGamepad = context.control.device is Gamepad;
         _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessMove(context.ReadValue<Vector2>());
         }
     }
-
     public void OnJump(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
-
         _isOnGamepad = context.control.device is Gamepad;
         _activeJump?.ProcessJump(context);
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessJump(context);
         }
     }
-
     public void OnPrimaryAction(InputAction.CallbackContext context)
     {
-        if (IsIgnoringInput ||IsBlockingAbilities)
+        if (IsIgnoringInput || IsBlockingAbilities)
             return;
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessAction(context);
         }
     }
-
     public void OnSecondaryAction(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
         }
     }
-
     public void OnShield(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             if (ability is MechaCombat mechaCombat)
@@ -186,35 +160,57 @@ public class Character : MonoBehaviour, IDamageable
         }
     }
 
+    public void OnCycleSlot1(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput || IsBlockingAbilities)
+            return;
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            if (ability is MechaCombat mechaCombat)
+            {
+                mechaCombat.OnCycleSlot1(context);
+                break;
+            }
+        }
+    }
+
+    public void OnCycleSlot2(InputAction.CallbackContext context)
+    {
+        if (IsIgnoringInput || IsBlockingAbilities)
+            return;
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            if (ability is MechaCombat mechaCombat)
+            {
+                mechaCombat.OnCycleSlot2(context);
+                break;
+            }
+        }
+    }
     public void OnSkillAction(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
         }
     }
-
     private void Update()
     {
         CheckGrounded();
         CalculateAim();
         _activeMovement?.Tick();
         _activeJump?.Tick();
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.Tick();
         }
     }
-
     private void CalculateAim()
     {
         if (IsBlockingRotation)
             return;
-
         if (_isOnGamepad)
         {
             if (_rawAimInput.sqrMagnitude > 0.05f)
@@ -238,23 +234,19 @@ public class Character : MonoBehaviour, IDamageable
         if (CurrentAimDir == Vector2.zero)
             CurrentAimDir = Vector2.right;
     }
-
     private void FixedUpdate()
     {
         _activeMovement?.FixedTick();
         _activeJump?.FixedTick();
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.FixedTick();
         }
     }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         _activeMovement?.CharCollisionStay(collision);
         _activeJump?.CharCollisionStay(collision);
-
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.CharCollisionStay(collision);
@@ -269,36 +261,27 @@ public class Character : MonoBehaviour, IDamageable
     public void ForceSetGrounded(bool grounded)
     {
         IsGrounded = grounded;
-
         if (!grounded)
             LastGroundedTime = float.NegativeInfinity;
     }
-
     private void SetGrounded(bool grounded)
     {
         bool wasGrounded = IsGrounded;
         IsGrounded = grounded;
-
         if (!grounded)
             return;
-
         LastGroundedTime = Time.time;
-
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }
-
     private float ClampScreenMovement(float xVel)
     {
         CameraBounds bounds = _camService.GetBounds();
         float posX = _rb.position.x;
-
         if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
             xVel = 0;
-
         return xVel;
     }
-
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);
@@ -306,7 +289,6 @@ public class Character : MonoBehaviour, IDamageable
         vel.x = xVel;
         _rb.linearVelocity = vel;
     }
-
     public void TakeDamage(float damage)
     {
         OnTakeDamage?.Invoke(damage);

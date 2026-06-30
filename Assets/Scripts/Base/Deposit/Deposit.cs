@@ -1,43 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class Deposit : MonoBehaviour
 {
     [SerializeField] private DepositData _depositData;
-    [SerializeField] private DepositUI _depositUI;
-    [SerializeField] private string _pickupActionName = "Pickup";
+    [SerializeField] private string _collectActionName = "Collect";
+    [SerializeField] private ItemPickupPrompt _prompt;
 
     private ItemCollector _playerInRange;
     private PlayerInput _playerInput;
-    private bool _uiOpen;
+
+    private void Awake()
+    {
+        _prompt?.Hide();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"[Deposit] TriggerEnter: {other.gameObject.name}");
-
-        if (_playerInRange != null)
-        {
-            Debug.Log("[Deposit] Ya hay un jugador en rango, ignorando.");
-            return;
-        }
-
-        if (!other.TryGetComponent<ItemCollector>(out var collector))
-        {
-            Debug.Log($"[Deposit] {other.gameObject.name} no tiene ItemCollector.");
-            return;
-        }
-
-        if (!other.TryGetComponent<PlayerInput>(out var input))
-        {
-            Debug.Log($"[Deposit] {other.gameObject.name} no tiene PlayerInput.");
-            return;
-        }
+        if (_playerInRange != null) return;
+        if (!other.TryGetComponent<ItemCollector>(out var collector)) return;
+        if (!other.TryGetComponent<PlayerInput>(out var input)) return;
 
         _playerInRange = collector;
         _playerInput = input;
 
-        Debug.Log($"[Deposit] Jugador en rango: {other.gameObject.name}. Suscribiendo input '{_pickupActionName}'.");
         SubscribeInput();
+        UpdatePrompt();
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -45,9 +34,8 @@ public class Deposit : MonoBehaviour
         if (!other.TryGetComponent<ItemCollector>(out var collector)) return;
         if (collector != _playerInRange) return;
 
-        //Debug.Log($"[Deposit] Jugador salio del rango.");
         UnsubscribeInput();
-        CloseUI();
+        _prompt?.Hide();
 
         _playerInRange = null;
         _playerInput = null;
@@ -56,61 +44,67 @@ public class Deposit : MonoBehaviour
     private void SubscribeInput()
     {
         if (_playerInput == null) return;
-
-        var action = _playerInput.actions.FindAction(_pickupActionName);
-        if (action == null)
-        {
-            Debug.LogWarning($"[Deposit] Action '{_pickupActionName}' no encontrada en el PlayerInput.");
-            return;
-        }
-
-        action.performed += OnInteract;
-        Debug.Log($"[Deposit] Suscrito a '{_pickupActionName}'.");
+        var action = _playerInput.actions.FindAction(_collectActionName);
+        if (action != null)
+            action.performed += OnInteract;
     }
 
     private void UnsubscribeInput()
     {
         if (_playerInput == null) return;
-        var action = _playerInput.actions.FindAction(_pickupActionName);
+        var action = _playerInput.actions.FindAction(_collectActionName);
         if (action != null)
             action.performed -= OnInteract;
     }
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        Debug.Log("[Deposit] OnInteract disparado.");
+        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
+        if (inventory == null || !inventory.IsFull) return;
 
-        if (_uiOpen)
-            CloseUI();
+        Item item = inventory.TakeItem();
+        if (item == null) return;
+
+        _depositData.Deposit(item.Type);
+
+        Destroy(item.gameObject);
+
+        UpdatePrompt();
+    }
+
+    private void UpdatePrompt()
+    {
+        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
+            ? ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>()
+            : null;
+
+        if (inventory != null && inventory.IsFull)
+            _prompt?.Show(GetActionButtonName(), "Depositar");
         else
-            OpenUI();
+            _prompt?.Hide();
     }
 
-    private void OpenUI()
+    private string GetActionButtonName()
     {
-        Debug.Log("[Deposit] OpenUI llamado");
+        if (_playerInput == null) return "?";
 
-        if (_depositUI == null)
+        var action = _playerInput.actions.FindAction(_collectActionName);
+        if (action == null) return "?";
+
+        string scheme = _playerInput.currentControlScheme;
+        foreach (var binding in action.bindings)
         {
-            Debug.LogWarning("[Deposit] _depositUI no asignado.");
-            return;
+            if (binding.isComposite || binding.isPartOfComposite) continue;
+            if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) continue;
+
+            string display = UnityEngine.InputSystem.InputControlPath.ToHumanReadableString(
+                binding.effectivePath,
+                UnityEngine.InputSystem.InputControlPath.HumanReadableStringOptions.UseShortNames);
+
+            if (!string.IsNullOrEmpty(display))
+                return display;
         }
 
-        if (_depositData == null)
-        {
-            Debug.LogWarning("[Deposit] _depositData no asignado.");
-            return;
-        }
-
-        _uiOpen = true;
-        _depositUI.Open(_depositData, _playerInRange);
-        Debug.Log("[Deposit] UI abierta.");
-    }
-
-    private void CloseUI()
-    {
-        _uiOpen = false;
-        _depositUI?.Close();
-        Debug.Log("[Deposit] UI cerrada.");
+        return "?";
     }
 }

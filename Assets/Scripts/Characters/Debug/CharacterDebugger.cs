@@ -19,7 +19,7 @@ public class CharacterDebugger : MonoBehaviour
 
         _characterNameText.text = _debugInfo.CharacterName;
         _spriteRenderer.color = _debugInfo.DebugColor;
-        _collector.Filter = _debugInfo.ItemFilter;
+        //_collector.Filter = _debugInfo.ItemFilter;
 
         if (_character != null)
             _character.EquipCharacter(_debugInfo);

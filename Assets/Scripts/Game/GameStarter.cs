@@ -31,7 +31,7 @@ public class GameStarter : MonoBehaviour
     private void InitDeposit()
     {
         if (_depositData == null) return;
-        _depositData.InitWeapons(_initialEquippedWeaponSlots);
+        //_depositData.InitWeapons(_initialEquippedWeaponSlots);
     }
 
     private IEnumerator AssignDevicesCoroutine()

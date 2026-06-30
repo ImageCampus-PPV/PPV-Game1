@@ -1,27 +1,24 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 using ImageCampus.ToolBox.Services;
 using ImageCampus.ToolBox.Events;
 using Inventory.Events;
 
+
 public class MyInventory : MonoBehaviour, IService
 {
-    [SerializeField] private int _capacity = 5;
-    [SerializeField] private InventorySlotUI _slotPrefab;
-    [SerializeField] private Transform _slotContainer;
-    [SerializeField] private DragVisual _dragVisual; // arrastrá el DragVisual del Canvas
+    [Header("UI")]
+    [SerializeField] private Image _icon;
+    [SerializeField] private TextMeshProUGUI _nameText;
+    [SerializeField] private GameObject _emptyIndicator;
 
-    private readonly List<InventoryStack> _stacks = new();
-    private InventorySlotUI[] _slots;
+    private Item _currentItem;
     private EventBus _eventBus;
 
     public bool IsPersistance => false;
-
-    public ReadOnlyCollection<InventoryStack> Stacks => _stacks.AsReadOnly();
-    public int StackCount => _stacks.Count;
-    public bool IsFull => _stacks.Count >= _capacity;
+    public Item CurrentItem => _currentItem;
+    public bool IsFull => _currentItem != null;
 
     private void Awake()
     {
@@ -30,7 +27,7 @@ public class MyInventory : MonoBehaviour, IService
         if (ServiceProvider.Instance.ContainsService<EventBus>())
             _eventBus = ServiceProvider.Instance.GetService<EventBus>();
 
-        InitSlots();
+        RefreshUI();
     }
 
     private void OnDestroy()
@@ -38,150 +35,56 @@ public class MyInventory : MonoBehaviour, IService
         ServiceProvider.Instance.RemoveService<MyInventory>();
     }
 
+
     public bool TryAdd(Item item)
     {
-        if (item == null)
-            return false;
+        if (item == null || IsFull) return false;
 
-        InventoryStack existing = _stacks.Find(s => s.Type == item.Type);
-
-        if (existing != null)
-        {
-            existing.Count++;
-        }
-        else
-        {
-            if (IsFull) return false;
-            _stacks.Add(new InventoryStack(item));
-        }
-
+        _currentItem = item;
         item.gameObject.SetActive(false);
+
         RefreshUI();
         _eventBus?.Raise<ItemAddedEvent>(item, this);
 
         return true;
     }
 
-    private void InitSlots()
+    public Item TakeItem()
     {
-        if (_slotPrefab == null || _slotContainer == null)
-            return;
+        if (_currentItem == null) return null;
 
-        _slots = new InventorySlotUI[_capacity];
+        Item item = _currentItem;
+        _currentItem = null;
 
-        for (int i = 0; i < _capacity; i++)
-        {
-            _slots[i] = Instantiate(_slotPrefab, _slotContainer);
-            _slots[i].Clear();
+        RefreshUI();
+        _eventBus?.Raise<ItemRemovedEvent>(item, this);
 
-            DraggableSlot draggable = _slots[i].GetComponent<DraggableSlot>();
-
-            if (draggable != null)
-                draggable.SetDragVisual(_dragVisual);
-        }
+        return item;
     }
 
     private void RefreshUI()
     {
-        if (_slots == null)
+        if (_currentItem == null)
+        {
+            if (_icon != null) { _icon.sprite = null; _icon.color = new Color(1, 1, 1, 0); }
+            if (_nameText != null) _nameText.text = string.Empty;
+            if (_emptyIndicator != null) _emptyIndicator.SetActive(true);
             return;
+        }
 
-        for (int i = 0; i < _slots.Length; i++)
+        if (_emptyIndicator != null) _emptyIndicator.SetActive(false);
+
+        if (_nameText != null)
+            _nameText.text = _currentItem.Type != null ? _currentItem.Type.name : _currentItem.name;
+
+        if (_icon != null)
         {
-            if (i < _stacks.Count)
+            var sr = _currentItem.GetComponent<SpriteRenderer>();
+            if (sr != null)
             {
-                _slots[i].SetStack(_stacks[i]);
-
-                DraggableSlot draggable = _slots[i].GetComponentInChildren<DraggableSlot>();
-                DroppableSlot droppable = _slots[i].GetComponentInChildren<DroppableSlot>();
-
-                SlotData data = new SlotData { Stack = _stacks[i], Owner = SlotOwner.Inventory, Index = i };
-
-                if (draggable != null) 
-                    draggable.SlotData = data;
-
-                if (droppable != null) 
-                    droppable.SlotData = data;
+                _icon.sprite = sr.sprite;
+                _icon.color = Color.white;
             }
-            else
-            {
-                _slots[i].Clear();
-
-                DraggableSlot draggable = _slots[i].GetComponentInChildren<DraggableSlot>();
-                DroppableSlot droppable = _slots[i].GetComponentInChildren<DroppableSlot>();
-
-                SlotData data = new SlotData { Stack = null, Owner = SlotOwner.Inventory, Index = i };
-
-                if (draggable != null) 
-                    draggable.SlotData = data;
-
-                if (droppable != null) 
-                    droppable.SlotData = data;
-            }
-        }
-    }
-
-    public bool RemoveStack(ItemType type)
-    {
-        InventoryStack stack = _stacks.Find(s => s.Type == type);
-
-        if (stack == null) 
-            return false;
-
-        stack.Count--;
-
-        if (stack.Count <= 0)
-            _stacks.Remove(stack);
-
-        RefreshUI();
-        return true;
-    }
-
-    public InventoryStack RemoveStackAt(int index)
-    {
-        if (index < 0 || index >= _stacks.Count)
-            return null;
-
-        InventoryStack stack = _stacks[index];
-        _stacks.RemoveAt(index);
-        RefreshUI();
-        return stack;
-    }
-
-    public void SetStackAt(int index, InventoryStack stack)
-    {
-        if (index < 0 || index >= _stacks.Count)
-        {
-            if (stack != null)
-                _stacks.Add(stack);
-        }
-        else
-        {
-            if (stack == null)
-                _stacks.RemoveAt(index);
-            else
-                _stacks[index] = stack;
-        }
-
-        RefreshUI();
-    }
-
-    public void NotifyChanged()
-    {
-        RefreshUI();
-    }
-
-    public void SetMediator(InventoryDepositMediator mediator)
-    {
-        if (_slots == null) 
-            return;
-
-        foreach (InventorySlotUI slot in _slots)
-        {
-            DroppableSlot droppable = slot.GetComponent<DroppableSlot>();
-
-            if (droppable != null)
-                droppable.Mediator = mediator;
         }
     }
 }
