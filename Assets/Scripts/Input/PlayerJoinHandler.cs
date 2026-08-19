@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerJoinHandler : MonoBehaviour
 {
+    //TODO: Make sure services aren't serialized
     [SerializeField] private PlayersContainer _container;
 
     private void Awake()

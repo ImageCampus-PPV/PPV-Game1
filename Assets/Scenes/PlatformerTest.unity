@@ -1510,9 +1510,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e914bb342ada2e6448b1b4f3134478a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyInventory
-  _capacity: 8
-  _slotPrefab: {fileID: 9186739989415075882, guid: 1e63819560ce0814183d8ec498cfc2dd, type: 3}
-  _slotContainer: {fileID: 666741933}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _emptyIndicator: {fileID: 0}
 --- !u!1 &586875387 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}

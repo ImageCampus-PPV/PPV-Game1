@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public class Health : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour _damageableComp;

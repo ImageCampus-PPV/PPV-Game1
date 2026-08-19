@@ -7,7 +7,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private float _timeToSpawn = 2f;
-    //If _maxToSpawn < 0, spawns with no limit.
     [SerializeField] private int _maxToSpawn = 4;
     [SerializeField] private GameObject _enemyFactoryGO;
 
