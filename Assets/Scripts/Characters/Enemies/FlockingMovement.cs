@@ -5,19 +5,21 @@ public class FlockingMovement : IMovementSteering
     private readonly SteeringContext _context = new();
 
     private readonly ISteeringBehaviour[] _behaviours;
+    private readonly FlockingSettings _settings;
 
-    public FlockingMovement(params ISteeringBehaviour[] behaviours)
+    public FlockingMovement(FlockingSettings settings, params ISteeringBehaviour[] behaviours)
     {
         _behaviours = behaviours;
     }
 
-    public Vector2 GetDesiredVelocity(Rigidbody2D rb,
-                                      Vector2 targetPosition,
-                                      float speed)
+    public Vector2 GetDesiredVelocity(Rigidbody2D rb, Vector2 targetPosition, float speed)
     {
         _context.TargetPosition = targetPosition;
         _context.DesiredDirection = (targetPosition - rb.position).normalized;
         _context.DistanceToTarget = Vector2.Distance(rb.position, targetPosition);
+
+        if (!_settings.enabled)
+            return _context.DesiredDirection * speed;
 
         Vector2 desiredDirection = _context.DesiredDirection;
 
@@ -25,10 +27,7 @@ public class FlockingMovement : IMovementSteering
 
         foreach (ISteeringBehaviour behaviour in _behaviours)
         {
-            steering += behaviour.GetSteering(
-                rb,
-                desiredDirection,
-                _context);
+            steering += behaviour.GetSteering(rb, desiredDirection, _context);
         }
 
         if (steering.sqrMagnitude < 0.05f)

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+//TODO: could be improved or removed
 public class SteeringContext
 {
     public Vector2 LastSuccessfulDirection = Vector2.right;

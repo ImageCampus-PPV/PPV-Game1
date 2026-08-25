@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
 
-        FlockingMovement movement = new FlockingMovement(
+        FlockingMovement movement = new FlockingMovement(_flockingSettings,
                                     new SeekSteering(_flockingSettings),
                                     new SeparationSteering(
                                         _identityLayer,
