@@ -117,15 +117,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _flockingSettings:
+    enabled: 1
     separationRadius: 3.5
-    obstacleLookRadius: 0.8
     separationWeight: 6
+    separationPredictionTime: 0.3
+    obstacleLookDistance: 0.8
     obstacleWeight: 3
+    obstacleNormalWeight: 0.7
+    obstacleTangentWeight: 0.3
     seekWeight: 1
     bodyRadius: 0.8
     wanderWeight: 0.4
     wanderJitter: 60
-    wanderRadius: 1
+    wanderStrength: 1
     orbitWeight: 0.65
     orbitMinDistance: 1.2
     orbitMaxDistance: 3.2
