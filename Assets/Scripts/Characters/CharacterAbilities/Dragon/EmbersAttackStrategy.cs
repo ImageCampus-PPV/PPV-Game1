@@ -56,7 +56,7 @@ public class EmbersAttackStrategy : AttackStrategy
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(beamCenter, beamSize, beamAngle, enemyLayer | _groundLayer);
 
-        foreach (var hit in hits)
+        foreach (Collider2D hit in hits)
         {
             if (((1 << hit.gameObject.layer) & enemyLayer) != 0)
             {
@@ -64,7 +64,7 @@ public class EmbersAttackStrategy : AttackStrategy
                 //mientras el ascuas toque al enemigo, le hace daño
                 damageable?.TakeDamage(damage * Time.deltaTime);
 
-                if (hit.TryGetComponent<IStatusEffectReceiver>(out var receiver))
+                if (hit.TryGetComponent<IStatusEffectReceiver>(out IStatusEffectReceiver receiver))
                 //y, además, le aplica el efecto de quemadura por x tiempo.
                 {
                     if (!receiver.HasEffect<BurnEffect>())

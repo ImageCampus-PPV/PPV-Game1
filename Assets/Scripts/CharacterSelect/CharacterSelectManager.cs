@@ -38,7 +38,7 @@ public class CharacterSelectManager : MonoBehaviour
 
     private void ActivateKeyboardDebugMode()
     {
-        var keyboard = Keyboard.current;
+        Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
         {
             Debug.LogWarning("[CharacterSelect] No se encontro teclado.");
@@ -163,7 +163,7 @@ public class CharacterSelectManager : MonoBehaviour
 
     private string GetDeviceName(int deviceId)
     {
-        var device = InputSystem.GetDeviceById(deviceId);
+        InputDevice device = InputSystem.GetDeviceById(deviceId);
 
         return device != null ? device.displayName : "Desconocido";
     }

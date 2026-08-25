@@ -15,7 +15,7 @@ public class PatrolBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             _startPos = context.Position;
@@ -27,7 +27,7 @@ public class PatrolBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnTick(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             if (_pauseTimer > 0)
@@ -59,58 +59,53 @@ public class PatrolBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnExit(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new StopMovementCommand()));
         return actions;
     }
 }
 
 
-public class StateMarker<MarkerType, StateContextType> where MarkerType : StateBehaviour<StateContextType> where StateContextType : IStateContext
-{ 
-}
-
 public class TransitionEvaluator
 {
-    private Dictionary<string, Type> _stateNameToType;
-    private Dictionary<string, List<(ICondition<IEnemyContext> cond, string toState)>> _transitionsByState;
-    private List<(ICondition<IEnemyContext> cond, string toState)> _anyTransitions;
+    private readonly Dictionary<string, Type> _stateNameToType;
+    private readonly Dictionary<string, List<(ICondition<IEnemyContext> cond, string toState)>> _transitionsByState;
+    private readonly List<(ICondition<IEnemyContext> cond, string toState)> _anyTransitions;
 
-    public TransitionEvaluator(
-        StateMachineConfig config,
-        Dictionary<string, Type> nameToTypeMapping
-    )
+    public TransitionEvaluator(StateMachineConfig config, Dictionary<string, Type> nameToTypeMapping)
     {
         _stateNameToType = nameToTypeMapping;
 
         _transitionsByState = new Dictionary<string, List<(ICondition<IEnemyContext>, string)>>();
-        foreach (var group in config.transitionsByState)
+        foreach (StateMachineConfig.StateTransitionGroup group in config.transitionsByState)
         {
-            var list = new List<(ICondition<IEnemyContext>, string)>();
-            foreach (var entry in group.transitions)
-                list.Add((entry.condition, entry.toState));
-            _transitionsByState[group.stateName] = list;
+            List<(ICondition<IEnemyContext>, string)> conditionToState = new List<(ICondition<IEnemyContext>, string)>();
+
+            foreach (StateMachineConfig.TransitionEntry entry in group.transitions)
+                conditionToState.Add((entry.condition, entry.toState));
+
+            _transitionsByState[group.stateName] = conditionToState;
         }
 
         _anyTransitions = new List<(ICondition<IEnemyContext>, string)>();
-        foreach (var entry in config.anyTransitions)
+        foreach (StateMachineConfig.AnyTransitionEntry entry in config.anyTransitions)
             _anyTransitions.Add((entry.condition, entry.toState));
     }
 
     public bool TryGetTransition(IEnemyContext context, string currentStateName, out string targetStateName)
     {
-        foreach (var (cond, to) in _anyTransitions)
+        foreach ((ICondition<IEnemyContext> condition, string to) in _anyTransitions)
         {
-            if (cond.Evaluate(context))
+            if (condition.Evaluate(context))
             {
                 targetStateName = to;
                 return true;
             }
         }
         
-        if (_transitionsByState.TryGetValue(currentStateName, out var list))
+        if (_transitionsByState.TryGetValue(currentStateName, out List<(ICondition<IEnemyContext> cond, string toState)> list))
         {
-            foreach (var (cond, to) in list)
+            foreach ((ICondition<IEnemyContext> cond, string to) in list)
             {
                 if (cond.Evaluate(context))
                 {
@@ -126,7 +121,7 @@ public class TransitionEvaluator
 
     public Type GetStateType(string stateName)
     {
-        _stateNameToType.TryGetValue(stateName, out var type);
+        _stateNameToType.TryGetValue(stateName, out Type type);
         return type;
     }
 }
@@ -135,10 +130,10 @@ public class EnemyState<MarkerType> : State where MarkerType : new()
 {
     public override BehaviourActions GetOnEnterBehaviour(params object[] parameters)
     {
-        var context = (IEnemyContext)parameters[0];
-        var evaluator = (TransitionEvaluator)parameters[1];
-        var behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
-        var stateName = (string)parameters[3];
+        IEnemyContext context = (IEnemyContext)parameters[0];
+        TransitionEvaluator evaluator = (TransitionEvaluator)parameters[1];
+        IStateBehaviour<IEnemyContext> behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
+        string stateName = (string)parameters[3];
 
         if (context is IStateDebugInfo debug)
             debug.CurrentStateName = stateName;
@@ -148,12 +143,12 @@ public class EnemyState<MarkerType> : State where MarkerType : new()
 
     public override BehaviourActions GetOnTickBehaviour(params object[] parameters)
     {
-        var context = (IEnemyContext)parameters[0];
-        var evaluator = (TransitionEvaluator)parameters[1];
-        var behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
-        var stateName = (string)parameters[3];
+        IEnemyContext context = (IEnemyContext)parameters[0];
+        TransitionEvaluator evaluator = (TransitionEvaluator)parameters[1];
+        IStateBehaviour<IEnemyContext> behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
+        string stateName = (string)parameters[3];
 
-        var actions = behaviour.GetOnTick(context);
+        BehaviourActions actions = behaviour.GetOnTick(context);
         actions.SetTransitionBehaviour(() =>
         {
             if (evaluator.TryGetTransition(context, stateName, out string targetStateName))
@@ -168,10 +163,8 @@ public class EnemyState<MarkerType> : State where MarkerType : new()
 
     public override BehaviourActions GetOnExitBehaviour(params object[] parameters)
     {
-        var context = (IEnemyContext)parameters[0];
-        var evaluator = (TransitionEvaluator)parameters[1];
-        var behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
-        var stateName = (string)parameters[3];
+        IEnemyContext context = (IEnemyContext)parameters[0];
+        IStateBehaviour<IEnemyContext> behaviour = (IStateBehaviour<IEnemyContext>)parameters[2];
         return behaviour.GetOnExit(context);
     }
 }

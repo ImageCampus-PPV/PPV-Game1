@@ -79,10 +79,10 @@ public class MyInventory : MonoBehaviour, IService
 
         if (_icon != null)
         {
-            var sr = _currentItem.GetComponent<SpriteRenderer>();
-            if (sr != null)
+            SpriteRenderer spriteRenderer = _currentItem.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
             {
-                _icon.sprite = sr.sprite;
+                _icon.sprite = spriteRenderer.sprite;
                 _icon.color = Color.white;
             }
         }

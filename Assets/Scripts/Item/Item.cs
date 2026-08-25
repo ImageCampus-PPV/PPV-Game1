@@ -14,7 +14,7 @@ public abstract class Item : MonoBehaviour
 
         if (ServiceProvider.Instance.ContainsService<MyInventory>())
         {
-            var inventory = ServiceProvider.Instance.GetService<MyInventory>();
+            MyInventory inventory = ServiceProvider.Instance.GetService<MyInventory>();
             if (!inventory.TryAdd(this))
                 Reject();
         }

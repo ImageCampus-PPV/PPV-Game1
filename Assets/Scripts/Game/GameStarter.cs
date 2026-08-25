@@ -53,7 +53,7 @@ public class GameStarter : MonoBehaviour
     {
         character.EquipCharacter(info);
 
-        if (character.TryGetComponent<CharacterDebugger>(out var debugger))
+        if (character.TryGetComponent<CharacterDebugger>(out CharacterDebugger debugger))
         {
             debugger.DebugInfo = info;
             debugger.UpdateInfo();

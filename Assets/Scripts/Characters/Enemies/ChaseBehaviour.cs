@@ -7,17 +7,17 @@ public class ChaseBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new ResumeMovementCommand()));
         return actions;
     }
 
     public override BehaviourActions GetOnTick(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
-            var target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
+            Transform target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
             if (target != null)
             {
                 context.Execute(new MoveCommand(target.position, _moveSpeed));
@@ -28,7 +28,7 @@ public class ChaseBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnExit(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new StopMovementCommand()));
         return actions;
     }

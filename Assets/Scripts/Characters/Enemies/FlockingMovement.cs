@@ -23,7 +23,7 @@ public class FlockingMovement : IMovementSteering
 
         Vector2 steering = Vector2.zero;
 
-        foreach (var behaviour in _behaviours)
+        foreach (ISteeringBehaviour behaviour in _behaviours)
         {
             steering += behaviour.GetSteering(
                 rb,

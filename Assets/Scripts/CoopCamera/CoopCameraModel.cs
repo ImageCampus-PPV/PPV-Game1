@@ -30,7 +30,7 @@ public class CoopCameraModel
         if (positions.Count == 0)
             return sum;
 
-        foreach (var pos in positions)
+        foreach (Vector3 pos in positions)
             sum += pos;
 
         currentCentroid = sum / positions.Count;

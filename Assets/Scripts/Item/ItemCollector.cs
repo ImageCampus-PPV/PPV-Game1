@@ -65,7 +65,7 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ItemPickupArea>(out var area)) 
+        if (!other.TryGetComponent<ItemPickupArea>(out ItemPickupArea area))
             return;
 
         if (!_itemsInRange.Contains(area))
@@ -74,7 +74,7 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ItemPickupArea>(out var area)) 
+        if (!other.TryGetComponent<ItemPickupArea>(out ItemPickupArea area))
             return;
 
         _itemsInRange.Remove(area);
@@ -147,7 +147,7 @@ public class ItemCollector : MonoBehaviour
         if (!ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>())
             return false;
 
-        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
+        MyInventory inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
         return inventory.IsFull;
     }
 

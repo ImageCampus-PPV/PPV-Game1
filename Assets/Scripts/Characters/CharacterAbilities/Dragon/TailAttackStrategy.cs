@@ -33,12 +33,12 @@ public class TailAttackStrategy : AttackStrategy
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(attackPos, new(_hitboxSizeX, _hitboxSizeY), enemyLayer);
 
-        foreach (var hit in hits)
+        foreach (Collider2D hit in hits)
         {
             IDamageable damageable = hit.GetComponent<IDamageable>();
             damageable?.TakeDamage(damage);
 
-            if (hit.TryGetComponent<Rigidbody2D>(out var enemyRb))
+            if (hit.TryGetComponent<Rigidbody2D>(out Rigidbody2D enemyRb))
             {
                 float dir = Mathf.Sign(hit.transform.position.x - character.transform.position.x);
                 enemyRb.linearVelocity = Vector2.zero;
