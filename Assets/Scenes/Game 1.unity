@@ -2862,9 +2862,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e914bb342ada2e6448b1b4f3134478a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyInventory
-  _capacity: 8
-  _slotPrefab: {fileID: 3981546343948635423, guid: 1e63819560ce0814183d8ec498cfc2dd, type: 3}
-  _slotContainer: {fileID: 666741933}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _emptyIndicator: {fileID: 0}
 --- !u!114 &560394076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,6 +2882,8 @@ MonoBehaviour:
   _mechaCharacter: {fileID: 1750149060}
   _dragonInfo: {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
   _mechaInfo: {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
+  _depositData: {fileID: 0}
+  _initialEquippedWeaponSlots: 0000000002000000
 --- !u!114 &560394077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9244,8 +9246,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6037299}
   m_HandleRect: {fileID: 6037298}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.49607542
+  m_Value: 0.9999998
+  m_Size: 0.49607533
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

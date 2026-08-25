@@ -5,6 +5,8 @@ using UnityEngine;
 [CustomPropertyDrawer(typeof(StateNameAttribute))]
 public class StateNameDrawer : PropertyDrawer
 {
+    private List<string> stateNamesCache = new List<string>();
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         if (property.propertyType != SerializedPropertyType.String)
@@ -13,31 +15,30 @@ public class StateNameDrawer : PropertyDrawer
             return;
         }
 
-        var config = property.serializedObject.targetObject as StateMachineConfig;
+        StateMachineConfig config = property.serializedObject.targetObject as StateMachineConfig;
         if (config == null)
         {
             EditorGUI.PropertyField(position, property, label);
             return;
         }
 
-        var stateNames = new List<string>();
-        foreach (var state in config.states)
+        stateNamesCache.Clear();
+        foreach (StateMachineConfig.StateEntry state in config.states)
             if (!string.IsNullOrEmpty(state.stateName))
-                stateNames.Add(state.stateName);
+                stateNamesCache.Add(state.stateName);
 
-        if (stateNames.Count == 0)
+        if (stateNamesCache.Count == 0)
         {
             EditorGUI.PropertyField(position, property, label);
-            EditorGUI.LabelField(new Rect(position.x + position.width - 150, position.y, 150, position.height),
-                " (add states first)", EditorStyles.miniLabel);
             return;
         }
 
-        int currentIndex = Mathf.Max(0, stateNames.IndexOf(property.stringValue));
-        int newIndex = EditorGUI.Popup(position, label.text, currentIndex, stateNames.ToArray());
-        if (newIndex >= 0 && newIndex < stateNames.Count)
-            property.stringValue = stateNames[newIndex];
-        else if (!string.IsNullOrEmpty(property.stringValue) && !stateNames.Contains(property.stringValue))
+        int currentIndex = Mathf.Max(0, stateNamesCache.IndexOf(property.stringValue));
+        int newIndex = EditorGUI.Popup(position, label.text, currentIndex, stateNamesCache.ToArray());
+
+        if (newIndex >= 0 && newIndex < stateNamesCache.Count)
+            property.stringValue = stateNamesCache[newIndex];
+        else if (!string.IsNullOrEmpty(property.stringValue) && !stateNamesCache.Contains(property.stringValue))
             property.stringValue = "";
     }
 }

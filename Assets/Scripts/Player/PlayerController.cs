@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        var hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
         bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
 
         _model.SetGrounded(grounded);
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     {
         float xVel = _model.MoveXInputDir * _model.Settings.speed;
 
-        var bounds = _camService.GetBounds();
+        CameraBounds bounds = _camService.GetBounds();
 
         float posX = _view.Rb.position.x;
 

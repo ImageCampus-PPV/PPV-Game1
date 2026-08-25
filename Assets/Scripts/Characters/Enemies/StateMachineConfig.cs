@@ -36,6 +36,6 @@ public class StateMachineConfig : ScriptableObject
     public List<StateTransitionGroup> transitionsByState = new List<StateTransitionGroup>();
     public List<AnyTransitionEntry> anyTransitions = new List<AnyTransitionEntry>();
 
-    public string DefaultState => states.Count > 0 ? states[0].stateName : "Patrol";
+    public string DefaultState => states.Count > 0 ? states[0].stateName : "UnknownState";
 }
 

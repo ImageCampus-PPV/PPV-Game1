@@ -35,6 +35,7 @@ public class PlayersContainer : MonoBehaviour, IService
         if (_players.Contains(player))
             return;
 
+        //TODO: Make this with the event system
         _players.Add(player);
         OnPlayerAdded?.Invoke(player);
     }

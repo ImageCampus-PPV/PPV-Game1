@@ -26,7 +26,7 @@ public class StickyAbility : CharacterAbility
         if (IsSticking || Character.IsGrounded)
             return;
 
-        if (collision.gameObject.TryGetComponent<StickyWall>(out var stickyWall))
+        if (collision.gameObject.TryGetComponent<StickyWall>(out StickyWall stickyWall))
         {
             Stick(collision.contacts[0].point, stickyWall.Normal);
         }

@@ -47,7 +47,7 @@ public abstract class WeaponStrategy : ScriptableObject
     protected void DealDamageInArea(Vector2 center, float radius)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius, enemyLayer);
-        foreach (var hit in hits)
+        foreach (Collider2D hit in hits)
             hit.GetComponent<IDamageable>()?.TakeDamage(damage);
     }
 }

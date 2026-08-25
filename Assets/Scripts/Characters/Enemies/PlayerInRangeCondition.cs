@@ -8,7 +8,7 @@ public class PlayerInRangeCondition : Condition<IEnemyContext>
 
     public override bool Evaluate(IEnemyContext context)
     {
-        var target = context.ExecuteQuery(new FindTargetQuery(_range, _targetLayer));
+        Transform target = context.ExecuteQuery(new FindTargetQuery(_range, _targetLayer));
         return target != null;
     }
 }

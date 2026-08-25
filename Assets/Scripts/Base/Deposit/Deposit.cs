@@ -24,9 +24,14 @@ public class Deposit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (_playerInRange != null) return;
-        if (!other.TryGetComponent<ItemCollector>(out var collector)) return;
-        if (!other.TryGetComponent<PlayerInput>(out var input)) return;
+        if (_playerInRange != null) 
+            return;
+
+        if (!other.TryGetComponent<ItemCollector>(out ItemCollector collector)) 
+            return;
+
+        if (!other.TryGetComponent<PlayerInput>(out PlayerInput input))
+            return;
 
         _playerInRange = collector;
         _playerInput = input;
@@ -37,8 +42,11 @@ public class Deposit : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ItemCollector>(out var collector)) return;
-        if (collector != _playerInRange) return;
+        if (!other.TryGetComponent<ItemCollector>(out ItemCollector collector)) 
+            return;
+
+        if (collector != _playerInRange) 
+            return;
 
         UnsubscribeInput();
         _prompt?.Hide();
@@ -50,26 +58,28 @@ public class Deposit : MonoBehaviour
 
     private void SubscribeInput()
     {
-        if (_playerInput == null) return;
+        if (_playerInput == null) 
+            return;
 
-        var collectAction = _playerInput.actions.FindAction(_collectActionName);
+        InputAction collectAction = _playerInput.actions.FindAction(_collectActionName);
         if (collectAction != null)
             collectAction.performed += OnInteract;
 
-        var cancelAction = _playerInput.actions.FindAction(_cancelActionName);
+        InputAction cancelAction = _playerInput.actions.FindAction(_cancelActionName);
         if (cancelAction != null)
             cancelAction.performed += OnCancel;
     }
 
     private void UnsubscribeInput()
     {
-        if (_playerInput == null) return;
+        if (_playerInput == null) 
+            return;
 
-        var collectAction = _playerInput.actions.FindAction(_collectActionName);
+        InputAction collectAction = _playerInput.actions.FindAction(_collectActionName);
         if (collectAction != null)
             collectAction.performed -= OnInteract;
 
-        var cancelAction = _playerInput.actions.FindAction(_cancelActionName);
+        InputAction cancelAction = _playerInput.actions.FindAction(_cancelActionName);
         if (cancelAction != null)
             cancelAction.performed -= OnCancel;
     }
@@ -82,7 +92,7 @@ public class Deposit : MonoBehaviour
             return;
         }
 
-        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
+        MyInventory inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
             ? ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>()
             : null;
 
@@ -135,15 +145,16 @@ public class Deposit : MonoBehaviour
 
     private void BlockPlayerInput(bool block)
     {
-        foreach (var character in FindObjectsByType<Character>(FindObjectsSortMode.None))
+        foreach (Character character in FindObjectsByType<Character>(FindObjectsSortMode.None))
             character.IsIgnoringInput = block;
     }
 
     private void UpdatePrompt()
     {
-        if (_uiOpen) return;
+        if (_uiOpen) 
+            return;
 
-        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
+        MyInventory inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>()
             ? ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>()
             : null;
 
@@ -157,20 +168,23 @@ public class Deposit : MonoBehaviour
 
     private string GetActionButtonName()
     {
-        if (_playerInput == null) return "?";
+        if (_playerInput == null) 
+            return "?";
 
-        var action = _playerInput.actions.FindAction(_collectActionName);
-        if (action == null) return "?";
+        InputAction action = _playerInput.actions.FindAction(_collectActionName);
+        if (action == null) 
+            return "?";
 
         string scheme = _playerInput.currentControlScheme;
-        foreach (var binding in action.bindings)
+        foreach (InputBinding binding in action.bindings)
         {
-            if (binding.isComposite || binding.isPartOfComposite) continue;
-            if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) continue;
+            if (binding.isComposite || binding.isPartOfComposite) 
+                continue;
 
-            string display = InputControlPath.ToHumanReadableString(
-                binding.effectivePath,
-                InputControlPath.HumanReadableStringOptions.UseShortNames);
+            if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) 
+                continue;
+
+            string display = InputControlPath.ToHumanReadableString(binding.effectivePath, InputControlPath.HumanReadableStringOptions.UseShortNames);
 
             if (!string.IsNullOrEmpty(display))
                 return display;

@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+//TODO: Use entity registry
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
 public class Character : MonoBehaviour, IDamageable
 {
     [Header("Ground checks")]
     [SerializeField] private float _coyoteTime = 0.12f;
+    //TODO: Make ground check with unity
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private float _groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask _groundLayer;
@@ -36,6 +39,8 @@ public class Character : MonoBehaviour, IDamageable
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
+
+    //TODO: get rid of the Actions
     public Action<float> OnTakeDamage { get; set; }
     private void Awake()
     {
@@ -254,6 +259,7 @@ public class Character : MonoBehaviour, IDamageable
     }
     private void CheckGrounded()
     {
+        //TODO: wtf???
         Collider2D[] hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
         bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
         SetGrounded(grounded);
@@ -268,9 +274,12 @@ public class Character : MonoBehaviour, IDamageable
     {
         bool wasGrounded = IsGrounded;
         IsGrounded = grounded;
+
         if (!grounded)
             return;
+
         LastGroundedTime = Time.time;
+
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }

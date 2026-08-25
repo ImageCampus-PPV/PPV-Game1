@@ -65,14 +65,17 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ItemPickupArea>(out var area)) return;
+        if (!other.TryGetComponent<ItemPickupArea>(out ItemPickupArea area))
+            return;
+
         if (!_itemsInRange.Contains(area))
             _itemsInRange.Add(area);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.TryGetComponent<ItemPickupArea>(out var area)) return;
+        if (!other.TryGetComponent<ItemPickupArea>(out ItemPickupArea area))
+            return;
 
         _itemsInRange.Remove(area);
 
@@ -98,7 +101,8 @@ public class ItemCollector : MonoBehaviour
         }
 
         ItemPickupArea newClosest = FindClosest();
-        if (newClosest == _closestItem) return;
+        if (newClosest == _closestItem) 
+            return;
 
         _closestItem?.HidePrompt();
         _closestItem = newClosest;
@@ -143,23 +147,30 @@ public class ItemCollector : MonoBehaviour
         if (!ImageCampus.ToolBox.Services.ServiceProvider.Instance.ContainsService<MyInventory>())
             return false;
 
-        var inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
+        MyInventory inventory = ImageCampus.ToolBox.Services.ServiceProvider.Instance.GetService<MyInventory>();
         return inventory.IsFull;
     }
 
     private string GetPickupButtonName()
     {
         string notFound = "?";
-        if (PlayerInput == null) return notFound;
+        if (PlayerInput == null) 
+            return notFound;
 
         InputAction action = PlayerInput.actions.FindAction(_collectActionName);
-        if (action == null) return notFound;
+
+        if (action == null) 
+            return notFound;
 
         string scheme = PlayerInput.currentControlScheme;
+
         foreach (InputBinding binding in action.bindings)
         {
-            if (binding.isComposite || binding.isPartOfComposite) continue;
-            if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) continue;
+            if (binding.isComposite || binding.isPartOfComposite) 
+                continue;
+
+            if (!string.IsNullOrEmpty(scheme) && !binding.groups.Contains(scheme)) 
+                continue;
 
             string display = InputControlPath.ToHumanReadableString(
                 binding.effectivePath,
