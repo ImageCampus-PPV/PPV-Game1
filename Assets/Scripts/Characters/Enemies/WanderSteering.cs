@@ -13,9 +13,7 @@ public class WanderSteering : ISteeringBehaviour
         _strength = settings.wanderStrength;
     }
 
-    public Vector2 GetSteering(Rigidbody2D rb,
-                               Vector2 desiredDirection,
-                               SteeringContext context)
+    public Vector2 GetSteering(Rigidbody2D rb, Vector2 desiredDirection, SteeringContext context)
     {
         if (!context.WanderInitialized)
         {
