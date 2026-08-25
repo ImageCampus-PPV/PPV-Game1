@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
     private Rigidbody2D _rb;
     private Health _health;
     private DamageResponse _damageResponse;
+    //TODO: separate effects logic
     private List<StatusEffect> _effects = new List<StatusEffect>();
 
     private FSM _fsm;

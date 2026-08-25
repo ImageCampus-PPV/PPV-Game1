@@ -48,10 +48,7 @@ public class PatrolBehaviour : StateBehaviour<IEnemyContext>
             }
             else
             {
-                context.Execute(new MoveCommand(
-                    new Vector2(targetX, context.Position.y),
-                    _moveSpeed
-                ));
+                context.Execute(new MoveCommand(new Vector2(targetX, context.Position.y), _moveSpeed));
             }
         });
         return actions;

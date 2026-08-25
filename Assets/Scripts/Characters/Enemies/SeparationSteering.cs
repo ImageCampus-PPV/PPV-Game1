@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class SeparationSteering : ISteeringBehaviour
 {
@@ -6,7 +6,7 @@ public class SeparationSteering : ISteeringBehaviour
     private readonly float _weight;
     private readonly float _predictionTime;
     private readonly LayerMask _identityLayer;
-    private const int MAX_STORED_COLLIDERS = 16; 
+    private const int MAX_STORED_COLLIDERS = 16;
     private readonly Collider2D[] _overlapBuffer = new Collider2D[MAX_STORED_COLLIDERS];
 
     public SeparationSteering(LayerMask identityLayer, FlockingSettings settings)
@@ -15,6 +15,7 @@ public class SeparationSteering : ISteeringBehaviour
         _radius = settings.separationRadius;
         _weight = settings.separationWeight;
         _predictionTime = settings.separationPredictionTime;
+
     }
 
     public Vector2 GetSteering(Rigidbody2D rb, Vector2 desiredDirection, SteeringContext context)
@@ -27,6 +28,12 @@ public class SeparationSteering : ISteeringBehaviour
                                                 layerMask = _identityLayer
                                             },
                                             _overlapBuffer);
+
+
+        Debug.Log("Steering separation, " + count);
+
+        if (count > 0)
+            Debug.Log("Stuff nearby: " + count);
 
         //separation force
         Vector2 force = Vector2.zero;
