@@ -27,7 +27,7 @@ public abstract class AttackStrategy : ScriptableObject
 
     protected void DealDamageToTargets(Collider2D[] hits, float damage)
     {
-        foreach (var hit in hits)
+        foreach (Collider2D hit in hits)
         {
             IDamageable damageable = hit.GetComponent<IDamageable>();
             damageable?.TakeDamage(damage);

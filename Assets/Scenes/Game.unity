@@ -2169,7 +2169,8 @@ MonoBehaviour:
 
     Keep Space / X pressed to glide.
 
-    Right Click / LT (Ground and Air): Primary action
+    Right Click / LT (Ground
+    and Air): Primary action
 
     S / Arrow Down (Air) Skill action'
   m_isRightToLeft: 0
@@ -2757,7 +2758,8 @@ Transform:
   m_LocalPosition: {x: -1.29082, y: 0, z: -0.72446}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 812208301}]
+  m_Children:
+  - {fileID: 812208301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &560394074
@@ -3156,7 +3158,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 1565002190}, {fileID: 76302977}, {fileID: 321832606}]
+  m_Children:
+  - {fileID: 1565002190}
+  - {fileID: 76302977}
+  - {fileID: 321832606}
   m_Father: {fileID: 786578262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -4666,8 +4671,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '- Enemies
 
-    The enemies are punching bags. You can deal damage to them and see how many HITS
-    they got, as well as the total damage they accumulated'
+    The enemies are punching bags. You can deal damage to them
+    and see how many HITS they got, as well as the total damage they accumulated'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4881,9 +4886,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "- Mecha\nCan stick to walls, will fall after a certain time. Can also jump
-    off of it. \nHas two weapons. \nLeft Click / L1: Uses first weapon\nRight click
-    / R1: Uses second weapon"
+  m_text: "- Mecha\nCan stick to walls, will fall after a certain time. Can also
+    jump off of it. \nHas two weapons. \nLeft Click / L1: Uses first weapon\nRight
+    click / R1: Uses second weapon"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5440,10 +5445,11 @@ MonoBehaviour:
 
     Jump / Fly: W / X button
 
-    I / North Button: Switch character
+    I
+    / North Button: Switch character
 
-    Click on the Debug Tab to open and close it. You can switch the player to debug
-    with the "Switch Player" button
+    Click on the Debug Tab to open and close
+    it. You can switch the player to debug with the "Switch Player" button
 
 '
   m_isRightToLeft: 0
@@ -7667,11 +7673,11 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
-      propertyPath: _charactersToSwitch.Array.data[0]
+      propertyPath: '_charactersToSwitch.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
     - target: {fileID: 1790953903513159696, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
-      propertyPath: _charactersToSwitch.Array.data[1]
+      propertyPath: '_charactersToSwitch.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: ad02ed43bb7e0da4380566ac555f5cc4, type: 2}
     - target: {fileID: 2300534559883845812, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
@@ -7712,15 +7718,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_ActionEvents.Array.data[25].m_ActionName
-      value: Player/Shield[/XInputControllerWindows/buttonEast,/Keyboard/ctrl]
+      value: 'Player/Shield[/XInputControllerWindows/buttonEast,/Keyboard/ctrl]'
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_ActionEvents.Array.data[27].m_ActionName
-      value: Player/SwitchSlot1[/Keyboard/1]
+      value: 'Player/SwitchSlot1[/Keyboard/1]'
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_ActionEvents.Array.data[28].m_ActionName
-      value: Player/SwitchSlot2[/Keyboard/2]
+      value: 'Player/SwitchSlot2[/Keyboard/2]'
       objectReference: {fileID: 0}
     - target: {fileID: 7760340944051414937, guid: d264b220779caa040a77b1983b4c2aa7, type: 3}
       propertyPath: m_ActionEvents.Array.data[25].m_PersistentCalls.m_Calls.Array.size
@@ -8182,8 +8188,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6037299}
   m_HandleRect: {fileID: 6037298}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.4960754
+  m_Value: 0.9999998
+  m_Size: 0.49607533
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8694,10 +8700,11 @@ MonoBehaviour:
 
     You can change in-game values in the Debug tab
 
-    Player 1 is the first player that joins. (See debug tab)
+    Player
+    1 is the first player that joins. (See debug tab)
 
-    If you switch a type with I/R2, you have to press "Switch Player" to update the
-    values.'
+    If you switch a type with
+    I/R2, you have to press "Switch Player" to update the values.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

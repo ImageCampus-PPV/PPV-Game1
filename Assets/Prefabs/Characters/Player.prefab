@@ -392,6 +392,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 192fce9a-7ca3-4fbf-9a15-7805520e8b5d
     m_ActionName: 'Player/Shield[/Keyboard/ctrl]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9a93af7-e8a9-48f8-8d0a-e9dde64d9de6
+    m_ActionName: 'Player/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 952944f2-639c-4252-ab3e-8e5fabd9d954
+    m_ActionName: 'Player/SwitchSlot1[/Keyboard/1]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7846be7-23b4-4888-b7f6-78414d1d7a07
+    m_ActionName: 'Player/SwitchSlot2[/Keyboard/2]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -409,7 +421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9039277c0f596449a8558651d3d1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemCollector
-  _filter: {fileID: 11400000, guid: 60770ca0fa5832147a81064ca2ffb9ee, type: 2}
   _collectActionName: Collect
 --- !u!114 &7125797993490839326
 MonoBehaviour:

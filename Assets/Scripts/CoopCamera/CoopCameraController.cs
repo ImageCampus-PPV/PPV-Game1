@@ -55,7 +55,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
 
         _positions.Clear();
 
-        foreach (var player in _container.Players)
+        foreach (Character player in _container.Players)
             _positions.Add(player.transform.position);
 
         Vector3 targetCentroid = _model.FindCentroid(_positions);
@@ -85,7 +85,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
         if (_container.Players.Count == 0)
             return;
 
-        var startPos = _container.Players[0].transform.position;
+        Vector3 startPos = _container.Players[0].transform.position;
 
         transform.position = startPos += _settings.offset;
     }

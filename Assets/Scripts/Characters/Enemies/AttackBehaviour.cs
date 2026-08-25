@@ -11,7 +11,7 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             context.Execute(new StopMovementCommand());
@@ -24,11 +24,11 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnTick(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             context.Execute(new StopMovementCommand());
-            var target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
+            Transform target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
             if (target == null) return;
 
             if (_cooldownTimer > 0)
@@ -57,7 +57,7 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
 
     public override BehaviourActions GetOnExit(IEnemyContext context)
     {
-        var actions = new BehaviourActions();
+        BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new ResumeMovementCommand()));
         return actions;
     }

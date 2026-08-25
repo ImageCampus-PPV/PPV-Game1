@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//TODO: could be better
 [CreateAssetMenu(fileName = "CharacterDebugInfo", menuName = "Debug/CharacterDebugInfo")]
 public class CharacterDebugInfo : ScriptableObject
 {

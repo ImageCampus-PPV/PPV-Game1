@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -76,14 +77,14 @@ public class InGameInspector : MonoBehaviour
         if (targetPlayer.ActiveJump != null)
             GenerateUIForObject(targetPlayer.ActiveJump, "Jump");
 
-        foreach (var ability in targetPlayer.ActiveAbilities)
+        foreach (CharacterAbility ability in targetPlayer.ActiveAbilities)
         {
             GenerateUIForObject(ability, ability.GetType().Name);
             if (ability is ICombat)
             {
-                var strategies = (ability as ICombat).Strategies;
+                List<AttackStrategy> strategies = (ability as ICombat).Strategies;
 
-                foreach (var strategy in strategies)
+                foreach (AttackStrategy strategy in strategies)
                 {
                     GenerateUIForObject(strategy, strategy.GetType().Name);
                 }

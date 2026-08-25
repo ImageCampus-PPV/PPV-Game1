@@ -57,7 +57,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
 
     private LineRenderer GetOrCreateLine()
     {
-        foreach (var pooledLine in _linePool)
+        foreach (LineRenderer pooledLine in _linePool)
         {
             if (!pooledLine.gameObject.activeSelf)
                 return pooledLine;

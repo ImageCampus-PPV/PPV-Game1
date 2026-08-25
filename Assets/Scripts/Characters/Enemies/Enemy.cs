@@ -26,9 +26,9 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
     private FSM _fsm;
     private TransitionEvaluator _evaluator;
 
-    private Dictionary<object, object> _dataStore = new Dictionary<object, object>();
     private Dictionary<Type, object> _commandHandlers = new Dictionary<Type, object>();
 
+    //TODO: make sure ALL ACTIONS GET CLEANED UP (and Funcs). I do not clean it here (my bad).
     public event Action<ICommand> OnCommandExecuted;
 
     public Transform Transform => transform;
@@ -49,23 +49,25 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
 
-        var movement = new FlockingMovement(
-                            new SeekSteering(_flockingSettings),
-                            new SeparationSteering(
-                                _identityLayer,
-                                _flockingSettings),
-                            new ObstacleAvoidanceSteering(
-                                _obstacleLayers,
-                                _flockingSettings),
-                            new WanderSteering(_flockingSettings)
-                            );
+        FlockingMovement movement = new FlockingMovement(
+                                    new SeekSteering(_flockingSettings),
+                                    new SeparationSteering(
+                                        _identityLayer,
+                                        _flockingSettings),
+                                    new ObstacleAvoidanceSteering(
+                                        _obstacleLayers,
+                                        _flockingSettings),
+                                    new WanderSteering(_flockingSettings)
+                                    );
 
         RegisterCommandHandler(new MoveCommandHandler(_rb, movement));
         RegisterCommandHandler(new StopMovementCommandHandler(_rb));
         RegisterCommandHandler(new ResumeMovementCommandHandler(_rb));
 
-        var stateNameToType = new Dictionary<string, Type>();
-        foreach (var entry in _stateMachineConfig.states)
+        //TODO: Separate this state machine part (so it's more of a plug-in than something accumulated in the Awake)
+
+        Dictionary<string, Type> stateNameToType = new Dictionary<string, Type>();
+        foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
         {
             Type marker = entry.behaviour.GetType();
             Type stateType = typeof(EnemyState<>).MakeGenericType(marker);
@@ -78,10 +80,10 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _fsm = new FSM(defaultStateType);
 
         MethodInfo addStateMethod = typeof(FSM).GetMethod("AddState");
-        foreach (var entry in _stateMachineConfig.states)
+        foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
         {
             Type stateType = stateNameToType[entry.stateName];
-            var genericAdd = addStateMethod.MakeGenericMethod(stateType);
+            MethodInfo genericAdd = addStateMethod.MakeGenericMethod(stateType);
 
             Func<object[]> onTick = () => new object[] { this, _evaluator, entry.behaviour, entry.stateName };
             Func<object[]> onEnter = () => new object[] { this, _evaluator, entry.behaviour, entry.stateName };
@@ -110,6 +112,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _fsm.Tick();
     }
 
+    //TODO: Make this more readable and maybe separate it from enemy (all the command-handling logic should be separate)
     public void Execute<CommandType>(CommandType command) where CommandType : ICommand
     {
         if (_commandHandlers.TryGetValue(typeof(CommandType), out object handler))
@@ -121,32 +124,13 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
             Debug.LogWarning($"No handler for {typeof(CommandType).Name}");
     }
 
+    //TODO: query logic might be a little hardcoded, could be improved.
     public ResultType ExecuteQuery<ResultType>(ICommandQuery<ResultType> query)
     {
         if (query is FindTargetQuery find)
             return (ResultType)(object)TargetSelector.GetBestTarget(transform.position, find.Range, find.TargetLayer);
 
         throw new NotSupportedException($"Query {query.GetType()} not supported.");
-    }
-
-    public void SetData<T>(StateDataKey<T> key, T value)
-    {
-        _dataStore[key] = value;
-    }
-
-    public T GetData<T>(StateDataKey<T> key)
-    {
-        return _dataStore.TryGetValue(key, out object v) ? (T)v : default;
-    }
-
-    public bool TryGetData<T>(StateDataKey<T> key, out T value)
-    {
-        if (_dataStore.TryGetValue(key, out object v))
-        {
-            value = (T)v; return true;
-        }
-        value = default;
-        return false;
     }
 
     public void RegisterCommandHandler<CommandType>(ICommandHandler<CommandType> handler) where CommandType : ICommand
@@ -159,9 +143,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         private readonly Rigidbody2D _rb;
         private readonly IMovementSteering _steering;
 
-        public MoveCommandHandler(
-            Rigidbody2D rb,
-            IMovementSteering steering)
+        public MoveCommandHandler(Rigidbody2D rb, IMovementSteering steering)
         {
             _rb = rb;
             _steering = steering;
@@ -215,8 +197,8 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
 
     public bool HasEffect<EffectType>() where EffectType : StatusEffect
     {
-        foreach (var e in _effects)
-            if (e is EffectType)
+        foreach (StatusEffect effect in _effects)
+            if (effect is EffectType)
                 return true;
         return false;
     }

@@ -8,14 +8,14 @@ public class EnemyManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach (var spawner in _spawners)
+        foreach (EnemySpawner spawner in _spawners)
         {
             spawner.OnEnemySpawn += OnNewEnemySpawned;
         }
 
-        foreach (var enemy in _activeEnemies)
+        foreach (Enemy enemy in _activeEnemies)
         {
-            if (enemy.TryGetComponent<Health>(out var health))
+            if (enemy.TryGetComponent<Health>(out Health health))
                 health.OnDowned += OnEnemyDown;
         }
     }
@@ -26,7 +26,7 @@ public class EnemyManager : MonoBehaviour
         {
             Debug.Log("Enemy down detected");
 
-            foreach (var spawner in _spawners)
+            foreach (EnemySpawner spawner in _spawners)
             {
                 if (spawner.ContainsEnemy(enemy))
                 {
@@ -47,7 +47,7 @@ public class EnemyManager : MonoBehaviour
     private void OnNewEnemySpawned(Enemy enemy)
     {
         _activeEnemies.Add(enemy);
-        if (enemy.TryGetComponent<Health>(out var health))
+        if (enemy.TryGetComponent<Health>(out Health health))
             health.OnDowned += OnEnemyDown;
     }
 }

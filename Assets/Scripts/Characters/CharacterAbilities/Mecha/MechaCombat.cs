@@ -105,7 +105,7 @@ public class MechaCombat : CharacterAbility
     {
         if (_shieldAbility == null)
         {
-            foreach (var ability in Character.ActiveAbilities)
+            foreach (CharacterAbility ability in Character.ActiveAbilities)
             {
                 if (ability is ShieldAbility shield)
                 {

@@ -55,9 +55,10 @@ public class DepositUI : MonoBehaviour
 
     private Sprite GetIcon(ItemType type)
     {
-        if (type == null || _itemIcons == null) return null;
+        if (type == null || _itemIcons == null) 
+            return null;
 
-        foreach (var entry in _itemIcons)
+        foreach (ItemIconEntry entry in _itemIcons)
             if (entry.type == type)
                 return entry.icon;
 

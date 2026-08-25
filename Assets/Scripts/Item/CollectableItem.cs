@@ -13,7 +13,7 @@ public class CollectableItem : Item
         if (_collectionMode != CollectionMode.Automatic)
             return;
 
-        if (!other.TryGetComponent<ItemCollector>(out var collector))
+        if (!other.TryGetComponent<ItemCollector>(out ItemCollector collector))
             return;
 
         Collect();
