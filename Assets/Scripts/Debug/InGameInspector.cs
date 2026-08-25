@@ -16,9 +16,6 @@ public class InGameInspector : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _targetPlayerText;
     [SerializeField] private GameObject _debugHeaderPrefab;
 
-    [Header("Players")]
-    [SerializeField] private PlayersContainer _playersContainer;
-
     private int _currentPlayerIndex = 0;
 
     private void Start()

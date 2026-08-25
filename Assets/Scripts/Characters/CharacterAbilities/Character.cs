@@ -17,7 +17,7 @@ public class Character : MonoBehaviour, IDamageable
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
     private List<CharacterAbility> _activeAbilities = new();
-    private ICoopCameraService _camService;
+
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
     public Action TouchGroundEvent;
@@ -45,15 +45,14 @@ public class Character : MonoBehaviour, IDamageable
     }
     protected virtual void Start()
     {
-        _camService = ServiceProvider.Instance.ContainsService<ICoopCameraService>() ?
-            ServiceProvider.Instance.GetService<ICoopCameraService>() :
-            null;
+
     }
+
     public void EquipCharacter(CharacterDebugInfo info)
     {
         IsIgnoringInput = false;
         IsBlockingRotation = false;
-        //Debug.Log(_rb);
+
         CleanUpAbilities();
         _activeAbilities.Clear();
         if (info.MovementAbility != null)
@@ -274,6 +273,7 @@ public class Character : MonoBehaviour, IDamageable
         if (!wasGrounded)
             TouchGroundEvent?.Invoke();
     }
+
     private float ClampScreenMovement(float xVel)
     {
         CameraBounds bounds = _camService.GetBounds();
@@ -282,6 +282,7 @@ public class Character : MonoBehaviour, IDamageable
             xVel = 0;
         return xVel;
     }
+
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);
