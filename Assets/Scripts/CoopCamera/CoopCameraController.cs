@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using ImageCampus.ToolBox.Services;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 [Serializable]
@@ -11,12 +10,7 @@ public class CoopCameraSettings
     public float speed;
 }
 
-public interface ICoopCameraService : IService
-{
-    CameraBounds GetBounds();
-}
-
-public class CoopCameraController : MonoBehaviour, ICoopCameraService
+public class CoopCameraController : MonoBehaviour, IService
 {
     [SerializeField] private Camera _cam;
     [SerializeField] private PlayersContainer _container;
@@ -32,7 +26,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
     {
         _model = new CoopCameraModel(_settings, _boundsMargin);
 
-        ServiceProvider.Instance.AddService<ICoopCameraService>(this);
+        ServiceProvider.Instance.AddService<CoopCameraController>(this);
 
         if (_container == null)
             Debug.Log($"No {nameof(PlayersContainer)} inserted in {nameof(CoopCameraController)}");
@@ -45,7 +39,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
 
     private void OnDestroy()
     {
-        ServiceProvider.Instance.RemoveService<ICoopCameraService>();
+        ServiceProvider.Instance.RemoveService<CoopCameraController>();
     }
 
     private void LateUpdate()
@@ -65,19 +59,7 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
 
     public CameraBounds GetBounds()
     {
-        float height = _cam.orthographicSize * 2f;
-        float width = height * _cam.aspect;
-
-        Vector3 pos = _cam.transform.position;
-
-        return new CameraBounds
-        {
-            left = pos.x - width * 0.5f,
-            right = pos.x + width * 0.5f,
-            bottom = pos.y - height * 0.5f,
-            top = pos.y + height * 0.5f,
-            margin = _boundsMargin
-        };
+        return _model.GetBounds(_cam.transform.position, _cam.orthographicSize, _cam.aspect);
     }
 
     private void SnapToPlayer()
@@ -95,5 +77,14 @@ public class CoopCameraController : MonoBehaviour, ICoopCameraService
         Vector3 desiredPos = pos + _settings.offset;
         Vector3 smoothedPos = Vector3.Lerp(transform.position, desiredPos, _settings.speed * Time.deltaTime);
         transform.position = smoothedPos;
+    }
+
+    public bool IsInCameraBounds(Vector3 position)
+    {
+        Vector3 viewportPos = _cam.WorldToViewportPoint(position);
+
+        return viewportPos.x >= 0f && viewportPos.x <= 1f && 
+               viewportPos.y >= 0f && viewportPos.y <= 1f && 
+               viewportPos.z > 0f;
     }
 }

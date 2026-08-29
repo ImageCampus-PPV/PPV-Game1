@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask _groundLayer;
 
-    private ICoopCameraService _camService;
+    private CoopCameraController _camService;
     private PlayerModel _model;
     private PlayerView _view;
     private Collider2D _ownCollider;
@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
         if (_view.Rb == null)
             _view.Rb = GetComponent<Rigidbody2D>();
 
-        _camService = ServiceProvider.Instance.ContainsService<ICoopCameraService>() ?
-            ServiceProvider.Instance.GetService<ICoopCameraService>() :
+        _camService = ServiceProvider.Instance.ContainsService<CoopCameraController>() ?
+            ServiceProvider.Instance.GetService<CoopCameraController>() :
             null;
     }
 

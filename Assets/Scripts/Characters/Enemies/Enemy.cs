@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
     [SerializeField] private LayerMask _identityLayer;
     [SerializeField] private LayerMask _obstacleLayers;
 
+    private Vector2 _positionOnSpawn;
     private Rigidbody2D _rb;
     private Health _health;
     private DamageResponse _damageResponse;
@@ -37,6 +38,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
     public float Health => _health.CurrentHealth;
     public float MaxHealth => _health.MaxHealth;
     public Transform AttackOffset => _attackOffset;
+    public Vector2 PositionOnSpawn => _positionOnSpawn;
 
     public bool IsStunned { get; set; }
     public Action<float> OnTakeDamage { get; set; }
@@ -49,6 +51,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
+        _positionOnSpawn = transform.position;
 
         FlockingMovement movement = new FlockingMovement(_flockingSettings,
                                     new SeekSteering(_flockingSettings),
@@ -63,7 +66,6 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
 
         RegisterCommandHandler(new MoveCommandHandler(_rb, movement));
         RegisterCommandHandler(new StopMovementCommandHandler(_rb));
-        RegisterCommandHandler(new ResumeMovementCommandHandler(_rb));
 
         //TODO: Separate this state machine part (so it's more of a plug-in than something accumulated in the Awake)
 
@@ -169,20 +171,6 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         public void Execute(StopMovementCommand command, IStateContext context)
         {
             _rb.linearVelocity = Vector2.zero;
-        }
-    }
-
-    private class ResumeMovementCommandHandler : ICommandHandler<ResumeMovementCommand>
-    {
-        private Rigidbody2D _rb;
-        public ResumeMovementCommandHandler(Rigidbody2D rb)
-        {
-            _rb = rb;
-        }
-
-        public void Execute(ResumeMovementCommand command, IStateContext context)
-        {
-            //TODO: Remove if unused.
         }
     }
 

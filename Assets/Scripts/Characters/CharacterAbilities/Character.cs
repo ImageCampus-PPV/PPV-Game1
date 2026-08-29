@@ -20,7 +20,7 @@ public class Character : MonoBehaviour, IDamageable
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
     private List<CharacterAbility> _activeAbilities = new();
-    private ICoopCameraService _camService;
+    private CoopCameraController _camService;
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
     public Action TouchGroundEvent;
@@ -50,8 +50,8 @@ public class Character : MonoBehaviour, IDamageable
     }
     protected virtual void Start()
     {
-        _camService = ServiceProvider.Instance.ContainsService<ICoopCameraService>() ?
-            ServiceProvider.Instance.GetService<ICoopCameraService>() :
+        _camService = ServiceProvider.Instance.ContainsService<CoopCameraController>() ?
+            ServiceProvider.Instance.GetService<CoopCameraController>() :
             null;
     }
     public void EquipCharacter(CharacterDebugInfo info)
