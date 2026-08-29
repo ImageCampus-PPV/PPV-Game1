@@ -42,4 +42,6 @@ MonoBehaviour:
     transitions:
     - condition: {fileID: 11400000, guid: 61f1dbefa19d3ce4aa53003cc43dfe5b, type: 2}
       toState: Patrol
+    - condition: {fileID: 11400000, guid: f6638ba1c8eb2a640a7c7d7d884f1141, type: 2}
+      toState: Chase
   anyTransitions: []

@@ -598,7 +598,7 @@ Transform:
   m_GameObject: {fileID: 24787870}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -109.45, y: 0.85, z: -1004.8072}
+  m_LocalPosition: {x: -119.2, y: 3.2, z: -1004.8072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -863,17 +863,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1174911576506649878, guid: 0bca2f93fbd2f434cbb1c141e96ada46, type: 3}
   m_PrefabInstance: {fileID: 17491010}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &103197916 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5898922658412322238, guid: 0bca2f93fbd2f434cbb1c141e96ada46, type: 3}
-  m_PrefabInstance: {fileID: 17491010}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 195d21cb33aff3e4e99c2a4270254351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemPickupPrompt
 --- !u!1 &107439899
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,7 +1675,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -27.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2787,9 +2776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e914bb342ada2e6448b1b4f3134478a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MyInventory
-  _icon: {fileID: 1565002192}
-  _nameText: {fileID: 76302979}
-  _emptyIndicator: {fileID: 321832603}
 --- !u!114 &560394076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3146,7 +3132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &666741933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5880,7 +5866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1166758364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6100,11 +6086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6775a2e8c7f0c14685b79b966259510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Deposit
-  _depositData: {fileID: 11400000, guid: 32735d825410f634ba9e830e8d2167d9, type: 2}
-  _collectActionName: Collect
-  _cancelActionName: Cancel
-  _prompt: {fileID: 103197916}
-  _depositUI: {fileID: 1166758365}
 --- !u!58 &1205038554
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8188,8 +8169,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6037299}
   m_HandleRect: {fileID: 6037298}
   m_Direction: 2
-  m_Value: 0.9999998
-  m_Size: 0.49607533
+  m_Value: 1.0000001
+  m_Size: 0.49607542
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8395,7 +8376,7 @@ Transform:
   m_GameObject: {fileID: 1961406919}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -103.95, y: 0.85, z: -1004.8072}
+  m_LocalPosition: {x: -100.2, y: 10.13, z: -1004.8072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

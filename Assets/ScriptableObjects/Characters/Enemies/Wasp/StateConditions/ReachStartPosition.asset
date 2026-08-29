@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17a9b80ee1f90d498e8ea880959a737, type: 3}
   m_Name: ReachStartPosition
   m_EditorClassIdentifier: Assembly-CSharp::ReachStartPositionCondition
-  _distanceMargin: 0.1
+  _distanceMargin: 1

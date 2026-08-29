@@ -4,9 +4,7 @@ using UnityEngine;
 public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private float _moveSpeed = 2f;
-    private bool _initialied = false;
     private Vector2 _startPos;
-    private bool _reachedDestination = false;
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
@@ -14,6 +12,7 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
         actions.AddUpdateBehaviour(() =>
         {
             _startPos = context.PositionOnSpawn;
+            Debug.Log("Enemy " + context.Transform.name + " heading to " + _startPos + ". Current pos: " + context.Position);
         });
         return actions;
     }
@@ -23,16 +22,7 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
         BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
-            if (!_reachedDestination)
-                context.Execute(new MoveCommand(_startPos, _moveSpeed));
-
-            if (Vector2.Distance(_startPos, context.Position) < 0.1f)
-            {
-                context.Execute(new StopMovementCommand());
-                _reachedDestination = true;
-            }
-            else
-                _reachedDestination = false;
+            context.Execute(new MoveCommand(_startPos, _moveSpeed));
         });
         return actions;
     }
