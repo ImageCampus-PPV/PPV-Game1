@@ -4,15 +4,13 @@ using UnityEngine;
 public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private float _moveSpeed = 2f;
-    private Vector2 _startPos;
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
         BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
-            _startPos = context.PositionOnSpawn;
-            Debug.Log("Enemy " + context.Transform.name + " heading to " + _startPos + ". Current pos: " + context.Position);
+            //Debug.Log("Enemy " + context.Transform.name + " heading to " + _startPos + ". Current pos: " + context.Position);
         });
         return actions;
     }
@@ -22,7 +20,9 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
         BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
-            context.Execute(new MoveCommand(_startPos, _moveSpeed));
+            //Debug.Log("Enemy " + context.Transform.name + " heading to " + context.PositionOnSpawn + ". Current pos: " + context.Position);
+            //Debug.Log("Move speed: " + _moveSpeed);
+            context.Execute(new MoveCommand(context.PositionOnSpawn, _moveSpeed));
         });
         return actions;
     }

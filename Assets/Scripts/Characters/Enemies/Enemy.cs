@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
         _positionOnSpawn = transform.position;
-        Debug.Log("Position on spawn of enemy " + name + ": " + _positionOnSpawn);
+        //Debug.Log("Position on spawn of enemy " + name + ": " + _positionOnSpawn);
 
         FlockingMovement movement = new FlockingMovement(_flockingSettings,
                                     new SeekSteering(_flockingSettings),
@@ -83,15 +83,17 @@ public class Enemy : MonoBehaviour, IEnemyContext, IDamageable, IStunnable, ISta
         Type defaultStateType = stateNameToType[_stateMachineConfig.DefaultState];
         _fsm = new FSM(defaultStateType);
 
-        MethodInfo addStateMethod = typeof(FSM).GetMethod("AddState");
+        MethodInfo addStateMethod = typeof(FSM).GetMethod(nameof(FSM.AddState));
         foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
         {
+            StateBehaviour<IEnemyContext> stateBehaviourInstance = UnityEngine.Object.Instantiate(entry.behaviour);
+
             Type stateType = stateNameToType[entry.stateName];
             MethodInfo genericAdd = addStateMethod.MakeGenericMethod(stateType);
 
-            Func<object[]> onTick = () => new object[] { this, _evaluator, entry.behaviour, entry.stateName };
-            Func<object[]> onEnter = () => new object[] { this, _evaluator, entry.behaviour, entry.stateName };
-            Func<object[]> onExit = () => new object[] { this, _evaluator, entry.behaviour, entry.stateName };
+            Func<object[]> onTick = () => new object[] { this, _evaluator, stateBehaviourInstance, entry.stateName };
+            Func<object[]> onEnter = () => new object[] { this, _evaluator, stateBehaviourInstance, entry.stateName };
+            Func<object[]> onExit = () => new object[] { this, _evaluator, stateBehaviourInstance, entry.stateName };
 
             genericAdd.Invoke(_fsm, new object[] { onTick, onEnter, onExit });
         }

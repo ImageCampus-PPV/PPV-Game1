@@ -35,7 +35,7 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(_timeToSpawn);
 
-            GameObject enemyGO = _enemyFactory?.CreateRandomEnemy(transform.position, Quaternion.identity);
+            GameObject enemyGO = _enemyFactory?.CreateRandomEnemy(transform.position, Quaternion.identity, name);
             _spawnedCount++;
 
             if (enemyGO.TryGetComponent<Enemy>(out Enemy enemy))
