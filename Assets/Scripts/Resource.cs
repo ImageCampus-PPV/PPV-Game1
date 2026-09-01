@@ -4,18 +4,18 @@ namespace GreenAbis
     public sealed class Resource
     {
         private string name;
-        private long minValue;
-        private long maxValue;
-        private long currentValue;
+        private uint minValue;
+        private uint maxValue;
+        private uint currentValue;
 
         public string Name => name;
-        public long CurrentValue => currentValue;
+        public uint CurrentValue => currentValue;
 
         public Resource()
         {
         }
 
-        public Resource(string name, long minValue, long maxValue, long startValue)
+        public Resource(string name, uint minValue, uint maxValue, uint startValue)
         {
             this.name = name;
             this.minValue = minValue;
@@ -23,17 +23,17 @@ namespace GreenAbis
             this.currentValue = System.Math.Clamp(startValue, minValue, maxValue);
         }
 
-        public void AddResource(long amount)
+        public void AddResource(uint amount)
         {
             currentValue = System.Math.Clamp(currentValue + amount, minValue, maxValue);
         }
 
-        public void RemoveResource(long amount)
+        public void RemoveResource(uint amount)
         {
             currentValue = System.Math.Clamp(currentValue - amount, minValue, maxValue);
         }
 
-        public void SetResourceAmount(long amount)
+        public void SetResourceAmount(uint amount)
         {
             currentValue = System.Math.Clamp(amount, minValue, maxValue);
         }
