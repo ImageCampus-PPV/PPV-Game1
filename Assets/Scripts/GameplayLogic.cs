@@ -42,6 +42,9 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
         EntityFactory.Create<Mecha>();
         EntityFactory.Create<Dragon>();
+
+        for (int i = 0; i < 5; ++i)
+            EntityFactory.Create<Wasp>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
     }
 
     public void Tick(float deltaTime)
