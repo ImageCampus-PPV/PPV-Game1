@@ -1413,6 +1413,17 @@
                     "action": "JoinGame",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8875a3e-bb38-4d9b-82ea-b69af48a44af",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoinGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
