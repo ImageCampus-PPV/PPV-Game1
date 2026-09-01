@@ -30,7 +30,7 @@ public sealed class Deposit : IService, IDisposable
 
     }
 
-    public void AddResource<TRespuseType>(long amount)
+    public void AddResource<TRespuseType>(uint amount)
     {
         Type resourceType = typeof(TRespuseType);
 
@@ -40,7 +40,7 @@ public sealed class Deposit : IService, IDisposable
         resources[resourceType].AddResource(amount);
     }
 
-    public void RemoveResource<TRespuseType>(long amount)
+    public void RemoveResource<TRespuseType>(uint amount)
     {
         Type resourceType = typeof(TRespuseType);
 
@@ -50,7 +50,7 @@ public sealed class Deposit : IService, IDisposable
         resources[resourceType].RemoveResource(amount);
     }
 
-    public bool HasResourceAmount<TRespuseType>(long amount)
+    public bool HasResourceAmount<TRespuseType>(uint amount)
     {
         return resources[typeof(TRespuseType)].CurrentValue >= amount;
     }
