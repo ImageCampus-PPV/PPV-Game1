@@ -2,6 +2,7 @@ using UnityEngine;
 using Assets.Scripts.Entities;
 using System.Collections.Generic;
 using ImageCampus.ToolBox.Services;
+using System;
 
 public class CoopCameraController : IInitiable, ITickable, IService
 {
@@ -82,5 +83,14 @@ public class CoopCameraController : IInitiable, ITickable, IService
     public void SetSpeed(float speed)
     {
         this.speed = speed;
+    }
+
+    public bool IsInCameraBounds(Vector3 position)
+    {
+        Vector3 viewportPos = _cam.WorldToViewportPoint(position);
+
+        return viewportPos.x >= 0f && viewportPos.x <= 1f &&
+               viewportPos.y >= 0f && viewportPos.y <= 1f &&
+               viewportPos.z > 0f;
     }
 }
