@@ -3,11 +3,25 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
+
+public class Dragon : Character
+{
+
+}
+
+public class Mecha : Character
+{
+
+}
+
 
 //TODO: Use entity registry
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
-public class Character : MonoBehaviour, IDamageable
+public class Character : BaseEntity, IDamageable
 {
+    private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
+
     [Header("Ground checks")]
     [SerializeField] private float _coyoteTime = 0.12f;
     //TODO: Make ground check with unity
@@ -15,12 +29,13 @@ public class Character : MonoBehaviour, IDamageable
     [SerializeField] private float _groundCheckRadius = 0.1f;
     [SerializeField] private LayerMask _groundLayer;
 
+    [SerializeField] private CharacterDebugInfo info;
+
     private Vector2 _rawAimInput;
     private bool _isOnGamepad;
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
     private List<CharacterAbility> _activeAbilities = new();
-    private ICoopCameraService _camService;
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
     public Action TouchGroundEvent;
@@ -47,18 +62,21 @@ public class Character : MonoBehaviour, IDamageable
         _rb = GetComponent<Rigidbody2D>();
         _ownCollider = GetComponent<Collider2D>();
         CurrentAimDir = Vector2.right;
+
+        EquipCharacter(info);
+
+        if (TryGetComponent<CharacterDebugger>(out CharacterDebugger debugger))
+        {
+            debugger.DebugInfo = info;
+            debugger.UpdateInfo();
+        }
     }
-    protected virtual void Start()
-    {
-        _camService = ServiceProvider.Instance.ContainsService<ICoopCameraService>() ?
-            ServiceProvider.Instance.GetService<ICoopCameraService>() :
-            null;
-    }
+
     public void EquipCharacter(CharacterDebugInfo info)
     {
         IsIgnoringInput = false;
         IsBlockingRotation = false;
-        //Debug.Log(_rb);
+
         CleanUpAbilities();
         _activeAbilities.Clear();
         if (info.MovementAbility != null)
@@ -84,10 +102,7 @@ public class Character : MonoBehaviour, IDamageable
             _activeAbilities.Add(clonedAbility);
         }
     }
-    public void SetInputDevice(InputDevice device)
-    {
-        _isOnGamepad = device is Gamepad;
-    }
+
     private void CleanUpAbilities()
     {
         if (_activeMovement != null)
@@ -100,26 +115,28 @@ public class Character : MonoBehaviour, IDamageable
                 Destroy(ability);
         }
     }
-    public void OnAim(InputAction.CallbackContext context)
+    public void OnAim(Vector2 dir)
     {
         if (IsIgnoringInput || IsBlockingRotation)
             return;
-        _rawAimInput = context.ReadValue<Vector2>();
-        _isOnGamepad = context.control.device is Gamepad;
+
+        if (dir != Vector2.zero)
+            Debug.Log(dir.ToString());
+
         foreach (CharacterAbility ability in _activeAbilities)
         {
-            ability.ProcessAim(_rawAimInput);
+            ability.ProcessAim(dir);
         }
     }
-    public void OnMove(InputAction.CallbackContext context)
+    public void OnMove(Vector2 dir)
     {
         if (IsIgnoringInput)
             return;
-        _isOnGamepad = context.control.device is Gamepad;
-        _activeMovement?.ProcessMove(context.ReadValue<Vector2>());
+
+        _activeMovement?.ProcessMove(dir);
         foreach (CharacterAbility ability in _activeAbilities)
         {
-            ability.ProcessMove(context.ReadValue<Vector2>());
+            ability.ProcessMove(dir);
         }
     }
     public void OnJump(InputAction.CallbackContext context)
@@ -201,6 +218,7 @@ public class Character : MonoBehaviour, IDamageable
             ability.ProcessSkill(context);
         }
     }
+
     private void Update()
     {
         CheckGrounded();
@@ -225,12 +243,12 @@ public class Character : MonoBehaviour, IDamageable
         }
         else
         {
-            if (Camera.main != null && Mouse.current != null)
+            if (CoopCameraController.Camera && Mouse.current != null)
             {
                 Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
                 //Debug.Log(mouseScreenPos);
-                float depthDist = Mathf.Abs(Camera.main.transform.position.z);
-                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new(mouseScreenPos.x, mouseScreenPos.y, depthDist));
+                float depthDist = Mathf.Abs(CoopCameraController.Camera.transform.position.z);
+                Vector3 mouseWorldPos = CoopCameraController.Camera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, depthDist));
                 //Debug.Log(mouseWorldPos);
                 CurrentAimDir = ((Vector2)mouseWorldPos - (Vector2)transform.position).normalized;
                 //Debug.Log(CurrentAimDir);
@@ -259,7 +277,6 @@ public class Character : MonoBehaviour, IDamageable
     }
     private void CheckGrounded()
     {
-        //TODO: wtf???
         Collider2D[] hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
         bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
         SetGrounded(grounded);
@@ -285,7 +302,7 @@ public class Character : MonoBehaviour, IDamageable
     }
     private float ClampScreenMovement(float xVel)
     {
-        CameraBounds bounds = _camService.GetBounds();
+        CameraBounds bounds = CoopCameraController.GetBounds();
         float posX = _rb.position.x;
         if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
             xVel = 0;
