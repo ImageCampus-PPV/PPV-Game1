@@ -17,3 +17,5 @@ MonoBehaviour:
     gameObject: {fileID: 3288637428352067916, guid: 2e2f6e09bcfb08c4fb3abaa5d2f3591e, type: 3}
   - TypeName: Mecha
     gameObject: {fileID: 3288637428352067916, guid: 8d0b11e476fcc8b4fbbaaadab8a43c05, type: 3}
+  - TypeName: Wasp
+    gameObject: {fileID: 3397934936948879136, guid: d3b07fcc304a9544a8266650cd08312a, type: 3}
