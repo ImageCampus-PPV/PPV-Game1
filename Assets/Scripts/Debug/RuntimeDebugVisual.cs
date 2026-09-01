@@ -24,7 +24,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
 
     private void OnDestroy()
     {
-        ServiceProvider.Instance.RemoveService<RuntimeDebugVisual>();
+
     }
 
     private void Update()
