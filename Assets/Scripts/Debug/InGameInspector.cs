@@ -1,3 +1,5 @@
+using Assets.Scripts.Entities;
+using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -8,6 +10,8 @@ using UnityEngine.UI;
 
 public class InGameInspector : MonoBehaviour
 {
+    EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+
     [Header("UI refs")]
     [SerializeField] private Button _openMenuButton;
     [SerializeField] private Button _switchPlayerButton;
@@ -16,9 +20,6 @@ public class InGameInspector : MonoBehaviour
     [SerializeField] private DebugField _debugFieldPrefab;
     [SerializeField] private TextMeshProUGUI _targetPlayerText;
     [SerializeField] private GameObject _debugHeaderPrefab;
-
-    [Header("Players")]
-    [SerializeField] private PlayersContainer _playersContainer;
 
     private int _currentPlayerIndex = 0;
 
@@ -43,9 +44,9 @@ public class InGameInspector : MonoBehaviour
     {
         if (_menuPanel.activeSelf)
         {
-            if (_playersContainer.Players.Count > 0)
+            if (EntityRegistry.GetCountOf<Character>() > 0)
             {
-                _currentPlayerIndex = (_currentPlayerIndex + 1) % _playersContainer.Players.Count;
+                _currentPlayerIndex = (_currentPlayerIndex + 1) % EntityRegistry.GetCountOf<Character>();
                 RefreshUI();
             }
         }
@@ -58,17 +59,17 @@ public class InGameInspector : MonoBehaviour
             Destroy(fieldPanel.gameObject);
         }
 
-        if (_playersContainer == null || _playersContainer.Players.Count == 0)
+        if (EntityRegistry.GetCountOf<Character>() == 0)
         {
             _targetPlayerText.text = "No players online.";
         }
 
-        if (_currentPlayerIndex >= _playersContainer.Players.Count)
+        if (_currentPlayerIndex >= EntityRegistry.GetCountOf<Character>())
         {
             _currentPlayerIndex = 0;
         }
 
-        Character targetPlayer = _playersContainer.Players[_currentPlayerIndex];
+        Character targetPlayer = EntityRegistry.GetEntityAtIndex<Character>(_currentPlayerIndex);
 
         _targetPlayerText.text = $"Player {_currentPlayerIndex + 1}.";
 
