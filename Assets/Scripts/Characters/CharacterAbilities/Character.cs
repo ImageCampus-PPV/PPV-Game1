@@ -36,6 +36,7 @@ public class Character : BaseEntity, IDamageable
     private MovementAbility _activeMovement;
     private JumpAbility _activeJump;
     private List<CharacterAbility> _activeAbilities = new();
+
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
     public Action TouchGroundEvent;
@@ -120,8 +121,7 @@ public class Character : BaseEntity, IDamageable
         if (IsIgnoringInput || IsBlockingRotation)
             return;
 
-        if (dir != Vector2.zero)
-            Debug.Log(dir.ToString());
+        _rawAimInput = dir;
 
         foreach (CharacterAbility ability in _activeAbilities)
         {
