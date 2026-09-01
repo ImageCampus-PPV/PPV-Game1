@@ -1,0 +1,4 @@
+class Wasp : Enemy
+{
+
+}
