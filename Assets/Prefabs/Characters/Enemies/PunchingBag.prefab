@@ -151,6 +151,7 @@ GameObject:
   - component: {fileID: 5802617110633325090}
   - component: {fileID: 8703316697019996960}
   - component: {fileID: 4947651690428707736}
+  - component: {fileID: 6321090852487677899}
   m_Layer: 8
   m_Name: PunchingBag
   m_TagString: Untagged
@@ -245,6 +246,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37598dcc0a32e2c45a1e263a18e29ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _stateMachineConfig: {fileID: 0}
+  _attackOffset: {fileID: 0}
+  _targetLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _flockingSettings:
+    enabled: 0
+    separationRadius: 0
+    separationWeight: 0
+    separationPredictionTime: 0
+    obstacleLookDistance: 0
+    obstacleWeight: 0
+    obstacleNormalWeight: 0
+    obstacleTangentWeight: 0
+    seekWeight: 0
+    bodyRadius: 0
+    wanderWeight: 0
+    wanderJitter: 0
+    wanderStrength: 0
+    orbitWeight: 0
+    orbitMinDistance: 0
+    orbitMaxDistance: 0
+  _identityLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _obstacleLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &5802617110633325090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +362,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 2
+--- !u!114 &6321090852487677899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3153612450362442465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8734e8abdd78fcc4e9cce38aaf7f3e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  _damageableComp: {fileID: 3026008539853067893}
+  _maxHealth: 100
 --- !u!1 &7138755337103497217
 GameObject:
   m_ObjectHideFlags: 0
