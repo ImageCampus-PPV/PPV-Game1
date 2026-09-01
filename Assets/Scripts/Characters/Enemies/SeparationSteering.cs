@@ -30,10 +30,10 @@ public class SeparationSteering : ISteeringBehaviour
                                             _overlapBuffer);
 
 
-        Debug.Log("Steering separation, " + count);
+        //Debug.Log("Steering separation, " + count);
 
-        if (count > 0)
-            Debug.Log("Stuff nearby: " + count);
+        //if (count > 0)
+        //    Debug.Log("Stuff nearby: " + count);
 
         //separation force
         Vector2 force = Vector2.zero;
