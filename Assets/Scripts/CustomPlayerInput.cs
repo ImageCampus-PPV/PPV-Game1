@@ -61,6 +61,10 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.SkillAction.started += OnSkillAction;
         EntityInput.Player.SkillAction.performed += OnSkillAction;
         EntityInput.Player.SkillAction.canceled += OnSkillAction;
+
+        EntityInput.Player.Shield.started += OnShield;
+        EntityInput.Player.Shield.performed += OnShield;
+        EntityInput.Player.Shield.canceled += OnShield;
     }
 
     public void LateInit()
@@ -99,6 +103,11 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         ControllerCharacter.OnSecondaryAction(ctx);
     }
 
+    private void OnShield(InputAction.CallbackContext ctx)
+    {
+        ControllerCharacter.OnShield(ctx);
+    }
+
     public void Dispose()
     {
         EntityInput.Player.Jump.Disable();
@@ -121,5 +130,9 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.SkillAction.started += OnSkillAction;
         EntityInput.Player.SkillAction.performed += OnSkillAction;
         EntityInput.Player.SkillAction.canceled += OnSkillAction;
+
+        EntityInput.Player.Shield.started += OnShield;
+        EntityInput.Player.Shield.performed += OnShield;
+        EntityInput.Player.Shield.canceled += OnShield;
     }
 }
