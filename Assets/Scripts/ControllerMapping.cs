@@ -120,7 +120,8 @@ public sealed class ControllerMapping : IService, IInitiable, ITickable
 
         if (!deviceToPlayerMapping.ContainsKey(pendingDeviceToMap))
         {
-            if (EntityRegistry.GetEntityCount<Character>() == MinPlayerToStartGame)
+                  //Used to be GetEntityCount
+            if (EntityRegistry.GetCountOf<Character>() == MinPlayerToStartGame)
             {
                 //TODO: Add Event to start game or instead ignore the event and add a property that return bool if deviceToPlayerMapping.Count() >= MinPlayerToStartGame || EntityRegistry.GetEntityCount<Character>() >= MinPlayerToStartGame
                 //EventBus.Raise<GirdStartTickingEvent>();

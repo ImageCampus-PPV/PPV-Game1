@@ -1,4 +1,4 @@
-﻿public class Interactable : BaseEntity
+﻿public abstract class Interactable : BaseEntity
 {
 
 }

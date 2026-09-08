@@ -12,6 +12,8 @@ public class InteractionLogic : IInitiable, IDisposable
 
     private Dictionary<Type, object> _creationSubsctiptions;
     private Dictionary<string, Type> _entityClassNameToType;
+    private Dictionary<Type, Action<uint, Interactable>> interactableTypeToAction;
+    private Dictionary<string, Type> _acceptedEntityNameToType;
 
     private MethodInfo _subscribeToInteractionAcceptedMethod;
     private MethodInfo _unsubscribeMethod;
@@ -20,6 +22,7 @@ public class InteractionLogic : IInitiable, IDisposable
     {
         _entityClassNameToType = new Dictionary<string, Type>();
         _creationSubsctiptions = new Dictionary<Type, object>();
+        _acceptedEntityNameToType = new Dictionary<string, Type>();
 
         _subscribeToInteractionAcceptedMethod = GetType().GetMethod(nameof(SubscribeToCreation), BindingFlags.NonPublic | BindingFlags.Instance);
         _unsubscribeMethod = EventBus.GetType().GetMethod(nameof(EventBus.Unsubscribe), BindingFlags.Instance | BindingFlags.Public);
@@ -44,7 +47,9 @@ public class InteractionLogic : IInitiable, IDisposable
     private void RaiseEventAsGeneric(in PlayerRequestInteractionAcceptedGeneric userRequestInteractionAcceptedGenericEvent)
     {
         Type raisingType = _entityClassNameToType[userRequestInteractionAcceptedGenericEvent.interactableType];
-        _subscribeToInteractionAcceptedMethod.MakeGenericMethod(raisingType).Invoke(this, new object[] { userRequestInteractionAcceptedGenericEvent });
+        _subscribeToInteractionAcceptedMethod.MakeGenericMethod(raisingType).Invoke(this, new object[] {});
+
+        //_creationSubsctiptions[_acceptedEntityNameToType[userRequestInteractionAcceptedGenericEvent.interactableType]]
     }
 
     private void RegisterEntityMethods()
@@ -62,15 +67,16 @@ public class InteractionLogic : IInitiable, IDisposable
         }
     }
 
-    private void SubscribeToCreation<EntityType>() where EntityType : Interactable
+    private void SubscribeToCreation<InteractableType>() where InteractableType : Interactable
     {
-        EventBus.EventCallback<PlayerRequestInteractionAccepted<EntityType>> callback = EventBus.SubscribeAndReturn<PlayerRequestInteractionAccepted<EntityType>>(InteractionAccepted);
+        EventBus.EventCallback<PlayerRequestInteractionAccepted<InteractableType>> callback = EventBus.SubscribeAndReturn<PlayerRequestInteractionAccepted<InteractableType>>(InteractionAccepted);
 
-        _creationSubsctiptions.Add(typeof(PlayerRequestInteractionAccepted<EntityType>), callback);
+        _creationSubsctiptions.Add(typeof(PlayerRequestInteractionAccepted<InteractableType>), callback);
+        _acceptedEntityNameToType.Add(nameof(InteractableType), typeof(PlayerRequestInteractionAccepted<InteractableType>));
 
-        void InteractionAccepted(in PlayerRequestInteractionAccepted<EntityType> callback)
+        void InteractionAccepted(in PlayerRequestInteractionAccepted<InteractableType> callback)
         {
-            OnUserInteractionAccepted<EntityType>(callback.characterID, callback.interactableID);
+            OnUserInteractionAccepted<InteractableType>(callback.characterID, callback.interactableID);
         }
 
     }

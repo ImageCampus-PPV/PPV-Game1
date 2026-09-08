@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PossibleInteractions : ITickable, IService
 {
-
     public bool IsPersistance => false;
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
