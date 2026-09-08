@@ -1,26 +1,10 @@
-﻿using System;
+﻿using Assets.Scripts.Entities;
 using CustomInputClass;
-using UnityEngine.InputSystem;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
-using Assets.Scripts.Entities;
+using System;
 using UnityEngine;
-
-public struct UserRequestJumpEvent : IEvent
-{
-    uint entityID;
-
-    public void Assign(params object[] parameters)
-    {
-        entityID = (uint)parameters[0];
-    }
-
-    public void Reset()
-    {
-        entityID = default(uint);
-    }
-}
-
+using UnityEngine.InputSystem;
 public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
@@ -47,6 +31,7 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.PrimaryAction.Enable();
         EntityInput.Player.SecondaryAction.Enable();
         EntityInput.Player.SkillAction.Enable();
+        EntityInput.Player.Interact.Enable();
 
         EntityInput.Player.Jump.started += OnJump;
         EntityInput.Player.Jump.performed += OnJump;
@@ -65,6 +50,8 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.Shield.started += OnShield;
         EntityInput.Player.Shield.performed += OnShield;
         EntityInput.Player.Shield.canceled += OnShield;
+
+        EntityInput.Player.Interact.started += OnInteract;
     }
 
     public void LateInit()
@@ -108,6 +95,11 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         ControllerCharacter.OnShield(ctx);
     }
 
+    private void OnInteract(InputAction.CallbackContext ctx)
+    {
+        EventBus.Raise<PlayerRequestedInteraction>(entityID);
+    }
+
     public void Dispose()
     {
         EntityInput.Player.Jump.Disable();
@@ -127,12 +119,14 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.SecondaryAction.performed -= OnSecondaryAction;
         EntityInput.Player.SecondaryAction.canceled -= OnSecondaryAction;
 
-        EntityInput.Player.SkillAction.started += OnSkillAction;
-        EntityInput.Player.SkillAction.performed += OnSkillAction;
-        EntityInput.Player.SkillAction.canceled += OnSkillAction;
+        EntityInput.Player.SkillAction.started -= OnSkillAction;
+        EntityInput.Player.SkillAction.performed -= OnSkillAction;
+        EntityInput.Player.SkillAction.canceled -= OnSkillAction;
 
-        EntityInput.Player.Shield.started += OnShield;
-        EntityInput.Player.Shield.performed += OnShield;
-        EntityInput.Player.Shield.canceled += OnShield;
+        EntityInput.Player.Shield.started -= OnShield;
+        EntityInput.Player.Shield.performed -= OnShield;
+        EntityInput.Player.Shield.canceled -= OnShield;
+
+        EntityInput.Player.Interact.started -= OnInteract;
     }
 }

@@ -11,6 +11,12 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
+    private PossibleInteractions PossibleInteractions => ServiceProvider.Instance.GetService<PossibleInteractions>();
+
+    private InteractionLogic _interactionLogic;
+    private InteractionController _interactionController;
+    private DepositLogic _depositLogic;
+    private DepositUI _depositUI;
 
     private SceneRef _gamePlayScene;
 
@@ -27,21 +33,35 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ServiceProvider.Instance.AddService<EntityFactory>(new EntityFactory());
         ServiceProvider.Instance.AddService<EntityRegistry>(new EntityRegistry());
         ServiceProvider.Instance.AddService<CoopCameraController>(new CoopCameraController());
-        ServiceProvider.Instance.AddService<CoopCameraController>(new Inventory());
+        ServiceProvider.Instance.AddService<Inventory>(new Inventory());
+        ServiceProvider.Instance.AddService<PossibleInteractions>(new PossibleInteractions());
 
+
+        _interactionLogic = new InteractionLogic();
+        _interactionController = new InteractionController();
+        _depositLogic = new DepositLogic();
+        _depositUI = new DepositUI();
+
+        _interactionController.Init();
+        _interactionLogic.Init();
         ControllerMapping.Init();
         EntityFactory.Init();
         CoopCameraController.Init();
+        _depositUI.Init();
     }
 
     public void LateInit()
     {
+        _interactionController.Init();
+        _interactionLogic.LateInit();
         ControllerMapping.LateInit();
         EntityFactory.LateInit();
         CoopCameraController.LateInit();
+        _depositUI.LateInit();
 
         EntityFactory.Create<Mecha>();
         EntityFactory.Create<Dragon>();
+        EntityFactory.Create<Deposit>();
 
         for (int i = 0; i < 5; ++i)
             EntityFactory.Create<Wasp>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
@@ -51,6 +71,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     {
         ControllerMapping.Tick(deltaTime);
         CoopCameraController.Tick(deltaTime);
+        _depositLogic.Tick(deltaTime);
+        PossibleInteractions.Tick(deltaTime);
     }
 
     public void Dispose()

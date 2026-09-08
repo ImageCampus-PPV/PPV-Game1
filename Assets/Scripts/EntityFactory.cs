@@ -30,7 +30,7 @@ public class EntityFactory : IService, IInitiable
     {
         Type entityType = typeof(EntityType);
 
-        GameObject objectToUse = FindPrefabByName(entityType.Name);
+        GameObject objectToUse = PrefabsRegistry.FindPrefabByName(entityType.Name);
 
         GameObject gameObjectGo = UnityEngine.Object.Instantiate(objectToUse, position, rotation: Quaternion.identity);
 
@@ -40,14 +40,5 @@ public class EntityFactory : IService, IInitiable
         setIDFunction.Invoke(entity, new object[] { ++lastAssignedID });
 
         EntityRegistry.Add(entity);
-    }
-
-    private GameObject FindPrefabByName(string name)
-    {
-        foreach (PrefabByName prefabByName in PrefabsRegistry.prefab)
-            if (prefabByName.TypeName.Equals(name))
-                return prefabByName.gameObject;
-
-        return null;
     }
 }

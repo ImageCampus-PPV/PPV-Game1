@@ -5,7 +5,7 @@ using System.Reflection;
 
 using Resource = GreenAbis.Resource;
 
-public sealed class Deposit : IService, IDisposable
+public sealed class Wallet : IService, IDisposable
 {
     public bool IsPersistance => false;
 
@@ -13,7 +13,7 @@ public sealed class Deposit : IService, IDisposable
 
     public Dictionary<Type, Resource> Resources => resources;
 
-    public Deposit()
+    public Wallet()
     {
         resources = new Dictionary<Type, Resource>();
 
@@ -65,4 +65,3 @@ public sealed class Deposit : IService, IDisposable
 
     }
 }
-
