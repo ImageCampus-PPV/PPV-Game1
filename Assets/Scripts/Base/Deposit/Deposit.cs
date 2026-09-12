@@ -1,4 +1,4 @@
-public class Deposit : BaseEntity
+public class Deposit : Interactable
 {
 
 }

@@ -7,13 +7,13 @@ public sealed class Wallet : IService, IDisposable
 {
     public bool IsPersistance => false;
 
-    private readonly Dictionary<Type, ResourceData> _resources;
+    private readonly Dictionary<string, ResourceData> _resources;
 
-    public Dictionary<Type, ResourceData> Resources => _resources;
+    public Dictionary<string, ResourceData> Resources => _resources;
 
     public Wallet()
     {
-        _resources = new Dictionary<Type, ResourceData>();
+        _resources = new Dictionary<string, ResourceData>();
 
         foreach (Type type in Assembly.GetCallingAssembly().GetTypes())
         {
@@ -23,39 +23,53 @@ public sealed class Wallet : IService, IDisposable
             if (!typeof(Item).IsAssignableFrom(type))
                 continue;
 
-            _resources.Add(type, new ResourceData(type.Name, 0, 300, 0));
+            _resources.Add(type.Name, new ResourceData(type.Name, 0, 300, 0));
         }
 
     }
 
     public void AddResource<ResourceType>(uint amount)
     {
-        Type resourceType = typeof(ResourceType);
+        AddResource(amount, typeof(ResourceType).Name);
+    }
+    public void AddResource(uint amount, string typeName)
+    {
+        if (!_resources.ContainsKey(typeName))
+            throw new KeyNotFoundException($"The {typeName} is not registred as a Resource.");
 
-        if (!_resources.ContainsKey(resourceType))
-            throw new KeyNotFoundException($"The {resourceType.Name} is not registred as a Resource.");
-
-        _resources[resourceType].AddResource(amount);
+        _resources[typeName].AddResource(amount);
     }
 
     public void RemoveResource<ResourceType>(uint amount)
     {
-        Type resourceType = typeof(ResourceType);
+        RemoveResource(amount, typeof(ResourceType).Name);
+    }
 
-        if (!_resources.ContainsKey(resourceType))
-            throw new KeyNotFoundException($"The {resourceType.Name} is not registred as a Resource.");
+    public void RemoveResource(uint amount, string typeName)
+    {
+        if (!_resources.ContainsKey(typeName))
+            throw new KeyNotFoundException($"The {typeName} is not registred as a Resource.");
 
-        _resources[resourceType].RemoveResource(amount);
+        _resources[typeName].RemoveResource(amount);
     }
 
     public bool HasResourceAmount<ResourceType>(uint amount)
     {
-        return _resources[typeof(ResourceType)].CurrentValue >= amount;
+        return HasResourceAmount(amount, typeof(ResourceType).Name);
+    }
+    public bool HasResourceAmount(uint amount, string typeName)
+    {
+        return _resources[typeName].CurrentValue >= amount;
     }
 
     public long GetResourceAmount<ResourceType>()
     {
-        return _resources[typeof(ResourceType)].CurrentValue;
+        return GetResourceAmount(typeof(ResourceType).Name);
+    }
+
+    public long GetResourceAmount(string typeName)
+    {
+        return _resources[typeName].CurrentValue;
     }
 
     public void Dispose()

@@ -11,7 +11,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
-    private PossibleInteractions PossibleInteractions => ServiceProvider.Instance.GetService<PossibleInteractions>();
+    private NearestObjectDetector PossibleInteractions => ServiceProvider.Instance.GetService<NearestObjectDetector>();
 
     private InteractionLogic _interactionLogic;
     private InteractionController _interactionController;
@@ -33,8 +33,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ServiceProvider.Instance.AddService<EntityFactory>(new EntityFactory());
         ServiceProvider.Instance.AddService<EntityRegistry>(new EntityRegistry());
         ServiceProvider.Instance.AddService<CoopCameraController>(new CoopCameraController());
-        ServiceProvider.Instance.AddService<Inventory>(new Inventory());
-        ServiceProvider.Instance.AddService<PossibleInteractions>(new PossibleInteractions());
+        ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
+        ServiceProvider.Instance.AddService<NearestObjectDetector>(new NearestObjectDetector());
 
 
         _interactionLogic = new InteractionLogic();

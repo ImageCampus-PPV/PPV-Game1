@@ -5,7 +5,7 @@ using System;
 public class InteractionController : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    private PossibleInteractions PossibleInteractions => ServiceProvider.Instance.GetService<PossibleInteractions>();
+    private NearestObjectDetector PossibleInteractions => ServiceProvider.Instance.GetService<NearestObjectDetector>();
 
     public void Init()
     {
