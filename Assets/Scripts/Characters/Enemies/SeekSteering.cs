@@ -4,7 +4,7 @@ public class SeekSteering : ISteeringBehaviour
 {
     private readonly float _weight;
 
-    public SeekSteering(FlockingSettings settings)
+    public SeekSteering(SteeringSettings settings)
     {
         _weight = settings.seekWeight;
     }

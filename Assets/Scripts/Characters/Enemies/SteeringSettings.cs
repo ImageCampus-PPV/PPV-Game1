@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [Serializable]
-public struct FlockingSettings
+public struct SteeringSettings
 {
     [Header("General")]
     [SerializeField] public bool enabled;

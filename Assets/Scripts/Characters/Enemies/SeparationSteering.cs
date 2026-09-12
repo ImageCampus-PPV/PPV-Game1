@@ -9,7 +9,7 @@ public class SeparationSteering : ISteeringBehaviour
     private const int MAX_STORED_COLLIDERS = 16;
     private readonly Collider2D[] _overlapBuffer = new Collider2D[MAX_STORED_COLLIDERS];
 
-    public SeparationSteering(LayerMask identityLayer, FlockingSettings settings)
+    public SeparationSteering(LayerMask identityLayer, SteeringSettings settings)
     {
         _identityLayer = identityLayer;
         _radius = settings.separationRadius;

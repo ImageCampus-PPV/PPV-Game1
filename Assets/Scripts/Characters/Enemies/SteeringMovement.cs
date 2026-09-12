@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class FlockingMovement : IMovementSteering
+public class SteeringMovement : IMovementSteering
 {
     private readonly SteeringContext _context = new();
 
     private readonly ISteeringBehaviour[] _behaviours;
-    private readonly FlockingSettings _settings;
+    private readonly SteeringSettings _settings;
 
-    public FlockingMovement(FlockingSettings settings, params ISteeringBehaviour[] behaviours)
+    public SteeringMovement(SteeringSettings settings, params ISteeringBehaviour[] behaviours)
     {
         //Debug.Log("Steering behaviours: " + behaviours.Length);
         _behaviours = behaviours;

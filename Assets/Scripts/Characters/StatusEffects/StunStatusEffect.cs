@@ -2,9 +2,8 @@ public class StunStatusEffect : StatusEffect
 {
     public override string DisplayName => "Stunned!";
 
-    public StunStatusEffect(float duration)
+    public StunStatusEffect(float duration): base(duration)
     {
-        remainingTime = duration;
     }
 
     public override void Tick(IStatusEffectReceiver target, float dt)

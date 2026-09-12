@@ -13,8 +13,8 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
     [SerializeField] private Transform _attackOffset;
     [SerializeField] private LayerMask _targetLayers;
 
-    [Header("Flocking stats")]
-    [SerializeField] private FlockingSettings _flockingSettings;
+    [Header("Steering stats")]
+    [SerializeField] private SteeringSettings _steeringSettings;
     [SerializeField] private LayerMask _identityLayer;
     [SerializeField] private LayerMask _obstacleLayers;
 
@@ -54,15 +54,15 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
         _positionOnSpawn = transform.position;
         //Debug.Log("Position on spawn of enemy " + name + ": " + _positionOnSpawn);
 
-        FlockingMovement movement = new FlockingMovement(_flockingSettings,
-                                    new SeekSteering(_flockingSettings),
+        SteeringMovement movement = new SteeringMovement(_steeringSettings,
+                                    new SeekSteering(_steeringSettings),
                                     new SeparationSteering(
                                         _identityLayer,
-                                        _flockingSettings),
+                                        _steeringSettings),
                                     new ObstacleAvoidanceSteering(
                                         _obstacleLayers,
-                                        _flockingSettings),
-                                    new WanderSteering(_flockingSettings)
+                                        _steeringSettings),
+                                    new WanderSteering(_steeringSettings)
                                     );
 
         RegisterCommandHandler(new MoveCommandHandler(_rb, movement));
