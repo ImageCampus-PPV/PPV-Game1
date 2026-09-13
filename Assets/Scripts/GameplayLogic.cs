@@ -15,7 +15,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     private InteractionLogic _interactionLogic;
     private InteractionController _interactionController;
-    private DepositLogic _depositLogic;
     private DepositUI _depositUI;
 
     private SceneRef _gamePlayScene;
@@ -39,7 +38,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
         _interactionLogic = new InteractionLogic();
         _interactionController = new InteractionController();
-        _depositLogic = new DepositLogic();
         _depositUI = new DepositUI();
 
         _interactionController.Init();
@@ -71,7 +69,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     {
         ControllerMapping.Tick(deltaTime);
         CoopCameraController.Tick(deltaTime);
-        _depositLogic.Tick(deltaTime);
         PossibleInteractions.Tick(deltaTime);
     }
 
