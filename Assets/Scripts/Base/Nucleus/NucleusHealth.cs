@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,15 +16,12 @@ public class NucleusHealth : DamageableEntity
     private float _currentHp;
     private bool _isDead;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+
     public float CurrentHp => _currentHp;
     public float MaxHp => _maxHp;
     public float HpPercent => _currentHp / _maxHp;
     public bool IsDead => _isDead;
-
-    public override Action<float> OnTakeDamage { get; set; }
-
-    public Action OnNucleusDestroyed;
-    public Action OnHordeEnded;
 
     private void Awake()
     {
@@ -37,11 +36,11 @@ public class NucleusHealth : DamageableEntity
 
     public override void TakeDamage(float amount)
     {
-        if (_isDead) 
+        if (_isDead)
             return;
 
         _currentHp = Mathf.Max(0f, _currentHp - amount);
-        OnTakeDamage?.Invoke(amount);
+        EventBus.Raise<OnCombatDamage>(ID, amount);
 
         RefreshUI();
 
@@ -57,7 +56,7 @@ public class NucleusHealth : DamageableEntity
 
         _currentHp = _maxHp;
         RefreshUI();
-        OnHordeEnded?.Invoke();
+        EventBus.Raise<OnHordeEnded>();
 
         Debug.Log("[Nucleus] Horda terminada. Vida restaurada.");
     }
@@ -65,7 +64,7 @@ public class NucleusHealth : DamageableEntity
     private void TriggerGameOver()
     {
         _isDead = true;
-        OnNucleusDestroyed?.Invoke();
+        EventBus.Raise<OnNucleusDestroyed>();
 
         Debug.Log("[Nucleus] Destruido. Game Over.");
 
@@ -81,5 +80,27 @@ public class NucleusHealth : DamageableEntity
     {
         if (_hpSlider != null)
             _hpSlider.value = HpPercent;
+    }
+}
+
+
+public struct OnNucleusDestroyed : IEvent
+{
+    public void Assign(params object[] parameters)
+    {
+    }
+
+    public void Reset()
+    {
+    }
+}
+public struct OnHordeEnded : IEvent
+{
+    public void Assign(params object[] parameters)
+    {
+    }
+
+    public void Reset()
+    {
     }
 }

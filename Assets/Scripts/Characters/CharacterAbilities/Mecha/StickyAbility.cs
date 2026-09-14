@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Sticky")]
@@ -7,18 +9,19 @@ public class StickyAbility : CharacterAbility
     [SerializeField] private float _jumpOffForceX = 10f;
     [SerializeField] private float _unstickForceXMultiplier = 0.5f;
     [SerializeField] private float _jumpOffForceY = 15f;
-    
+
     private float _stickTimer;
     private Vector2 _wallNormal;
     private Vector2 _attachPoint;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public bool IsSticking { get; private set; }
 
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
 
-        Character.JumpPressedEvent += JumpOff;
+        EventBus.Subscribe<OnCharacterJumpPressed>(JumpOff);
     }
 
     public override void CharCollisionStay(Collision2D collision)
@@ -58,7 +61,7 @@ public class StickyAbility : CharacterAbility
 
         _stickTimer -= Time.fixedDeltaTime;
 
-        if (_stickTimer<= 0f)
+        if (_stickTimer <= 0f)
         {
             Unstick();
             return;
@@ -67,8 +70,11 @@ public class StickyAbility : CharacterAbility
         Character.transform.position = _attachPoint;
     }
 
-    public void JumpOff()
+    public void JumpOff(in OnCharacterJumpPressed onCharacterJumpPressed)
     {
+        if (Character.ID != onCharacterJumpPressed.characterID)
+            return;
+
         if (!IsSticking)
             return;
 

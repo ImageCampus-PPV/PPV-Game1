@@ -1,6 +1,6 @@
 using ImageCampus.ToolBox.Events;
 
-struct OnCombatDamage : IEvent
+public struct OnCombatDamage : IEvent
 {
     public uint EntityToDamageID;
     public float DamageToReceive;

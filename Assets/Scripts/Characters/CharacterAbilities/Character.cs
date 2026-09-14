@@ -1,19 +1,10 @@
+using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
-
-public class Dragon : Character
-{
-
-}
-
-public class Mecha : Character
-{
-
-}
 
 
 //TODO: Use entity registry
@@ -39,10 +30,8 @@ public class Character : DamageableEntity
 
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
-    public Action TouchGroundEvent;
-    public Action JumpPressedEvent;
-    public Action JumpReleasedEvent;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
@@ -56,8 +45,6 @@ public class Character : DamageableEntity
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
 
-    //TODO: get rid of the Actions
-    public override Action<float> OnTakeDamage { get; set; }
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -303,7 +290,7 @@ public class Character : DamageableEntity
         LastGroundedTime = Time.time;
 
         if (!wasGrounded)
-            TouchGroundEvent?.Invoke();
+            EventBus.Raise<OnCharacterTouchedGround>(ID);
     }
     private float ClampScreenMovement(float xVel)
     {
@@ -320,8 +307,54 @@ public class Character : DamageableEntity
         vel.x = xVel;
         _rb.linearVelocity = vel;
     }
+
     public override void TakeDamage(float damage)
     {
-        OnTakeDamage?.Invoke(damage);
+        EventBus.Raise<OnCombatDamage>(ID, damage);
+    }
+}
+
+public struct OnCharacterTouchedGround : IEvent
+{
+    public uint characterID;
+
+    public void Assign(params object[] parameters)
+    {
+        characterID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        characterID = default(uint);
+    }
+}
+
+public struct OnCharacterJumpPressed : IEvent
+{
+    public uint characterID;
+
+    public void Assign(params object[] parameters)
+    {
+        characterID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        characterID = default(uint);
+    }
+}
+
+public struct OnCharacterJumpReleased : IEvent
+{
+    public uint characterID;
+
+    public void Assign(params object[] parameters)
+    {
+        characterID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        characterID = default(uint);
     }
 }

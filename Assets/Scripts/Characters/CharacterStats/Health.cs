@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
@@ -10,9 +12,8 @@ public class Health : MonoBehaviour
     public float MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
     public bool IsDowned => _currentHealth <= 0f;
-    public event Action<float, float> OnHealthChanged;
-    public event Action<MonoBehaviour> OnDowned;
-    public event Action OnRevived;
+    public uint OwnerID => _damageableEntity.ID;
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private void Awake()
     {
@@ -21,24 +22,24 @@ public class Health : MonoBehaviour
         if (_damageableEntity == null)
             Debug.LogError("No damageable monobehaviour provided");
 
-        _damageableEntity.OnTakeDamage += TakeDamage;
+        EventBus.Subscribe<OnCombatDamage>(TakeDamage);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(in OnCombatDamage onCombatDamage)
     {
-        if (IsDowned)
+        if (IsDowned || onCombatDamage.EntityToDamageID != OwnerID)
             return;
 
-        _currentHealth -= damage;
+        _currentHealth -= onCombatDamage.DamageToReceive;
 
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
             Debug.Log($"{_damageableEntity.name} is down");
-            OnDowned?.Invoke(_damageableEntity);
+            EventBus.Raise<OnCharacterDowned>(OwnerID);
         }
 
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Heal(float amount)
@@ -47,7 +48,7 @@ public class Health : MonoBehaviour
             return;
 
         _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Revive(float maxHealthPercentage)
@@ -56,17 +57,66 @@ public class Health : MonoBehaviour
             return;
 
         _currentHealth = _maxHealth * maxHealthPercentage;
-        OnRevived?.Invoke();
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnCharacterRevived>(OwnerID);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Reset()
     {
         bool wasDowned = IsDowned;
         _currentHealth = _maxHealth;
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
 
         if (wasDowned)
-            OnRevived?.Invoke();
+            EventBus.Raise<OnCharacterRevived>(OwnerID);
+    }
+}
+
+public struct OnHealthChange : IEvent
+{
+    public uint entityAffectedID;
+    public float currentHealth;
+    public float maxHealth;
+
+    public void Assign(params object[] parameters)
+    {
+        entityAffectedID = (uint)parameters[0];
+        currentHealth = (float)parameters[1];
+        maxHealth = (float)parameters[2];
+    }
+
+    public void Reset()
+    {
+        entityAffectedID = default(uint);
+        currentHealth = default(float);
+        maxHealth = default(float);
+    }
+}
+
+public struct OnCharacterDowned : IEvent
+{
+    public uint entityDownedID;
+    public void Assign(params object[] parameters)
+    {
+        entityDownedID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        entityDownedID = default(uint);
+    }
+}
+
+public struct OnCharacterRevived : IEvent
+{
+    public uint entityRevivedID;
+    public void Assign(params object[] parameters)
+    {
+        entityRevivedID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        entityRevivedID = default(uint);
     }
 }

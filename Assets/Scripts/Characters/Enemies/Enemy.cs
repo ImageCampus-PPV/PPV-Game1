@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,12 +15,13 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     [SerializeField] private Transform _attackOffset;
     [SerializeField] private LayerMask _targetLayers;
     [SerializeField] private bool _damageOnContact = false;
-
+    [SerializeField] private List<DamageBehaviourConfig> _damageBehaviourConfigs;
 
     [Header("Steering stats")]
     [SerializeField] private SteeringSettings _steeringSettings;
     [SerializeField] private LayerMask _identityLayer;
     [SerializeField] private LayerMask _obstacleLayers;
+
 
     private Vector2 _positionOnSpawn;
     private Rigidbody2D _rb;
@@ -26,15 +29,14 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     private DamageResponse _damageResponse;
     //TODO: separate effects logic
     private List<StatusEffect> _effects = new List<StatusEffect>();
+    private List<DamageBehaviour> _damageBehaviours;
 
     private FSM _fsm;
     private TransitionEvaluator _evaluator;
 
     private Dictionary<Type, object> _commandHandlers = new Dictionary<Type, object>();
 
-    //TODO: make sure ALL ACTIONS GET CLEANED UP (and Funcs). I do not clean it here (my bad).
-    public event Action<ICommand> OnCommandExecuted;
-
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public Transform Transform => transform;
     public Vector2 Position => transform.position;
     public float Health => _health.CurrentHealth;
@@ -46,7 +48,6 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     public List<StatusEffect> ActiveEffects => _effects;
 
     public string CurrentStateName { get; set; }
-    public override Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -101,6 +102,11 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
         }
 
         _fsm.Transition(defaultStateType);
+
+        foreach (DamageBehaviourConfig config in _damageBehaviourConfigs)
+        {
+            _damageBehaviours.Add(config.CreateBehaviour());
+        }
     }
 
     private void Start()
@@ -123,6 +129,17 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
             return;
 
         _fsm.Tick();
+
+        foreach (DamageBehaviour damageBehaviour in _damageBehaviours)
+        {
+            damageBehaviour.Tick(Time.deltaTime);
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        foreach (DamageBehaviour damageBehaviour in _damageBehaviours)
+            damageBehaviour.OnCollisionStay(collision);
     }
 
     //TODO: Make this more readable and maybe separate it from enemy (all the command-handling logic should be separate)
@@ -131,7 +148,6 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
         if (_commandHandlers.TryGetValue(typeof(CommandType), out object handler))
         {
             ((ICommandHandler<CommandType>)handler).Execute(command, this);
-            OnCommandExecuted?.Invoke(command);
         }
         else
             Debug.LogWarning($"No handler for {typeof(CommandType).Name}");
@@ -187,7 +203,8 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     public override void TakeDamage(float damage)
     {
         _damageResponse?.ReactToDamage(damage);
-        OnTakeDamage?.Invoke(damage);
+        EventBus.Raise<OnCombatDamage>(ID, damage);
+        
     }
     public void ApplyEffect(StatusEffect effect)
     {
@@ -205,72 +222,5 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     public void StopMovement()
     {
         Execute(new StopMovementCommand());
-    }
-}
-
-
-public abstract class DamageBehaviourConfig : ScriptableObject
-{
-    public abstract DamageBehaviour CreateBehaviour();
-
-}
-
-[CreateAssetMenu(menuName = "Enemy/Behaviour/" + nameof(ContactDamageBehaviourConfig))]
-public sealed class ContactDamageBehaviourConfig : DamageBehaviourConfig
-{
-    [SerializeField] private float _damage = 1f;
-    [SerializeField] private float _cooldown = 1f;
-    [SerializeField] private LayerMask _targetLayers;
-
-    public override DamageBehaviour CreateBehaviour()
-    {
-        return new ContactDamageBehaviour(_damage, _cooldown, _targetLayers);
-    }
-}
-
-public abstract class DamageBehaviour
-{
-    public abstract void Tick(float deltaTime);
-
-    public abstract void OnCollisionStay(Collision2D collision);
-}
-
-public sealed class ContactDamageBehaviour : DamageBehaviour
-{
-    private readonly float _damage;
-    private readonly float _cooldown;
-    private readonly LayerMask _targetLayers;
-
-    private float _cooldownTimer;
-
-    public ContactDamageBehaviour(float damage, float cooldown, LayerMask targetLayers)
-    {
-        _damage = damage;
-        _cooldown = cooldown;
-        _targetLayers = targetLayers;
-    }
-
-    public override void OnCollisionStay(Collision2D collision)
-    {
-        if (_cooldownTimer > 0f)
-            return;
-
-        GameObject target = collision.gameObject;
-
-        if ((_targetLayers.value & (1 << target.layer)) == 0)
-            return;
-
-        if (!target.TryGetComponent<DamageableEntity>(out DamageableEntity damageable))
-            return;
-
-        damageable.TakeDamage(_damage);
-
-        _cooldownTimer = _cooldown;
-    }
-
-    public override void Tick(float deltaTime)
-    {
-        if (_cooldownTimer > 0f)
-            _cooldownTimer -= deltaTime;
     }
 }

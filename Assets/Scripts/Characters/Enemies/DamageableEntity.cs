@@ -3,8 +3,6 @@ using System;
 
 public abstract class DamageableEntity : BaseEntity, IInitiable
 {
-    //TODO: remove these actions
-    public abstract Action<float> OnTakeDamage { get; set; }
     private CombatEntitiesRegistry CombatEntitiesRegistry => ServiceProvider.Instance.GetService<CombatEntitiesRegistry>();
 
     public void Init()

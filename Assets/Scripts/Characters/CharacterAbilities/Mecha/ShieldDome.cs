@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
@@ -10,14 +12,10 @@ public class ShieldDome : DamageableEntity
     private SpriteRenderer _sr;
     private CircleCollider2D _col;
 
-    public System.Action OnShieldBroken;
-    public System.Action OnShieldDissipated;
-
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public float CurrentHp => _currentHp;
     public float MaxHp => _maxHp;
     public float HpPercent => _currentHp / _maxHp;
-
-    public override Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -64,9 +62,9 @@ public class ShieldDome : DamageableEntity
             _sr.color = Color.Lerp(new Color(1f, 0f, 0f, 0.35f), new Color(0f, 1f, 1f, 0.35f), HpPercent);
 
         if (_currentHp <= _minHp)
-            OnShieldBroken?.Invoke();
+            EventBus.Raise<OnShieldBroken>(ID);
 
-        OnTakeDamage?.Invoke(damage);
+        EventBus.Raise<OnCombatDamage>(ID, damage);
     }
 
     public void Restore()
@@ -75,5 +73,36 @@ public class ShieldDome : DamageableEntity
 
         if (_sr != null)
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
+    }
+}
+
+
+public struct OnShieldBroken : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
+    }
+}
+
+public struct OnShieldDispatched : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
     }
 }
