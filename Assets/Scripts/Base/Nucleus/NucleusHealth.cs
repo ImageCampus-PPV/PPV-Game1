@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NucleusHealth : MonoBehaviour, IDamageable
+public class NucleusHealth : DamageableEntity
 {
     [Header("Config")]
     [SerializeField] private float _maxHp = 500f;
@@ -19,7 +19,7 @@ public class NucleusHealth : MonoBehaviour, IDamageable
     public float HpPercent => _currentHp / _maxHp;
     public bool IsDead => _isDead;
 
-    public Action<float> OnTakeDamage { get; set; }
+    public override Action<float> OnTakeDamage { get; set; }
 
     public Action OnNucleusDestroyed;
     public Action OnHordeEnded;
@@ -30,9 +30,15 @@ public class NucleusHealth : MonoBehaviour, IDamageable
         RefreshUI();
     }
 
-    public void TakeDamage(float amount)
+    private void Start()
     {
-        if (_isDead) return;
+        base.Init();
+    }
+
+    public override void TakeDamage(float amount)
+    {
+        if (_isDead) 
+            return;
 
         _currentHp = Mathf.Max(0f, _currentHp - amount);
         OnTakeDamage?.Invoke(amount);

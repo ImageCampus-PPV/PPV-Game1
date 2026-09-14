@@ -11,7 +11,7 @@ public static class TargetSelector
 
         for (int i = 0; i < hits.Length; i++)
         {
-            IDamageable damageable = hits[i].GetComponent<IDamageable>();
+            DamageableEntity damageable = hits[i].GetComponent<DamageableEntity>();
 
             if (damageable != null)
             {

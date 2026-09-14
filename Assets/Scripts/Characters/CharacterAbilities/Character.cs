@@ -18,7 +18,7 @@ public class Mecha : Character
 
 //TODO: Use entity registry
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
-public class Character : BaseEntity, IDamageable
+public class Character : DamageableEntity
 {
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
 
@@ -57,7 +57,7 @@ public class Character : BaseEntity, IDamageable
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
 
     //TODO: get rid of the Actions
-    public Action<float> OnTakeDamage { get; set; }
+    public override Action<float> OnTakeDamage { get; set; }
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -71,6 +71,11 @@ public class Character : BaseEntity, IDamageable
             debugger.DebugInfo = info;
             debugger.UpdateInfo();
         }
+    }
+
+    private void Start()
+    {
+        base.Init();
     }
 
     public void EquipCharacter(CharacterDebugInfo info)
@@ -315,7 +320,7 @@ public class Character : BaseEntity, IDamageable
         vel.x = xVel;
         _rb.linearVelocity = vel;
     }
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         OnTakeDamage?.Invoke(damage);
     }

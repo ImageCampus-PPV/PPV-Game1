@@ -13,7 +13,7 @@ public class BurnEffect : StatusEffect
     {
         remainingTime -= dt;
 
-        if (target is IDamageable damageable)
+        if (target is DamageableEntity damageable)
             damageable.TakeDamage(_damagePerSecond * dt);
     }
 }

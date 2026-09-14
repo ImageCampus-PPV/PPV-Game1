@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Health))]
-public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatusEffectReceiver, IStateDebugInfo
+public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectReceiver, IStateDebugInfo
 {
     [Header("State Machine")]
     [SerializeField] private StateMachineConfig _stateMachineConfig;
@@ -12,6 +12,8 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
     [Header("Attack")]
     [SerializeField] private Transform _attackOffset;
     [SerializeField] private LayerMask _targetLayers;
+    [SerializeField] private bool _damageOnContact = false;
+
 
     [Header("Steering stats")]
     [SerializeField] private SteeringSettings _steeringSettings;
@@ -41,10 +43,10 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
     public Vector2 PositionOnSpawn => _positionOnSpawn;
 
     public bool IsStunned { get; set; }
-    public Action<float> OnTakeDamage { get; set; }
     public List<StatusEffect> ActiveEffects => _effects;
 
     public string CurrentStateName { get; set; }
+    public override Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -86,7 +88,7 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
         MethodInfo addStateMethod = typeof(FSM).GetMethod(nameof(FSM.AddState));
         foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
         {
-            StateBehaviour<IEnemyContext> stateBehaviourInstance = UnityEngine.Object.Instantiate(entry.behaviour);
+            StateBehaviour<IEnemyContext> stateBehaviourInstance = Instantiate(entry.behaviour);
 
             Type stateType = stateNameToType[entry.stateName];
             MethodInfo genericAdd = addStateMethod.MakeGenericMethod(stateType);
@@ -99,6 +101,11 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
         }
 
         _fsm.Transition(defaultStateType);
+    }
+
+    private void Start()
+    {
+        base.Init();
     }
 
     private void Update()
@@ -177,7 +184,7 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
         }
     }
 
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         _damageResponse?.ReactToDamage(damage);
         OnTakeDamage?.Invoke(damage);
@@ -198,5 +205,72 @@ public class Enemy : BaseEntity, IEnemyContext, IDamageable, IStunnable, IStatus
     public void StopMovement()
     {
         Execute(new StopMovementCommand());
+    }
+}
+
+
+public abstract class DamageBehaviourConfig : ScriptableObject
+{
+    public abstract DamageBehaviour CreateBehaviour();
+
+}
+
+[CreateAssetMenu(menuName = "Enemy/Behaviour/" + nameof(ContactDamageBehaviourConfig))]
+public sealed class ContactDamageBehaviourConfig : DamageBehaviourConfig
+{
+    [SerializeField] private float _damage = 1f;
+    [SerializeField] private float _cooldown = 1f;
+    [SerializeField] private LayerMask _targetLayers;
+
+    public override DamageBehaviour CreateBehaviour()
+    {
+        return new ContactDamageBehaviour(_damage, _cooldown, _targetLayers);
+    }
+}
+
+public abstract class DamageBehaviour
+{
+    public abstract void Tick(float deltaTime);
+
+    public abstract void OnCollisionStay(Collision2D collision);
+}
+
+public sealed class ContactDamageBehaviour : DamageBehaviour
+{
+    private readonly float _damage;
+    private readonly float _cooldown;
+    private readonly LayerMask _targetLayers;
+
+    private float _cooldownTimer;
+
+    public ContactDamageBehaviour(float damage, float cooldown, LayerMask targetLayers)
+    {
+        _damage = damage;
+        _cooldown = cooldown;
+        _targetLayers = targetLayers;
+    }
+
+    public override void OnCollisionStay(Collision2D collision)
+    {
+        if (_cooldownTimer > 0f)
+            return;
+
+        GameObject target = collision.gameObject;
+
+        if ((_targetLayers.value & (1 << target.layer)) == 0)
+            return;
+
+        if (!target.TryGetComponent<DamageableEntity>(out DamageableEntity damageable))
+            return;
+
+        damageable.TakeDamage(_damage);
+
+        _cooldownTimer = _cooldown;
+    }
+
+    public override void Tick(float deltaTime)
+    {
+        if (_cooldownTimer > 0f)
+            _cooldownTimer -= deltaTime;
     }
 }

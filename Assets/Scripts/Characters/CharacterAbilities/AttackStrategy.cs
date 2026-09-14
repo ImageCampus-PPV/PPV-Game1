@@ -29,7 +29,7 @@ public abstract class AttackStrategy : ScriptableObject
     {
         foreach (Collider2D hit in hits)
         {
-            IDamageable damageable = hit.GetComponent<IDamageable>();
+            DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
             damageable?.TakeDamage(damage);
         }
     }

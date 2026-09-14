@@ -35,7 +35,8 @@ public class TailAttackStrategy : AttackStrategy
 
         foreach (Collider2D hit in hits)
         {
-            IDamageable damageable = hit.GetComponent<IDamageable>();
+            //TODO: replace with combat registry
+            DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
             damageable?.TakeDamage(damage);
 
             if (hit.TryGetComponent<Rigidbody2D>(out Rigidbody2D enemyRb))

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ShieldDome : MonoBehaviour, IDamageable
+public class ShieldDome : DamageableEntity
 {
     private float _currentHp;
     private float _maxHp;
@@ -17,7 +17,7 @@ public class ShieldDome : MonoBehaviour, IDamageable
     public float MaxHp => _maxHp;
     public float HpPercent => _currentHp / _maxHp;
 
-    public Action<float> OnTakeDamage { get; set; }
+    public override Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -27,6 +27,8 @@ public class ShieldDome : MonoBehaviour, IDamageable
 
     public void Initialize(float maxHp, float minHp, float radius, Collider2D[] friendlyColliders)
     {
+        base.Init();
+
         _maxHp = maxHp;
         _minHp = minHp;
         _currentHp = maxHp;
@@ -51,7 +53,7 @@ public class ShieldDome : MonoBehaviour, IDamageable
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
     }
 
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
         if (_currentHp <= _minHp)
             return;

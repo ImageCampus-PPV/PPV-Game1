@@ -48,6 +48,6 @@ public abstract class WeaponStrategy : ScriptableObject
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius, enemyLayer);
         foreach (Collider2D hit in hits)
-            hit.GetComponent<IDamageable>()?.TakeDamage(damage);
+            hit.GetComponent<DamageableEntity>()?.TakeDamage(damage);
     }
 }
