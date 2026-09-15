@@ -60,11 +60,6 @@ public class Character : DamageableEntity
         }
     }
 
-    private void Start()
-    {
-        base.Init();
-    }
-
     public void EquipCharacter(CharacterDebugInfo info)
     {
         IsIgnoringInput = false;
@@ -306,11 +301,6 @@ public class Character : DamageableEntity
         Vector2 vel = _rb.linearVelocity;
         vel.x = xVel;
         _rb.linearVelocity = vel;
-    }
-
-    public override void TakeDamage(float damage)
-    {
-        EventBus.Raise<OnCombatDamage>(ID, damage);
     }
 }
 

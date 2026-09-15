@@ -27,8 +27,7 @@ public class InteractionController : IInitiable, IDisposable
         (uint objectID, Type objectType) = CharacterInteraction(playerRequestedInteractionEvent.entityID);
 
         if (objectID == BaseEntity.NULL_BASE_ENTITY)
-            return; //TODO: In the future, we could add an event to reproduce a feedback that the interaction failed.
-
+            return;
 
         EventBus.Raise<PlayerRequestInteractionAcceptedGeneric>(playerRequestedInteractionEvent.entityID, objectID, objectType.Name);
     }

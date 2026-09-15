@@ -5,17 +5,8 @@ using UnityEngine;
 
 public class ShieldDome : DamageableEntity
 {
-    private float _currentHp;
-    private float _maxHp;
-    private float _minHp;
-
     private SpriteRenderer _sr;
     private CircleCollider2D _col;
-
-    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    public float CurrentHp => _currentHp;
-    public float MaxHp => _maxHp;
-    public float HpPercent => _currentHp / _maxHp;
 
     private void Awake()
     {
@@ -25,11 +16,9 @@ public class ShieldDome : DamageableEntity
 
     public void Initialize(float maxHp, float minHp, float radius, Collider2D[] friendlyColliders)
     {
-        base.Init();
+        _maxHealth = maxHp;
 
-        _maxHp = maxHp;
-        _minHp = minHp;
-        _currentHp = maxHp;
+        _currentHealth = maxHp;
 
         if (_col != null)
             _col.radius = radius;
@@ -51,31 +40,14 @@ public class ShieldDome : DamageableEntity
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
     }
 
-    public override void TakeDamage(float damage)
-    {
-        if (_currentHp <= _minHp)
-            return;
-
-        _currentHp = Mathf.Max(_minHp, _currentHp - damage);
-
-        if (_sr != null)
-            _sr.color = Color.Lerp(new Color(1f, 0f, 0f, 0.35f), new Color(0f, 1f, 1f, 0.35f), HpPercent);
-
-        if (_currentHp <= _minHp)
-            EventBus.Raise<OnShieldBroken>(ID);
-
-        EventBus.Raise<OnCombatDamage>(ID, damage);
-    }
-
     public void Restore()
     {
-        _currentHp = _maxHp;
+        Heal(_maxHealth);
 
         if (_sr != null)
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
     }
 }
-
 
 public struct OnShieldBroken : IEvent
 {

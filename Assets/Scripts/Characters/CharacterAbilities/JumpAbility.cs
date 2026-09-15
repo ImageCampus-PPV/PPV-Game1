@@ -28,8 +28,7 @@ public class JumpAbility : CharacterAbility
         EventBus.Subscribe<OnCharacterTouchedGround>(ResetJumps);
     }
 
-    public override void ProcessJump(Input
-        .CallbackContext context)
+    public override void ProcessJump(InputAction.CallbackContext context)
     {
         if (context.started)
         {

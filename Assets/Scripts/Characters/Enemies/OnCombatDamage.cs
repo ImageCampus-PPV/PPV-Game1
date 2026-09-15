@@ -2,18 +2,18 @@ using ImageCampus.ToolBox.Events;
 
 public struct OnCombatDamage : IEvent
 {
-    public uint EntityToDamageID;
-    public float DamageToReceive;
+    public uint entityToDamageID;
+    public float damageToReceive;
 
     public void Assign(params object[] parameters)
     {
-        EntityToDamageID = (uint)parameters[0];
-        DamageToReceive = (float)parameters[1];
+        entityToDamageID = (uint)parameters[0];
+        damageToReceive = (float)parameters[1];
     }
 
     public void Reset()
     {
-        EntityToDamageID = default(uint);
-        DamageToReceive = default(float);
+        entityToDamageID = default(uint);
+        damageToReceive = default(float);
     }
 }

@@ -5,37 +5,34 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private DamageableEntity _damageableEntity;
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
 
     public float MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
     public bool IsDowned => _currentHealth <= 0f;
-    public uint OwnerID => _damageableEntity.ID;
+    public uint OwnerID { get; private set; }
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private void Awake()
     {
         _currentHealth = _maxHealth;
 
-        if (_damageableEntity == null)
-            Debug.LogError("No damageable monobehaviour provided");
+        OwnerID = GetComponent<DamageableEntity>().ID;
 
         EventBus.Subscribe<OnCombatDamage>(TakeDamage);
     }
 
     public void TakeDamage(in OnCombatDamage onCombatDamage)
     {
-        if (IsDowned || onCombatDamage.EntityToDamageID != OwnerID)
+        if (IsDowned || onCombatDamage.entityToDamageID != OwnerID)
             return;
 
-        _currentHealth -= onCombatDamage.DamageToReceive;
+        _currentHealth -= onCombatDamage.damageToReceive;
 
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            Debug.Log($"{_damageableEntity.name} is down");
             EventBus.Raise<OnCharacterDowned>(OwnerID);
         }
 

@@ -51,6 +51,8 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
 
     private void Awake()
     {
+        _damageBehaviours = new List<DamageBehaviour>();
+
         _rb = GetComponent<Rigidbody2D>();
         _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
@@ -107,11 +109,6 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
         {
             _damageBehaviours.Add(config.CreateBehaviour());
         }
-    }
-
-    private void Start()
-    {
-        base.Init();
     }
 
     private void Update()
@@ -203,8 +200,7 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     public override void TakeDamage(float damage)
     {
         _damageResponse?.ReactToDamage(damage);
-        EventBus.Raise<OnCombatDamage>(ID, damage);
-        
+        base.TakeDamage(damage);
     }
     public void ApplyEffect(StatusEffect effect)
     {
@@ -222,5 +218,10 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
     public void StopMovement()
     {
         Execute(new StopMovementCommand());
+    }
+
+    private void OnDestroy()
+    {
+        _fsm.Dispose();
     }
 }

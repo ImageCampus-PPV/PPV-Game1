@@ -51,7 +51,7 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.Shield.performed += OnShield;
         EntityInput.Player.Shield.canceled += OnShield;
 
-        EntityInput.Player.Interact.started += OnInteract;
+        EntityInput.Player.Interact.canceled += OnInteract;
     }
 
     public void LateInit()
@@ -127,6 +127,6 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
         EntityInput.Player.Shield.performed -= OnShield;
         EntityInput.Player.Shield.canceled -= OnShield;
 
-        EntityInput.Player.Interact.started -= OnInteract;
+        EntityInput.Player.Interact.canceled -= OnInteract;
     }
 }

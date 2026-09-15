@@ -11,8 +11,11 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
-    private NearestObjectDetector PossibleInteractions => ServiceProvider.Instance.GetService<NearestObjectDetector>();
+    private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.GetService<NearestObjectDetector>();
+    private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
+    private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
 
+    private InventoryController _inventoryController;
     private InteractionLogic _interactionLogic;
     private InteractionController _interactionController;
     private DepositUI _depositUI;
@@ -34,12 +37,16 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ServiceProvider.Instance.AddService<CoopCameraController>(new CoopCameraController());
         ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
         ServiceProvider.Instance.AddService<NearestObjectDetector>(new NearestObjectDetector());
+        ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
+        ServiceProvider.Instance.AddService<Wallet>(new Wallet());
 
-
+        _inventoryController = new InventoryController();
         _interactionLogic = new InteractionLogic();
         _interactionController = new InteractionController();
         _depositUI = new DepositUI();
 
+        InventoryLogic.Init();
+        _inventoryController.Init();
         _interactionController.Init();
         _interactionLogic.Init();
         ControllerMapping.Init();
@@ -50,6 +57,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void LateInit()
     {
+        InventoryLogic.LateInit();
+        _inventoryController.LateInit();
         _interactionController.Init();
         _interactionLogic.LateInit();
         ControllerMapping.LateInit();
@@ -61,15 +70,24 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Dragon>();
         EntityFactory.Create<Deposit>();
 
-        for (int i = 0; i < 5; ++i)
-            EntityFactory.Create<Wasp>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
+        SpawnEntities<MechaItem>(10);
+        SpawnEntities<DragonItem>(10);
+        SpawnEntities<Wasp>(5);
+
+        void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
+        {
+            for (int i = 0; i < amount; ++i)
+            {
+                EntityFactory.Create<ItemType>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
+            }
+        }
     }
 
     public void Tick(float deltaTime)
     {
         ControllerMapping.Tick(deltaTime);
         CoopCameraController.Tick(deltaTime);
-        PossibleInteractions.Tick(deltaTime);
+        NearestObjectDetector.Tick(deltaTime);
     }
 
     public void Dispose()
