@@ -18,16 +18,22 @@ public class NearestObjectDetector : ITickable, IService
 
     public void Tick(float deltaTime)
     {
-        foreach (Character character in EntityRegistry.FilterEntities<Character>())
+        FindNearestTypeToType<Mecha, MechaItem>();
+        FindNearestTypeToType<Dragon, DragonItem>();
+    }
+
+    private void FindNearestTypeToType<TypeReference, TypeToFind>() where TypeReference : Character where TypeToFind : Interactable
+    {
+        foreach (Character character in EntityRegistry.FilterEntities<TypeReference>())
         {
             float nearestDistance = float.MaxValue;
             (uint, Type) nearestObject = (BaseEntity.NULL_BASE_ENTITY, null);
 
-            foreach (Interactable interactable in EntityRegistry.FilterEntities<Interactable>())
+            foreach (Interactable interactable in EntityRegistry.FilterEntities<TypeToFind>())
             {
                 float distance = Vector3.SqrMagnitude(character.transform.position - interactable.transform.position);
 
-                if (distance >= nearestDistance)
+                if (distance > _tolerance * _tolerance || distance >= nearestDistance)
                     continue;
 
                 nearestDistance = distance;

@@ -3,6 +3,7 @@ using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class InventoryLogic : IInitiable, IService
 {
@@ -68,7 +69,7 @@ public class InventoryLogic : IInitiable, IService
     }
 }
 
-public sealed class InventoryController : IInitiable
+public sealed class InventoryController : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
@@ -76,11 +77,20 @@ public sealed class InventoryController : IInitiable
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
     public bool IsPersistance => false;
 
+    private Dictionary<Type, object> _onInteractionCallBack;
+    private MethodInfo _subscribeToInteractionEvent;
+    private MethodInfo _unsuscribeEventSystem;
+
     public void Init()
     {
+        _onInteractionCallBack = new Dictionary<Type, object>();
+
+        _unsuscribeEventSystem = EventBus.GetType().GetMethod(nameof(EventBus.Subscribe), BindingFlags.Public | BindingFlags.Instance);
+        _subscribeToInteractionEvent = GetType().GetMethod(nameof(SubscribeToInteract), BindingFlags.NonPublic | BindingFlags.Instance);
+
         EventBus.Subscribe<PlayerRequestInteractionAccepted<Deposit>>(OnCharacterInteract);
-        EventBus.Subscribe<PlayerRequestInteractionAccepted<DragonItem>>(OnDragonItemInteraction);
-        EventBus.Subscribe<PlayerRequestInteractionAccepted<MechaItem>>(OnMechaItemInteraction);
+
+        SubscribeToEvents();
     }
 
     private void OnCharacterInteract(in PlayerRequestInteractionAccepted<Deposit> depositInteraction)
@@ -91,7 +101,7 @@ public sealed class InventoryController : IInitiable
         }
     }
 
-    private void OnDragonItemInteraction(in PlayerRequestInteractionAccepted<DragonItem> dragonItemInteractionEvent)
+    private void OnItemInteraction<EntityType>(PlayerRequestInteractionAccepted<EntityType> dragonItemInteractionEvent) where EntityType : Interactable
     {
         if (!EntityRegistry.Has(dragonItemInteractionEvent.interactableID))
             return;
@@ -103,19 +113,40 @@ public sealed class InventoryController : IInitiable
         }
     }
 
-    private void OnMechaItemInteraction(in PlayerRequestInteractionAccepted<MechaItem> mechaItemInteractionEvent)
+    private void SubscribeToEvents()
     {
-        if (!EntityRegistry.Has(mechaItemInteractionEvent.interactableID))
-            return;
-
-        if (InventoryLogic.TryAddItemOfType<MechaItem>())
+        foreach (Type type in GetType().Assembly.GetTypes())
         {
-            BaseEntity entity = EntityRegistry.GetAs<BaseEntity>(mechaItemInteractionEvent.interactableID);
-            EntityRegistry.Remove(entity);
+            if (!type.IsClass || type.IsAbstract)
+                continue;
+
+            if (!typeof(Interactable).IsAssignableFrom(type) || type == typeof(Deposit))
+                continue;
+
+            _subscribeToInteractionEvent.MakeGenericMethod(type).Invoke(this, new object[0]);
+        }
+    }
+
+    private void SubscribeToInteract<EntityType>() where EntityType : Interactable
+    {
+        EventBus.EventCallback<PlayerRequestInteractionAccepted<EntityType>> callback =
+            EventBus.SubscribeAndReturn<PlayerRequestInteractionAccepted<EntityType>>(OnObjectInteract);
+
+        _onInteractionCallBack.Add(typeof(PlayerRequestInteractionAccepted<EntityType>), callback);
+
+        void OnObjectInteract(in PlayerRequestInteractionAccepted<EntityType> callback)
+        {
+            OnItemInteraction<EntityType>(callback);
         }
     }
 
     public void LateInit()
     {
+    }
+
+    public void Dispose()
+    {
+        foreach (KeyValuePair<Type, object> eventSub in _onInteractionCallBack)
+            _unsuscribeEventSystem.MakeGenericMethod(eventSub.Key).Invoke(EventBus, new object[] { eventSub.Value });
     }
 }

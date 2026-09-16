@@ -6,9 +6,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 
-
-//TODO: Use entity registry
-[RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(Health))]
 public class Character : DamageableEntity
 {
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
