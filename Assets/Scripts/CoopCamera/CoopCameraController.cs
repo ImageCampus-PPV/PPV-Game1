@@ -3,6 +3,7 @@ using Assets.Scripts.Entities;
 using System.Collections.Generic;
 using ImageCampus.ToolBox.Services;
 using System;
+using GreenAbyss.Entities;
 
 public class CoopCameraController : IInitiable, ITickable, IService
 {

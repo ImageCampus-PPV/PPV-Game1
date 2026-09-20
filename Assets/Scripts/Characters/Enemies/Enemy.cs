@@ -220,7 +220,7 @@ public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectR
         Execute(new StopMovementCommand());
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         _fsm.Dispose();
     }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Assets.Scripts.Entities
+namespace GreenAbyss.Entities
 {
     public struct EntityDestroyEvent<EntityType> : IEvent where EntityType : BaseEntity
     {
@@ -42,14 +42,6 @@ namespace Assets.Scripts.Entities
 
             _entities = new Dictionary<uint, BaseEntity>();
             _entityIdsPerType = new Dictionary<Type, List<uint>>();
-        }
-
-        public void Init()
-        {
-            BaseEntity[] entities = UnityEngine.Object.FindObjectsOfType<BaseEntity>();
-
-            foreach (BaseEntity entity in entities)
-                Add(entity);
         }
 
         public void Add(BaseEntity newEntity)
@@ -136,11 +128,7 @@ namespace Assets.Scripts.Entities
 
             _entities.Remove(newEntity.ID);
 
-#if UNITY_EDITOR
-            UnityEngine.Object.DestroyImmediate(newEntity.gameObject);
-#else   
             UnityEngine.Object.Destroy(newEntity.gameObject);
-#endif
         }
 
         public bool Has(uint interactableID)

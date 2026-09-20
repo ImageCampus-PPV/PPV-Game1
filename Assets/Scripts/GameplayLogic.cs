@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Entities;
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Scheduling;
 using ImageCampus.ToolBox.Services;
 using System;
 using Systems;
@@ -15,6 +17,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
 
+    private NucleusLogic _nucleusLogic;
+    private HatchLogic _hatchLogic;
     private InventoryController _inventoryController;
     private InteractionLogic _interactionLogic;
     private InteractionController _interactionController;
@@ -39,12 +43,17 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ServiceProvider.Instance.AddService<NearestObjectDetector>(new NearestObjectDetector());
         ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
         ServiceProvider.Instance.AddService<Wallet>(new Wallet());
+        ServiceProvider.Instance.AddService<TaskScheduler>(new TaskScheduler());
 
+        _hatchLogic = new HatchLogic();
+        _nucleusLogic = new NucleusLogic();
         _inventoryController = new InventoryController();
         _interactionLogic = new InteractionLogic();
         _interactionController = new InteractionController();
         _depositUI = new DepositUI();
 
+        _hatchLogic.Init();
+        _nucleusLogic.Init();
         InventoryLogic.Init();
         _inventoryController.Init();
         _interactionController.Init();
@@ -57,6 +66,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void LateInit()
     {
+        _hatchLogic.LateInit();
+        _nucleusLogic.LateInit();
         InventoryLogic.LateInit();
         _inventoryController.LateInit();
         _interactionController.Init();
@@ -69,6 +80,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Mecha>();
         EntityFactory.Create<Dragon>();
         EntityFactory.Create<Deposit>();
+        EntityFactory.Create<Nucleus>();
 
         SpawnEntities<MechaItem>(10);
         SpawnEntities<DragonItem>(10);

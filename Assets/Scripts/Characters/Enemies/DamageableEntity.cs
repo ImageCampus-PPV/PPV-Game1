@@ -1,9 +1,12 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
 public abstract class DamageableEntity : BaseEntity
 {
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+
     [SerializeField] protected float _maxHealth = 100f;
 
     protected float _currentHealth = 0.0f;
@@ -12,7 +15,7 @@ public abstract class DamageableEntity : BaseEntity
 
     public float HpPercent => CurrentHealth / _maxHealth;
 
-    public bool IsDowned => _currentHealth <= 0f;
+    public bool IsDowned => _currentHealth <= 0.0f;
 
     public float MaxHealth => _maxHealth;
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
@@ -27,15 +30,12 @@ public abstract class DamageableEntity : BaseEntity
         if (IsDowned)
             return;
 
-        _currentHealth -= amount;
-
-        if (_currentHealth <= 0f)
-        {
-            _currentHealth = 0f;
-            EventBus.Raise<OnCharacterDowned>(ID);
-        }
+        _currentHealth = Mathf.Max(0.0f, _currentHealth - amount);
 
         EventBus.Raise<OnHealthChange>(ID, _currentHealth, _maxHealth);
+
+        if (_currentHealth == 0.0f)
+            EntityRegistry.Remove(this);
     }
 
     public void Heal(float amount)
@@ -47,7 +47,7 @@ public abstract class DamageableEntity : BaseEntity
         EventBus.Raise<OnHealthChange>(ID, _currentHealth, _maxHealth);
     }
 
-    public void Revive(float maxHealthPercentage)
+    public void Revive(float maxHealthPercentage = 1.0f)
     {
         if (!IsDowned)
             return;

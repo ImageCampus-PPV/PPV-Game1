@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Entities;
+﻿using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Reflection;
@@ -11,6 +11,7 @@ public class EntityFactory : IService, IInitiable
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     private MethodInfo setIDFunction;
+
 
     private PrefabsRegistry PrefabsRegistry => ServiceProvider.Instance.GetService<PrefabsRegistry>();
 
@@ -37,8 +38,17 @@ public class EntityFactory : IService, IInitiable
         if (!gameObjectGo.TryGetComponent<BaseEntity>(out BaseEntity entity))
             entity = gameObjectGo.AddComponent<EntityType>();
 
+        RegisterEntity(entity);
+    }
+
+    public void RegisterEntity(BaseEntity entity)
+    {
         setIDFunction.Invoke(entity, new object[] { ++lastAssignedID });
 
         EntityRegistry.Add(entity);
+
+        entity.Init();
+
+        entity.LateInit();
     }
 }

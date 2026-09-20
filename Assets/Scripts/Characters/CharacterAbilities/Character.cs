@@ -42,8 +42,10 @@ public class Character : DamageableEntity
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
 
-    private void Awake()
+    public override void Init()
     {
+        base.Init();
+
         _rb = GetComponent<Rigidbody2D>();
         _ownCollider = GetComponent<Collider2D>();
         CurrentAimDir = Vector2.right;

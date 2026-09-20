@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Entities;
+﻿using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;

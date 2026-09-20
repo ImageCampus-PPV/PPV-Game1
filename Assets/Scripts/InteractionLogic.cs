@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Entities;
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;

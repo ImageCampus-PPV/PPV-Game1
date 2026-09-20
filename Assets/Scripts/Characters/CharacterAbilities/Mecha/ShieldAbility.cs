@@ -85,7 +85,7 @@ public class ShieldAbility : CharacterAbility
             return;
         }
 
-        _activeDome = Object.Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
+        _activeDome = Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
 
         Character[] allCharacters = Object.FindObjectsByType<Character>(FindObjectsSortMode.None);
         Collider2D[] friendlyColliders = new Collider2D[allCharacters.Length];

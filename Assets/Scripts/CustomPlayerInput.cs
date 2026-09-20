@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using CustomInputClass;
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
@@ -13,7 +14,7 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
-    private Character ControllerCharacter => EntityRegistry.GetAs<Character>(entityID);
+    private Character ControllerCharacter => EntityRegistry.Has(entityID) ? EntityRegistry.GetAs<Character>(entityID) : null;
 
     private uint entityID = 0;
     public uint EntityID => entityID;
@@ -61,8 +62,8 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
 
     public void Tick(float deltaTime)
     {
-        ControllerCharacter.OnMove(EntityInput.Player.Move.ReadValue<Vector2>());
-        ControllerCharacter.OnAim(EntityInput.Player.Look.ReadValue<Vector2>());
+        ControllerCharacter?.OnMove(EntityInput.Player.Move.ReadValue<Vector2>());
+        ControllerCharacter?.OnAim(EntityInput.Player.Look.ReadValue<Vector2>());
     }
 
     private void OnPause(InputAction.CallbackContext ctx)
@@ -72,27 +73,27 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
-        ControllerCharacter.OnJump(ctx); //EventBus.Raise<UserRequestJumpEvent>(entityID);
+        ControllerCharacter?.OnJump(ctx); //EventBus.Raise<UserRequestJumpEvent>(entityID);
     }
 
     private void OnSkillAction(InputAction.CallbackContext ctx)
     {
-        ControllerCharacter.OnSkillAction(ctx);
+        ControllerCharacter?.OnSkillAction(ctx);
     }
 
     private void OnPrimaryAction(InputAction.CallbackContext ctx)
     {
-        ControllerCharacter.OnPrimaryAction(ctx);
+        ControllerCharacter?.OnPrimaryAction(ctx);
     }
 
     private void OnSecondaryAction(InputAction.CallbackContext ctx)
     {
-        ControllerCharacter.OnSecondaryAction(ctx);
+        ControllerCharacter?.OnSecondaryAction(ctx);
     }
 
     private void OnShield(InputAction.CallbackContext ctx)
     {
-        ControllerCharacter.OnShield(ctx);
+        ControllerCharacter?.OnShield(ctx);
     }
 
     private void OnInteract(InputAction.CallbackContext ctx)
