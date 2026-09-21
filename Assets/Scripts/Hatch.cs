@@ -17,9 +17,12 @@ public class Hatch : BaseEntity
     public void OpenHatch()
     {
         collider.enabled = false;
+        Debug.Log($"Hatch of id {ID} opened!!");
     }
+
     public void CloseHatch()
     {
         collider.enabled = true;
+        Debug.Log($"Hatch of id {ID} closed!!");
     }
 }

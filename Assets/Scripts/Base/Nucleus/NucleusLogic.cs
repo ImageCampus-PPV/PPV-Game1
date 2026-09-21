@@ -14,7 +14,7 @@ class NucleusLogic : IInitiable, IDisposable
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
 
-    private const float SapCooldown = 120.0f;
+    private const float SAP_COOLDOWN = 120.0f;
 
     private List<Vector3> _destroyedNucleusPos;
 
@@ -58,7 +58,7 @@ class NucleusLogic : IInitiable, IDisposable
 
     private void StartSapProduction()
     {
-        TaskScheduler.Schedule(SapGenerator, SapCooldown);
+        TaskScheduler.Schedule(SapGenerator, SAP_COOLDOWN);
     }
 
     public void Dispose()

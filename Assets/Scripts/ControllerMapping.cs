@@ -15,7 +15,7 @@ public sealed class ControllerMapping : IService, IInitiable, ITickable
     public bool IsPersistance => false;
 
     public const int MAX_PLAYERS_LIMIT = 2;
-    public const int MinPlayerToStartGame = 1;
+    public const int MIN_PLAYER_TO_START_GAME = 1;
 
     InputSystem_Actions inputActions;
 
@@ -122,7 +122,7 @@ public sealed class ControllerMapping : IService, IInitiable, ITickable
         if (!deviceToPlayerMapping.ContainsKey(pendingDeviceToMap))
         {
                   //Used to be GetEntityCount
-            if (EntityRegistry.GetCountOf<Character>() == MinPlayerToStartGame)
+            if (EntityRegistry.GetCountOf<Character>() == MIN_PLAYER_TO_START_GAME)
             {
                 //TODO: Add Event to start game or instead ignore the event and add a property that return bool if deviceToPlayerMapping.Count() >= MinPlayerToStartGame || EntityRegistry.GetEntityCount<Character>() >= MinPlayerToStartGame
                 //EventBus.Raise<GirdStartTickingEvent>();

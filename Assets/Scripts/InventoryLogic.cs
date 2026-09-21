@@ -10,10 +10,10 @@ public class InventoryLogic : IInitiable, IService
 {
     private Dictionary<Type, uint> _amountOfitemsByType;
 
-    public const uint MaxSlots = 5;
-    public const uint MaxItemCount = 50;
+    public const uint MAX_SLOTS = 5;
+    public const uint MAX_ITEMS_COUNT = 50;
     public bool IsPersistance => false;
-    public bool IsInventoryFull => _amountOfitemsByType.Count == MaxSlots;
+    public bool IsInventoryFull => _amountOfitemsByType.Count == MAX_SLOTS;
 
     public void Init()
     {
@@ -26,7 +26,7 @@ public class InventoryLogic : IInitiable, IService
 
     public bool IsItemAtMax<ItemType>() where ItemType : Item
     {
-        return _amountOfitemsByType[typeof(ItemType)] == MaxItemCount;
+        return _amountOfitemsByType[typeof(ItemType)] == MAX_ITEMS_COUNT;
     }
 
     public bool TryAddItemOfType<ItemType>(uint amount = 1) where ItemType : Item

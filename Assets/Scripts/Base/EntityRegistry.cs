@@ -91,14 +91,10 @@ namespace GreenAbyss.Entities
 
         public EntityType GetEntityAtIndex<EntityType>(int index) where EntityType : BaseEntity
         {
-            int currentIndex = 0;
-            foreach (EntityType entity in FilterEntities<EntityType>())
-            {
-                if (currentIndex++ == index)
-                    return entity;
-            }
+            if (index < 0 || _entityIdsPerType[typeof(EntityType)].Count < index)
+                throw new IndexOutOfRangeException($"Index {index} is not in range for {nameof(EntityRegistry)}");
 
-            return null;
+            return GetAs<EntityType>(_entityIdsPerType[typeof(EntityType)][index]);
         }
 
         public int GetCountOf<EntityType>() where EntityType : BaseEntity
@@ -129,6 +125,22 @@ namespace GreenAbyss.Entities
             _entities.Remove(newEntity.ID);
 
             UnityEngine.Object.Destroy(newEntity.gameObject);
+        }
+
+
+        public void RemoveAllOfType<EntityType>() where EntityType : BaseEntity
+        {
+            IEnumerable<EntityType> entitiesToRemove = FilterEntities<EntityType>();
+
+            foreach (EntityType entity in entitiesToRemove)
+                Remove(entity);
+        }
+
+        public EntityType GetRandomEntityOfType<EntityType>() where EntityType : BaseEntity
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _entityIdsPerType[typeof(EntityType)].Count);
+
+            return GetEntityAtIndex<EntityType>(randomIndex);
         }
 
         public bool Has(uint interactableID)

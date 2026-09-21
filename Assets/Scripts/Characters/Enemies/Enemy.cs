@@ -6,7 +6,7 @@ using System.Reflection;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Health))]
-public class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectReceiver, IStateDebugInfo
+public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectReceiver, IStateDebugInfo
 {
     [Header("State Machine")]
     [SerializeField] private StateMachineConfig _stateMachineConfig;

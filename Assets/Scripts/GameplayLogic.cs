@@ -6,16 +6,16 @@ using System;
 using Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
 {
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
     private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.GetService<NearestObjectDetector>();
     private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
-    private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
+    private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
 
     private NucleusLogic _nucleusLogic;
     private HatchLogic _hatchLogic;
@@ -23,6 +23,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private InteractionLogic _interactionLogic;
     private InteractionController _interactionController;
     private DepositUI _depositUI;
+    private HordeLogic _hordeLogic;
 
     private SceneRef _gamePlayScene;
 
@@ -51,6 +52,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _interactionLogic = new InteractionLogic();
         _interactionController = new InteractionController();
         _depositUI = new DepositUI();
+        _hordeLogic = new HordeLogic();
 
         _hatchLogic.Init();
         _nucleusLogic.Init();
@@ -62,6 +64,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Init();
         CoopCameraController.Init();
         _depositUI.Init();
+        _hordeLogic.Init();
     }
 
     public void LateInit()
@@ -76,6 +79,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.LateInit();
         CoopCameraController.LateInit();
         _depositUI.LateInit();
+        _hordeLogic.LateInit();
 
         EntityFactory.Create<Mecha>();
         EntityFactory.Create<Dragon>();
@@ -84,7 +88,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
         SpawnEntities<MechaItem>(10);
         SpawnEntities<DragonItem>(10);
-        SpawnEntities<Wasp>(5);
+        //SpawnEntities<Wasp>(5);
 
         void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
         {
@@ -97,6 +101,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Tick(float deltaTime)
     {
+        TaskScheduler.Tick(deltaTime);
         ControllerMapping.Tick(deltaTime);
         CoopCameraController.Tick(deltaTime);
         NearestObjectDetector.Tick(deltaTime);

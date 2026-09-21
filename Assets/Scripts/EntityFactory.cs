@@ -27,7 +27,7 @@ public class EntityFactory : IService, IInitiable
 
     }
 
-    public void Create<EntityType>(Vector3 position = default) where EntityType : BaseEntity
+    public EntityType Create<EntityType>(Vector3 position = default) where EntityType : BaseEntity
     {
         Type entityType = typeof(EntityType);
 
@@ -39,6 +39,8 @@ public class EntityFactory : IService, IInitiable
             entity = gameObjectGo.AddComponent<EntityType>();
 
         RegisterEntity(entity);
+
+        return entity as EntityType;
     }
 
     public void RegisterEntity(BaseEntity entity)
