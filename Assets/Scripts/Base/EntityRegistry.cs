@@ -27,17 +27,13 @@ namespace GreenAbyss.Entities
 
         private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
-        private uint _currentEntityID = 0;
-
         private Dictionary<uint, BaseEntity> _entities;
         private Dictionary<Type, List<uint>> _entityIdsPerType;
 
-        private MethodInfo _setObjectID;
         private MethodInfo _entityDestroyEvent;
 
         public EntityRegistry()
         {
-            _setObjectID = typeof(BaseEntity).GetMethod(BaseEntity.SetIDName, BindingFlags.NonPublic | BindingFlags.Instance);
             _entityDestroyEvent = GetType().GetMethod(nameof(InvokeEntityDestroyEvent), BindingFlags.NonPublic | BindingFlags.Instance);
 
             _entities = new Dictionary<uint, BaseEntity>();
@@ -46,7 +42,6 @@ namespace GreenAbyss.Entities
 
         public void Add(BaseEntity newEntity)
         {
-            _setObjectID.Invoke(newEntity, new object[] { ++_currentEntityID });
             _entities.Add(newEntity.ID, newEntity);
 
             Type currentEntityType = null;

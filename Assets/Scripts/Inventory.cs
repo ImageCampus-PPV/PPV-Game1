@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-public class InventoryLogic : IInitiable, IService
+public class Inventory : IService
 {
     private Dictionary<Type, uint> _amountOfitemsByType;
 
@@ -15,13 +15,9 @@ public class InventoryLogic : IInitiable, IService
     public bool IsPersistance => false;
     public bool IsInventoryFull => _amountOfitemsByType.Count == MAX_SLOTS;
 
-    public void Init()
+    public Inventory()
     {
         _amountOfitemsByType = new Dictionary<Type, uint>();
-    }
-
-    public void LateInit()
-    {
     }
 
     public bool IsItemAtMax<ItemType>() where ItemType : Item
@@ -73,7 +69,7 @@ public class InventoryLogic : IInitiable, IService
 public sealed class InventoryController : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
+    private Inventory InventoryLogic => ServiceProvider.Instance.GetService<Inventory>();
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
     public bool IsPersistance => false;

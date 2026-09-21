@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Entities;
 using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Scheduling;
 using ImageCampus.ToolBox.Services;
 using System;
@@ -14,8 +15,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
     private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.GetService<NearestObjectDetector>();
-    private InventoryLogic InventoryLogic => ServiceProvider.Instance.GetService<InventoryLogic>();
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private NucleusLogic _nucleusLogic;
     private HatchLogic _hatchLogic;
@@ -40,9 +41,9 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ServiceProvider.Instance.AddService<EntityFactory>(new EntityFactory());
         ServiceProvider.Instance.AddService<EntityRegistry>(new EntityRegistry());
         ServiceProvider.Instance.AddService<CoopCameraController>(new CoopCameraController());
-        ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
+        ServiceProvider.Instance.AddService<Inventory>(new Inventory());
         ServiceProvider.Instance.AddService<NearestObjectDetector>(new NearestObjectDetector());
-        ServiceProvider.Instance.AddService<InventoryLogic>(new InventoryLogic());
+        ServiceProvider.Instance.AddService<Inventory>(new Inventory());
         ServiceProvider.Instance.AddService<Wallet>(new Wallet());
         ServiceProvider.Instance.AddService<TaskScheduler>(new TaskScheduler());
 
@@ -56,7 +57,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
         _hatchLogic.Init();
         _nucleusLogic.Init();
-        InventoryLogic.Init();
         _inventoryController.Init();
         _interactionController.Init();
         _interactionLogic.Init();
@@ -71,7 +71,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     {
         _hatchLogic.LateInit();
         _nucleusLogic.LateInit();
-        InventoryLogic.LateInit();
         _inventoryController.LateInit();
         _interactionController.Init();
         _interactionLogic.LateInit();
@@ -109,6 +108,15 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Dispose()
     {
+        _hatchLogic.Dispose();
+        _nucleusLogic.Dispose();
+        _inventoryController.Dispose();
+        _interactionController.Dispose();
+        _interactionLogic.Dispose();
+        ControllerMapping.Dispose();
+        _depositUI.Dispose();
+        _hordeLogic.Dispose();
+
         SceneManager.UnloadSceneAsync(_gamePlayScene.Index);
         ServiceProvider.Instance.ClearAllServices();
     }

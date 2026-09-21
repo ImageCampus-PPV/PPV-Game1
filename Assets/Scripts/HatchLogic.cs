@@ -2,7 +2,6 @@ using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
-using System.Collections.Generic;
 
 public class HatchLogic : IInitiable, IDisposable
 {
@@ -16,24 +15,27 @@ public class HatchLogic : IInitiable, IDisposable
         EventBus.Subscribe<OnHordeEndedEvent>(OpenAllHatches);
     }
 
-    private void CloseAllHatches(in OnHordeStartedEvent callback)
-    {
-        foreach (Hatch hatch in EntityRegistry.FilterEntities<Hatch>())
-        {
-            hatch.CloseHatch();
-        }
-    }
-
-    private void OpenAllHatches(in OnHordeEndedEvent callback)
-    {
-        foreach (Hatch hatch in EntityRegistry.FilterEntities<Hatch>())
-        {
-            hatch.OpenHatch();
-        }
-    }
-
     public void LateInit()
     {
+        OpenHatches();
+    }
+
+    private void OpenAllHatches(in OnHordeEndedEvent _)
+    {
+        OpenHatches();
+    }
+
+    private void OpenHatches()
+    {
+        foreach (Hatch hatch in EntityRegistry.FilterEntities<Hatch>())
+            hatch.OpenHatch();
+    }
+
+
+    private void CloseAllHatches(in OnHordeStartedEvent _)
+    {
+        foreach (Hatch hatch in EntityRegistry.FilterEntities<Hatch>())
+            hatch.CloseHatch();
     }
 
     public void Dispose()

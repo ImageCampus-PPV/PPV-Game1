@@ -9,11 +9,9 @@ public class EntityFactory : IService, IInitiable
     public bool IsPersistance => false;
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private PrefabsRegistry PrefabsRegistry => ServiceProvider.Instance.GetService<PrefabsRegistry>();
 
     private MethodInfo setIDFunction;
-
-
-    private PrefabsRegistry PrefabsRegistry => ServiceProvider.Instance.GetService<PrefabsRegistry>();
 
     private uint lastAssignedID = 0;
 

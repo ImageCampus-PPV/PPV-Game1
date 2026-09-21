@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-public class InteractionLogic : IInitiable
+public class InteractionLogic : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
@@ -60,5 +60,10 @@ public class InteractionLogic : IInitiable
 
             _entityClassNameToType.Add(type.Name, type);
         }
+    }
+
+    public void Dispose()
+    {
+        EventBus.Unsubscribe<PlayerRequestInteractionAcceptedGeneric>(RaiseEventAsGeneric);
     }
 }

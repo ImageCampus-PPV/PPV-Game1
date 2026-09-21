@@ -5,7 +5,7 @@ public class ForceEntityRegistry : MonoBehaviour
 {
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
 
-    private void Start()
+    private void Awake()
     {
         EntityFactory.RegisterEntity(GetComponent<BaseEntity>());
         Destroy(this);

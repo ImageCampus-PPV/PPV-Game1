@@ -7,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 
-public class HordeLogic : IInitiable
+public class HordeLogic : IInitiable, IDisposable
 {
     private const float HORDE_COOLDOWN = 120f;
     private const float HORDE_DURATION = HORDE_COOLDOWN / 3f;
@@ -49,11 +49,14 @@ public class HordeLogic : IInitiable
     public void Init()
     {
         _createEnemiesMethod = typeof(EntityFactory).GetMethod(nameof(EntityFactory.Create), BindingFlags.Public | BindingFlags.Instance);
+
+        EventBus.Subscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
+        EventBus.Subscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
     }
 
     public void LateInit()
     {
-        TaskScheduler.Schedule(StartHorde, 2f);
+        StartNewHordeCountdown();
     }
 
     private void StartNewHordeCountdown()
@@ -63,11 +66,31 @@ public class HordeLogic : IInitiable
 
     private void StartHorde()
     {
-        Debug.Log("Start horde :3");
+        EventBus.Raise<OnHordeStartedEvent>();
+    }
+
+    private void OnHordeStartedEvent(in OnHordeStartedEvent _)
+    {
         EnemyCounter = 0;
         SpawnEnemies();
-        EventBus.Raise<OnHordeStartedEvent>();
-        EndHordeCountdown();
+
+        StartNewEndHordeCountdown();
+    }
+
+    private void StartNewEndHordeCountdown()
+    {
+        TaskScheduler.Schedule(EndHorde, HORDE_DURATION);
+    }
+
+    private void EndHorde()
+    {
+        EventBus.Raise<OnHordeEndedEvent>();
+    }
+
+    private void OnHordeEndedEvent(in OnHordeEndedEvent _)
+    {
+        ClearAllEnemies();
+        StartNewHordeCountdown();
     }
 
     private void ClearAllEnemies()
@@ -81,8 +104,8 @@ public class HordeLogic : IInitiable
             return;
 
         Vector3 enemySpawnPosition = EntityRegistry.GetRandomEntityOfType<EnemySpawner>().transform.position;
-        Type enemyType = GetRandomEnemyType();
-        _createEnemiesMethod.MakeGenericMethod(enemyType).Invoke(EntityFactory, new object[] { enemySpawnPosition });
+
+        _createEnemiesMethod.MakeGenericMethod(GetRandomEnemyType()).Invoke(EntityFactory, new object[] { enemySpawnPosition });
 
         TaskScheduler.Schedule(SpawnEnemies, ENEMIES_SPAWN_COOLDOWN);
     }
@@ -94,15 +117,9 @@ public class HordeLogic : IInitiable
         return _enemyTypesList[randomEnemyIndex];
     }
 
-    private void EndHordeCountdown()
+    public void Dispose()
     {
-        TaskScheduler.Schedule(EndHorde, HORDE_DURATION);
-    }
-
-    private void EndHorde()
-    {
-        ClearAllEnemies();
-        EventBus.Raise<OnHordeEndedEvent>();
-        StartNewHordeCountdown();
+        EventBus.Unsubscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
+        EventBus.Unsubscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
     }
 }
