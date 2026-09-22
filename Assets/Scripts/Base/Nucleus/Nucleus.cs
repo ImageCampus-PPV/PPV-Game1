@@ -1,7 +1,4 @@
-using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using UnityEngine;
 
 public class Nucleus : DamageableEntity
 {
