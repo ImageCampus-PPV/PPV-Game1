@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a6d5ca31fffbd64e8b0ada0a87480b0, type: 3}
-  m_Name: WaspChase
-  m_EditorClassIdentifier: Assembly-CSharp::ChaseBehaviour
-  _moveSpeed: 4
-  _targetLookRange: 100
-  _targetMask:
+  m_Script: {fileID: 11500000, guid: b8c3a6d9d7e05af469128f016c637036, type: 3}
+  m_Name: ChasePlayerOutOfRange
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerOutOfRangeCondition
+  _range: 5
+  _targetLayer:
     serializedVersion: 2
     m_Bits: 128
