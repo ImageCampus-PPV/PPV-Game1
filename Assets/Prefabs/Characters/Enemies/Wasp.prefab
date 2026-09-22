@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 3969646043472997445}
   - component: {fileID: 8185128234979137790}
   - component: {fileID: 7061281741340900048}
-  - component: {fileID: 7081056249571074587}
   - component: {fileID: 7365687590345680970}
   - component: {fileID: 7995072708514537931}
   - component: {fileID: 4368972793849004028}
@@ -112,20 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StunDamageResponse
   _stunDuration: 1.5
---- !u!114 &7081056249571074587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3397934936948879136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8734e8abdd78fcc4e9cce38aaf7f3e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  _damageableComp: {fileID: 8624963624122276381}
-  _maxHealth: 100
 --- !u!114 &7365687590345680970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba7278b21fe44849a6184e107625b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  _health: {fileID: 7081056249571074587}
+  _damageableEntity: {fileID: 8624963624122276381}
   _healthBar: {fileID: 3297282801735096283}
   _defaultFullHealth: 100
 --- !u!61 &7995072708514537931
@@ -213,12 +198,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571b091f58eb7bf438f0211efe4b03b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wasp
-  _stateMachineConfig: {fileID: 11400000, guid: f1a2ec0b665d53d409ffecdc3632aa45, type: 2}
+  _maxHealth: 100
+  _defaultStateMachineConfig: {fileID: 11400000, guid: f1a2ec0b665d53d409ffecdc3632aa45, type: 2}
+  _hordeModeStateMachineConfig: {fileID: 11400000, guid: edf8ed3ac5fdf8b44b54badcffd8919b, type: 2}
   _attackOffset: {fileID: 5725205844104546386}
   _targetLayers:
     serializedVersion: 2
     m_Bits: 0
-  _flockingSettings:
+  _damageOnContact: 0
+  _damageBehaviourConfigs: []
+  _steeringSettings:
     enabled: 0
     separationRadius: 0
     separationWeight: 0
@@ -237,10 +226,10 @@ MonoBehaviour:
     orbitMaxDistance: 0
   _identityLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _obstacleLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 6848
 --- !u!1 &4905870179119514445
 GameObject:
   m_ObjectHideFlags: 0
