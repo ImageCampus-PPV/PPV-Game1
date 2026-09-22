@@ -11,6 +11,7 @@ using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 public class HordeLogic : IInitiable, IDisposable
 {
     private const float HORDE_COOLDOWN = 120f;
+    private const float FIRST_HORDE_COOLDOWN = 3f;
     private const float HORDE_DURATION = HORDE_COOLDOWN / 3f;
     private const float ENEMIES_SPAWN_COOLDOWN = 3f;
     private const int ENEMIES_PER_HORDE = 50;
@@ -24,7 +25,6 @@ public class HordeLogic : IInitiable, IDisposable
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
 
     private int EnemyCounter = 0;
-    private int EnemySpawnerCount => EntityRegistry.GetCountOf<EnemySpawner>();
 
     public HordeLogic()
     {
@@ -53,16 +53,25 @@ public class HordeLogic : IInitiable, IDisposable
 
         EventBus.Subscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
         EventBus.Subscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
+        EventBus.Subscribe<EntityDestroyEvent<Nucleus>>(OnNucleusDestroyed);
+    }
+
+    private void OnNucleusDestroyed(in EntityDestroyEvent<Nucleus> nucleusDestroyEvent)
+    {
+        TaskScheduler.Remove(EndHorde);
+        TaskScheduler.Remove(SpawnEnemies);
+
+        EndHorde();
     }
 
     public void LateInit()
     {
-        StartNewHordeCountdown();
+        StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
     }
 
-    private void StartNewHordeCountdown()
+    private void StartNewHordeCountdown(float timer = HORDE_COOLDOWN)
     {
-        TaskScheduler.Schedule(StartHorde, HORDE_COOLDOWN);
+        TaskScheduler.Schedule(StartHorde, timer);
     }
 
     private void StartHorde()
@@ -108,8 +117,11 @@ public class HordeLogic : IInitiable, IDisposable
             return;
 
         Vector3 enemySpawnPosition = EntityRegistry.GetRandomEntityOfType<EnemySpawner>().transform.position;
+        Type enemyType = GetRandomEnemyType();
+        Enemy enemySpawned = _createEnemiesMethod.MakeGenericMethod(enemyType).Invoke(EntityFactory, new object[] { enemySpawnPosition }) as Enemy;
 
-        _createEnemiesMethod.MakeGenericMethod(GetRandomEnemyType()).Invoke(EntityFactory, new object[] { enemySpawnPosition });
+        if (enemySpawned != null)
+            enemySpawned.SwitchToHordeMode();
 
         TaskScheduler.Schedule(SpawnEnemies, ENEMIES_SPAWN_COOLDOWN);
     }
