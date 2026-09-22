@@ -12,15 +12,15 @@ public class NearestObjectDetector : ITickable, IService
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     private Dictionary<uint, (uint, Type)> _interactablePerCharacter = new Dictionary<uint, (uint, Type)>();
-    private float _tolerance = 5f;
+    private float _tolerance = 3f;
 
     public Dictionary<uint, (uint objectID, Type objectType)> InteractablePerCharacter => _interactablePerCharacter;
     public (uint objectID, Type objectType) this[uint characterID] => _interactablePerCharacter[characterID];
 
     public void Tick(float deltaTime)
     {
-        FindNearestTypeToType<Mecha, MechaItem>();
-        FindNearestTypeToType<Dragon, DragonItem>();
+        FindNearestTypeToType<Mecha, MechaInteractable>();
+        FindNearestTypeToType<Dragon, DragonInteractable>();
     }
 
     private void FindNearestTypeToType<TypeReference, TypeToFind>() where TypeReference : Character where TypeToFind : Interactable

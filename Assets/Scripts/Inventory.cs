@@ -78,16 +78,34 @@ public sealed class InventoryController : IInitiable, IDisposable
     private MethodInfo _subscribeToInteractionEvent;
     private MethodInfo _unsuscribeEventSystem;
 
+    private Dictionary<Type, Type> _mineToResource;
+    private MethodInfo _tryAddToInventory;
     public void Init()
     {
+        _mineToResource = new Dictionary<Type, Type>();
         _onInteractionCallBack = new Dictionary<Type, object>();
 
         _unsuscribeEventSystem = EventBus.GetType().GetMethod(nameof(EventBus.Subscribe), BindingFlags.Public | BindingFlags.Instance);
         _subscribeToInteractionEvent = GetType().GetMethod(nameof(SubscribeToInteract), BindingFlags.NonPublic | BindingFlags.Instance);
 
+        _tryAddToInventory = InventoryLogic.GetType().GetMethod(nameof(InventoryLogic.TryAddItemOfType), BindingFlags.Public | BindingFlags.Instance);
+
         EventBus.Subscribe<PlayerRequestInteractionAccepted<Deposit>>(OnCharacterInteract);
 
         SubscribeToEvents();
+
+        foreach (Type type in GetType().Assembly.GetTypes())
+        {
+            if (!type.IsClass || type.IsAbstract)
+                continue;
+
+            List<MineOfAttribute> attributes = new List<MineOfAttribute>(type.GetCustomAttributes<MineOfAttribute>());
+
+            if (attributes.Count == 0)
+                continue;
+
+            _mineToResource.Add(type, attributes[0].itemType);
+        }
     }
 
     private void OnCharacterInteract(in PlayerRequestInteractionAccepted<Deposit> depositInteraction)
@@ -103,11 +121,7 @@ public sealed class InventoryController : IInitiable, IDisposable
         if (!EntityRegistry.Has(dragonItemInteractionEvent.interactableID))
             return;
 
-        if (InventoryLogic.TryAddItemOfType<DragonItem>())
-        {
-            BaseEntity entity = EntityRegistry.GetAs<BaseEntity>(dragonItemInteractionEvent.interactableID);
-            EntityRegistry.Remove(entity);
-        }
+        _tryAddToInventory.MakeGenericMethod(_mineToResource[typeof(EntityType)]).Invoke(InventoryLogic, new object[] { (uint)1 });
     }
 
     private void SubscribeToEvents()

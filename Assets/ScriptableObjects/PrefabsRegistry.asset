@@ -23,9 +23,9 @@ MonoBehaviour:
     gameObject: {fileID: 3397934936948879136, guid: d3b07fcc304a9544a8266650cd08312a, type: 3}
   - TypeName: Deposit
     gameObject: {fileID: 331093371214233579, guid: a082885f76dd3774191141a1c8b1261f, type: 3}
-  - TypeName: DragonItem
+  - TypeName: AncestralMine
     gameObject: {fileID: 1937501220074201615, guid: fcd3c3e699b47774fbe64039ab1a8270, type: 3}
-  - TypeName: MechaItem
+  - TypeName: FerriteMine
     gameObject: {fileID: 1937501220074201615, guid: 2d628d153cb363e4997c72fa612f10c1, type: 3}
   - TypeName: Nucleus
     gameObject: {fileID: 331093371214233579, guid: 60145a3602e05e8438b89ffe85499ab8, type: 3}

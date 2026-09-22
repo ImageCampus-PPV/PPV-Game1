@@ -85,10 +85,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Deposit>();
         EntityFactory.Create<Nucleus>();
 
-        SpawnEntities<MechaItem>(10);
-        SpawnEntities<DragonItem>(10);
-        //SpawnEntities<Wasp>(5);
-
         void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
         {
             for (int i = 0; i < amount; ++i)
