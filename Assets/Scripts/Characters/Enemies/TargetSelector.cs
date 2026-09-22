@@ -2,6 +2,7 @@ using UnityEngine;
 
 public static class TargetSelector
 {
+    //TODO: use the entity registry here
     public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, targetLayer);
@@ -25,7 +26,8 @@ public static class TargetSelector
             }
         }
 
-        if (closest == null) return null;
+        if (closest == null) 
+            return null;
 
         if (Random.value > 0.5f)
         {

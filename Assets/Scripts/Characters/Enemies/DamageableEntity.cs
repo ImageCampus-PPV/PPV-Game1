@@ -35,7 +35,10 @@ public abstract class DamageableEntity : BaseEntity
         EventBus.Raise<OnHealthChange>(ID, _currentHealth, _maxHealth);
 
         if (_currentHealth == 0.0f)
+        {
+            Debug.Log($"Damageable Entity {name} is dead. Removing");
             EntityRegistry.Remove(this);
+        }
     }
 
     public void Heal(float amount)

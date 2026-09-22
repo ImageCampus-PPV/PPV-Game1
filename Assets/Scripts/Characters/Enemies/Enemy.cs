@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Health))]
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectReceiver, IStateDebugInfo
 {
     [Header("State Machine")]
-    [SerializeField] private StateMachineConfig _stateMachineConfig;
+    [SerializeField] private StateMachineConfig _defaultStateMachineConfig;
+    [SerializeField] private StateMachineConfig _hordeModeStateMachineConfig;
 
     [Header("Attack")]
     [SerializeField] private Transform _attackOffset;
@@ -25,7 +26,6 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
 
     private Vector2 _positionOnSpawn;
     private Rigidbody2D _rb;
-    private Health _health;
     private DamageResponse _damageResponse;
     //TODO: separate effects logic
     private List<StatusEffect> _effects = new List<StatusEffect>();
@@ -39,8 +39,6 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public Transform Transform => transform;
     public Vector2 Position => transform.position;
-    public float Health => _health.CurrentHealth;
-    public float MaxHealth => _health.MaxHealth;
     public Transform AttackOffset => _attackOffset;
     public Vector2 PositionOnSpawn => _positionOnSpawn;
 
@@ -54,10 +52,8 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
         _damageBehaviours = new List<DamageBehaviour>();
 
         _rb = GetComponent<Rigidbody2D>();
-        _health = GetComponent<Health>();
         _damageResponse = GetComponent<DamageResponse>();
         _positionOnSpawn = transform.position;
-        //Debug.Log("Position on spawn of enemy " + name + ": " + _positionOnSpawn);
 
         SteeringMovement movement = new SteeringMovement(_steeringSettings,
                                     new SeekSteering(_steeringSettings),
@@ -73,23 +69,26 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
         RegisterCommandHandler(new MoveCommandHandler(_rb, movement));
         RegisterCommandHandler(new StopMovementCommandHandler(_rb));
 
-        //TODO: Separate this state machine part (so it's more of a plug-in than something accumulated in the Awake)
+        InitStateMachine(_defaultStateMachineConfig);
+    }
 
+    private void InitStateMachine(StateMachineConfig stateMachineConfig)
+    {
         Dictionary<string, Type> stateNameToType = new Dictionary<string, Type>();
-        foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
+        foreach (StateMachineConfig.StateEntry entry in stateMachineConfig.states)
         {
             Type marker = entry.behaviour.GetType();
             Type stateType = typeof(EnemyState<>).MakeGenericType(marker);
             stateNameToType[entry.stateName] = stateType;
         }
 
-        _evaluator = new TransitionEvaluator(_stateMachineConfig, stateNameToType);
+        _evaluator = new TransitionEvaluator(stateMachineConfig, stateNameToType);
 
-        Type defaultStateType = stateNameToType[_stateMachineConfig.DefaultState];
+        Type defaultStateType = stateNameToType[stateMachineConfig.DefaultState];
         _fsm = new FSM(defaultStateType);
 
         MethodInfo addStateMethod = typeof(FSM).GetMethod(nameof(FSM.AddState));
-        foreach (StateMachineConfig.StateEntry entry in _stateMachineConfig.states)
+        foreach (StateMachineConfig.StateEntry entry in stateMachineConfig.states)
         {
             StateBehaviour<IEnemyContext> stateBehaviourInstance = Instantiate(entry.behaviour);
 
@@ -109,6 +108,11 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
         {
             _damageBehaviours.Add(config.CreateBehaviour());
         }
+    }
+
+    public void SwitchToHordeMode()
+    {
+        InitStateMachine(_hordeModeStateMachineConfig);
     }
 
     private void Update()
@@ -154,6 +158,7 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     public ResultType ExecuteQuery<ResultType>(ICommandQuery<ResultType> query)
     {
         if (query is FindTargetQuery find)
+            //TODO: fix this boxing!
             return (ResultType)(object)TargetSelector.GetBestTarget(transform.position, find.Range, find.TargetLayer);
 
         throw new NotSupportedException($"Query {query.GetType()} not supported.");
@@ -220,8 +225,9 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
         Execute(new StopMovementCommand());
     }
 
-    private void OnDisable()
+    public override void Dispose()
     {
+        base.Dispose();
         _fsm.Dispose();
     }
 }
