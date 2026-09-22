@@ -5,19 +5,13 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Health _health;
+    [SerializeField] private DamageableEntity _damageableEntity;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private float _defaultFullHealth = 100f;
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private void Awake()
     {
-        if (_health == null)
-            _health = GetComponent<Health>();
-
-        if (_health == null)
-            Debug.LogError("No health component provided to health bar.");
-
         if (_healthBar == null)
             Debug.LogError("No slider provided to health bar");
 
@@ -27,9 +21,24 @@ public class HealthBar : MonoBehaviour
         _healthBar.value = _healthBar.maxValue;
     }
 
+    private void Start()
+    {
+        if (_damageableEntity == null)
+            _damageableEntity = GetComponent<DamageableEntity>();
+    }
+
     private void UpdateHealthbar(in OnHealthChange onHealthChange)
     {
-        if (onHealthChange.entityAffectedID != _health.OwnerID)
+        if (_damageableEntity == null)
+            _damageableEntity = GetComponent<DamageableEntity>();
+
+        if (_damageableEntity == null)
+        {
+            Debug.LogError("No damageable entity to update health");
+            return;
+        }    
+
+        if (onHealthChange.entityAffectedID != _damageableEntity.ID)
             return;
 
         if (_healthBar.maxValue != onHealthChange.maxHealth)
@@ -43,5 +52,10 @@ public class HealthBar : MonoBehaviour
         }
 
         _healthBar.value = onHealthChange.currentHealth;
+    }
+
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<OnHealthChange>(UpdateHealthbar);
     }
 }
