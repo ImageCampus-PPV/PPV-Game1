@@ -29,3 +29,5 @@ MonoBehaviour:
     gameObject: {fileID: 1937501220074201615, guid: 2d628d153cb363e4997c72fa612f10c1, type: 3}
   - TypeName: Nucleus
     gameObject: {fileID: 331093371214233579, guid: 60145a3602e05e8438b89ffe85499ab8, type: 3}
+  - TypeName: Platform
+    gameObject: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
