@@ -4,6 +4,8 @@ using UnityEngine;
 public class ChaseBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private float _moveSpeed = 4f;
+    [SerializeField] private float _targetLookRange = 100f;
+    [SerializeField] private LayerMask _targetMask;
 
     public override BehaviourActions GetOnEnter(IEnemyContext context)
     {
@@ -17,11 +19,12 @@ public class ChaseBehaviour : StateBehaviour<IEnemyContext>
         BehaviourActions actions = new BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
-            Transform target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
+            Transform target = context.ExecuteQuery(new FindTargetQuery(_targetLookRange, _targetMask));
+
             if (target != null)
-            {
                 context.Execute(new MoveCommand(target.position, _moveSpeed));
-            }
+            else
+                Debug.Log("No target found for chasing");
         });
         return actions;
     }

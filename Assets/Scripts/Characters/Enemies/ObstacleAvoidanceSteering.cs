@@ -9,7 +9,7 @@ public class ObstacleAvoidanceSteering : ISteeringBehaviour
     private readonly float _normalWeight;
     private readonly float _tangentWeight;
 
-    public ObstacleAvoidanceSteering(LayerMask obstaclesLayer, FlockingSettings settings)
+    public ObstacleAvoidanceSteering(LayerMask obstaclesLayer, SteeringSettings settings)
     {
         _obstacleLayers = obstaclesLayer;
         _bodyRadius = settings.bodyRadius;

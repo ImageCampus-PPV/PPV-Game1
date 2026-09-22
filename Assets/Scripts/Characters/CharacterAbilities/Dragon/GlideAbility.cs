@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
@@ -8,6 +10,7 @@ public class GlideAbility : CharacterAbility
     private float _normalGravityScale;
     private bool _isHoldingJump;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public bool IsGliding { get; private set; }
 
     public override void Initialize(Character character, Rigidbody2D rb)
@@ -16,18 +19,24 @@ public class GlideAbility : CharacterAbility
 
         _normalGravityScale = Rb.gravityScale;
 
-        Character.JumpPressedEvent += OnJumpPressed;
-        Character.JumpReleasedEvent += OnJumpReleased;
-        Character.TouchGroundEvent += OnTouchGround;
+        EventBus.Subscribe<OnCharacterJumpPressed>(OnJumpPressed);
+        EventBus.Subscribe<OnCharacterJumpReleased>(OnJumpReleased);
+        EventBus.Subscribe<OnCharacterTouchedGround>(OnTouchGround);
     }
 
-    public void OnJumpPressed()
+    public void OnJumpPressed(in OnCharacterJumpPressed onCharacterJumpPressed)
     {
+        if (Character.ID != onCharacterJumpPressed.characterID)
+            return;
+
         _isHoldingJump = true;
     }
 
-    public void OnJumpReleased()
+    public void OnJumpReleased(in OnCharacterJumpReleased onCharacterJumpReleased)
     {
+        if (Character.ID != onCharacterJumpReleased.characterID)
+            return;
+
         _isHoldingJump = false;
         StopGliding();
     }
@@ -41,8 +50,11 @@ public class GlideAbility : CharacterAbility
         Rb.gravityScale = _normalGravityScale;
     }
 
-    public void OnTouchGround()
+    public void OnTouchGround(in OnCharacterTouchedGround onCharacterTouchedGround)
     {
+        if (Character.ID != onCharacterTouchedGround.characterID)
+            return;
+
         StopGliding();
     }
 

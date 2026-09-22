@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: WaspChase
   m_EditorClassIdentifier: Assembly-CSharp::ChaseBehaviour
   _moveSpeed: 4
+  _targetLookRange: 100
+  _targetMask:
+    serializedVersion: 2
+    m_Bits: 128

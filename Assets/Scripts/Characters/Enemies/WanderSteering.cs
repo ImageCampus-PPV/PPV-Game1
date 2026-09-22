@@ -6,7 +6,7 @@ public class WanderSteering : ISteeringBehaviour
     private readonly float _jitter;
     private readonly float _strength;
 
-    public WanderSteering(FlockingSettings settings)
+    public WanderSteering(SteeringSettings settings)
     {
         _weight = settings.wanderWeight;
         _jitter = settings.wanderJitter;

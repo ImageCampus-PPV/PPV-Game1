@@ -2,6 +2,7 @@ using UnityEngine;
 
 public static class TargetSelector
 {
+    //TODO: use the entity registry here
     public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, targetLayer);
@@ -11,7 +12,7 @@ public static class TargetSelector
 
         for (int i = 0; i < hits.Length; i++)
         {
-            IDamageable damageable = hits[i].GetComponent<IDamageable>();
+            DamageableEntity damageable = hits[i].GetComponent<DamageableEntity>();
 
             if (damageable != null)
             {
@@ -25,7 +26,8 @@ public static class TargetSelector
             }
         }
 
-        if (closest == null) return null;
+        if (closest == null) 
+            return null;
 
         if (Random.value > 0.5f)
         {

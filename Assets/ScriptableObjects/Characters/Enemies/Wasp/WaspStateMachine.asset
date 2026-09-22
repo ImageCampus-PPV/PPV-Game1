@@ -19,6 +19,8 @@ MonoBehaviour:
     behaviour: {fileID: 11400000, guid: 7689e63f5dde156498f187fa3453dac4, type: 2}
   - stateName: Attack
     behaviour: {fileID: 11400000, guid: abfa9a920df5a4d45860868466d4ce44, type: 2}
+  - stateName: Back to start
+    behaviour: {fileID: 11400000, guid: 68ff1b70a6d6d3643af5dc0310f424c7, type: 2}
   transitionsByState:
   - stateName: Patrol
     transitions:
@@ -29,9 +31,17 @@ MonoBehaviour:
     - condition: {fileID: 11400000, guid: 9f072c244fd92b643b7ae8ce8a3802f3, type: 2}
       toState: Attack
     - condition: {fileID: 11400000, guid: 25653e4fbfa37b4468ac07a254fbdc86, type: 2}
-      toState: Patrol
+      toState: Back to start
+    - condition: {fileID: 11400000, guid: 10a4760b240b7334ea9e7f94844e0fec, type: 2}
+      toState: Back to start
   - stateName: Attack
     transitions:
     - condition: {fileID: 11400000, guid: 0ba94922a77cb7d40ba1fa1b0fa566a1, type: 2}
+      toState: Chase
+  - stateName: Back to start
+    transitions:
+    - condition: {fileID: 11400000, guid: 61f1dbefa19d3ce4aa53003cc43dfe5b, type: 2}
+      toState: Patrol
+    - condition: {fileID: 11400000, guid: f6638ba1c8eb2a640a7c7d7d884f1141, type: 2}
       toState: Chase
   anyTransitions: []

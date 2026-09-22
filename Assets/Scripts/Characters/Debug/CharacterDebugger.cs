@@ -4,7 +4,6 @@ using UnityEngine;
 public class CharacterDebugger : MonoBehaviour
 {
     [SerializeField] private Character _character;
-    [SerializeField] private ItemCollector _collector;
     [SerializeField] private TextMeshProUGUI _characterNameText;
     [SerializeField] private SpriteRenderer _spriteRenderer;
 

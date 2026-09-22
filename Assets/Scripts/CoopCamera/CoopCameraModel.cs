@@ -12,14 +12,11 @@ public struct CameraBounds
 
 public class CoopCameraModel
 {
-    private readonly CoopCameraSettings _settings;
-
     public Vector3 currentCentroid { get; private set; }
     public float BoundsMargin { get; set; }
 
-    public CoopCameraModel(CoopCameraSettings settings, float boundsMargin)
+    public CoopCameraModel(float boundsMargin)
     {
-        _settings = settings;
         BoundsMargin = boundsMargin;
     }
 

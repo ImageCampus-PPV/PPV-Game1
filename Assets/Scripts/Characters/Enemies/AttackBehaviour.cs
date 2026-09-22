@@ -4,6 +4,8 @@ using UnityEngine;
 public class AttackBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private EnemyAttackStrategy _attackStrategy;
+    [SerializeField] private float _attackRange = 100f;
+    [SerializeField] private LayerMask _targetLayer;
 
     private float _cooldownTimer;
     private float _anticipationTimer;
@@ -28,8 +30,9 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
         actions.AddUpdateBehaviour(() =>
         {
             context.Execute(new StopMovementCommand());
-            Transform target = context.ExecuteQuery(new FindTargetQuery(100f, LayerMask.GetMask("Player")));
-            if (target == null) return;
+            Transform target = context.ExecuteQuery(new FindTargetQuery(_attackRange, _targetLayer));
+            if (target == null) 
+                return;
 
             if (_cooldownTimer > 0)
             {

@@ -1,23 +1,12 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
-public class ShieldDome : MonoBehaviour, IDamageable
+public class ShieldDome : DamageableEntity
 {
-    private float _currentHp;
-    private float _maxHp;
-    private float _minHp;
-
     private SpriteRenderer _sr;
     private CircleCollider2D _col;
-
-    public System.Action OnShieldBroken;
-    public System.Action OnShieldDissipated;
-
-    public float CurrentHp => _currentHp;
-    public float MaxHp => _maxHp;
-    public float HpPercent => _currentHp / _maxHp;
-
-    public Action<float> OnTakeDamage { get; set; }
 
     private void Awake()
     {
@@ -27,9 +16,9 @@ public class ShieldDome : MonoBehaviour, IDamageable
 
     public void Initialize(float maxHp, float minHp, float radius, Collider2D[] friendlyColliders)
     {
-        _maxHp = maxHp;
-        _minHp = minHp;
-        _currentHp = maxHp;
+        _maxHealth = maxHp;
+
+        _currentHealth = maxHp;
 
         if (_col != null)
             _col.radius = radius;
@@ -51,27 +40,41 @@ public class ShieldDome : MonoBehaviour, IDamageable
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
     }
 
-    public void TakeDamage(float damage)
-    {
-        if (_currentHp <= _minHp)
-            return;
-
-        _currentHp = Mathf.Max(_minHp, _currentHp - damage);
-
-        if (_sr != null)
-            _sr.color = Color.Lerp(new Color(1f, 0f, 0f, 0.35f), new Color(0f, 1f, 1f, 0.35f), HpPercent);
-
-        if (_currentHp <= _minHp)
-            OnShieldBroken?.Invoke();
-
-        OnTakeDamage?.Invoke(damage);
-    }
-
     public void Restore()
     {
-        _currentHp = _maxHp;
+        Heal(_maxHealth);
 
         if (_sr != null)
             _sr.color = new Color(0f, 1f, 1f, 0.35f);
+    }
+}
+
+public struct OnShieldBroken : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
+    }
+}
+
+public struct OnShieldDispatched : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
     }
 }

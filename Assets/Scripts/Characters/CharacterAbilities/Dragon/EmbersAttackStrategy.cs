@@ -60,7 +60,7 @@ public class EmbersAttackStrategy : AttackStrategy
         {
             if (((1 << hit.gameObject.layer) & enemyLayer) != 0)
             {
-                IDamageable damageable = hit.GetComponent<IDamageable>();
+                DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
                 //mientras el ascuas toque al enemigo, le hace daño
                 damageable?.TakeDamage(damage * Time.deltaTime);
 

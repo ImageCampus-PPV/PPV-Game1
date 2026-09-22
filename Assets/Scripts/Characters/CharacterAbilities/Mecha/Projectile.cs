@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
         if ((_enemyLayer.value & (1 << other.gameObject.layer)) == 0) 
             return;
 
-        other.GetComponent<IDamageable>()?.TakeDamage(_damage);
+        other.GetComponent<DamageableEntity>()?.TakeDamage(_damage);
         Destroy(gameObject);
     }
 }

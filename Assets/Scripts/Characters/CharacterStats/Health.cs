@@ -1,50 +1,42 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour _damageableComp;
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
 
     public float MaxHealth => _maxHealth;
     public float CurrentHealth => _currentHealth;
     public bool IsDowned => _currentHealth <= 0f;
-    public event Action<float, float> OnHealthChanged;
-    public event Action<MonoBehaviour> OnDowned;
-    public event Action OnRevived;
-    private IDamageable _damageable;
+    public uint OwnerID { get; private set; }
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private void Awake()
     {
         _currentHealth = _maxHealth;
 
-        if (_damageableComp == null)
-            Debug.LogError("No damageable monobehaviour provided");
+        OwnerID = GetComponent<DamageableEntity>().ID;
 
-        if (!_damageableComp.TryGetComponent(out IDamageable damageable))
-            Debug.LogError("User provided to health bar does not implement IDamageable interface.");
-
-        _damageable = damageable;
-
-        _damageable.OnTakeDamage += TakeDamage;
+        EventBus.Subscribe<OnCombatDamage>(TakeDamage);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(in OnCombatDamage onCombatDamage)
     {
-        if (IsDowned)
+        if (IsDowned || onCombatDamage.entityToDamageID != OwnerID)
             return;
 
-        _currentHealth -= damage;
+        _currentHealth -= onCombatDamage.damageToReceive;
 
         if (_currentHealth <= 0f)
         {
             _currentHealth = 0f;
-            Debug.Log($"{_damageableComp.name} is down");
-            OnDowned?.Invoke(_damageableComp);
+            EventBus.Raise<OnCharacterDowned>(OwnerID);
         }
 
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Heal(float amount)
@@ -53,7 +45,7 @@ public class Health : MonoBehaviour
             return;
 
         _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Revive(float maxHealthPercentage)
@@ -62,30 +54,66 @@ public class Health : MonoBehaviour
             return;
 
         _currentHealth = _maxHealth * maxHealthPercentage;
-        OnRevived?.Invoke();
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnCharacterRevived>(OwnerID);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
     }
 
     public void Reset()
     {
         bool wasDowned = IsDowned;
         _currentHealth = _maxHealth;
-        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+        EventBus.Raise<OnHealthChange>(OwnerID, _currentHealth, _maxHealth);
 
         if (wasDowned)
-            OnRevived?.Invoke();
+            EventBus.Raise<OnCharacterRevived>(OwnerID);
     }
+}
 
-#if UNITY_EDITOR
-    private void OnValidate()
+public struct OnHealthChange : IEvent
+{
+    public uint entityAffectedID;
+    public float currentHealth;
+    public float maxHealth;
+
+    public void Assign(params object[] parameters)
     {
-        if (_damageableComp == null)
-            return;
-
-        if (_damageableComp is not IDamageable)
-        {
-            Debug.LogError("Damageable component provided does not implement IDamageable interface.");
-        }
+        entityAffectedID = (uint)parameters[0];
+        currentHealth = (float)parameters[1];
+        maxHealth = (float)parameters[2];
     }
-#endif
+
+    public void Reset()
+    {
+        entityAffectedID = default(uint);
+        currentHealth = default(float);
+        maxHealth = default(float);
+    }
+}
+
+public struct OnCharacterDowned : IEvent
+{
+    public uint entityDownedID;
+    public void Assign(params object[] parameters)
+    {
+        entityDownedID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        entityDownedID = default(uint);
+    }
+}
+
+public struct OnCharacterRevived : IEvent
+{
+    public uint entityRevivedID;
+    public void Assign(params object[] parameters)
+    {
+        entityRevivedID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        entityRevivedID = default(uint);
+    }
 }

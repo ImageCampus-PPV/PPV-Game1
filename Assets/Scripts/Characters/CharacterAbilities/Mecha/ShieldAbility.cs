@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,11 +26,10 @@ public class ShieldAbility : CharacterAbility
     private float _cooldownTimer;
     private float _currentCooldown;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     public bool IsActive => _isActive;
     public bool IsOnCooldown => _isOnCooldown;
     public float CooldownProgress => _isOnCooldown && _currentCooldown > 0f ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
-
-
     public float ShieldHpProgress => _isActive && _lifetime > 0f ? _lifetimeTimer / _lifetime : 1f;
 
     public float ShieldArmorProgress => _activeDome != null ? _activeDome.HpPercent : 1f;
@@ -84,7 +85,7 @@ public class ShieldAbility : CharacterAbility
             return;
         }
 
-        _activeDome = Object.Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
+        _activeDome = Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
 
         Character[] allCharacters = Object.FindObjectsByType<Character>(FindObjectsSortMode.None);
         Collider2D[] friendlyColliders = new Collider2D[allCharacters.Length];
@@ -93,7 +94,7 @@ public class ShieldAbility : CharacterAbility
             friendlyColliders[i] = allCharacters[i].GetComponent<Collider2D>();
 
         _activeDome.Initialize(_maxHp, _minHp, _domeRadius, friendlyColliders);
-        _activeDome.OnShieldBroken += () => DeactivateShield(broken: true);
+        EventBus.Subscribe<OnShieldBroken>(BreakShield);
 
         _isActive = true;
         _lifetimeTimer = _lifetime;
@@ -104,9 +105,17 @@ public class ShieldAbility : CharacterAbility
         Debug.Log("[ShieldAbility] Shield activated.");
     }
 
+    private void BreakShield(in OnShieldBroken onShieldBroken)
+    {
+        if (_activeDome.ID != onShieldBroken.shieldID)
+            return;
+
+        DeactivateShield(true);
+    }
+
     private void DeactivateShield(bool broken)
     {
-        if (!_isActive) 
+        if (!_isActive)
             return;
 
         _isActive = false;

@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,43 +12,41 @@ public class JumpAbility : CharacterAbility
     [SerializeField] protected float holdForce = 15f;
     [SerializeField] protected float maxHoldTime = 0.2f;
 
-    [Header("If > 1 force increases in each jump, if < 1 force it decreases")]
+    [Header("If > 1 force increases in each jump, if < 1 force decreases")]
     [SerializeField] private float jumpForceModifier;
 
     protected int currentJumpCount = 0;
     protected float jumpHoldTimer;
     protected bool isHoldingJump;
 
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>(); 
+
     public override void Initialize(Character character, Rigidbody2D rb)
     {
         base.Initialize(character, rb);
 
-        Character.TouchGroundEvent -= ResetJumps;
-        Character.TouchGroundEvent += ResetJumps;
+        EventBus.Subscribe<OnCharacterTouchedGround>(ResetJumps);
     }
 
     public override void ProcessJump(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            Character.JumpPressedEvent?.Invoke();
+            EventBus.Raise<OnCharacterJumpPressed>(Character.ID);
             RequestJump();
         }
         if (context.canceled)
         {
-            Character.JumpReleasedEvent?.Invoke();
+            EventBus.Raise<OnCharacterJumpReleased>(Character.ID);
             isHoldingJump = false;
         }
     }
 
-    private void OnDestroy()
+    private void ResetJumps(in OnCharacterTouchedGround onCharacterTouchedGround)
     {
-        if (Character != null)
-            Character.TouchGroundEvent -= ResetJumps;
-    }
+        if (Character.ID != onCharacterTouchedGround.characterID)
+            return;
 
-    private void ResetJumps()
-    {
         if (Rb.linearVelocity.y > 0.1f)
             return;
 

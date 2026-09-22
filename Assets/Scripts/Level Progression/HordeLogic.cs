@@ -1,0 +1,141 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+using UnityEngine.TextCore.Text;
+using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
+
+public class HordeLogic : IInitiable, IDisposable
+{
+    private const float HORDE_COOLDOWN = 120f;
+    private const float FIRST_HORDE_COOLDOWN = 3f;
+    private const float HORDE_DURATION = HORDE_COOLDOWN / 3f;
+    private const float ENEMIES_SPAWN_COOLDOWN = 3f;
+    private const int ENEMIES_PER_HORDE = 50;
+
+    private MethodInfo _createEnemiesMethod;
+    private readonly List<Type> _enemyTypesList;
+
+    private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
+
+    private int EnemyCounter = 0;
+
+    public HordeLogic()
+    {
+        _enemyTypesList = new List<Type>();
+
+        GetEnemyTypes();
+
+        void GetEnemyTypes()
+        {
+            foreach (Type type in GetType().Assembly.GetTypes())
+            {
+                if (!type.IsClass || type.IsAbstract)
+                    continue;
+
+                if (!typeof(Enemy).IsAssignableFrom(type))
+                    continue;
+
+                _enemyTypesList.Add(type);
+            }
+        }
+    }
+
+    public void Init()
+    {
+        _createEnemiesMethod = typeof(EntityFactory).GetMethod(nameof(EntityFactory.Create), BindingFlags.Public | BindingFlags.Instance);
+
+        EventBus.Subscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
+        EventBus.Subscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
+        EventBus.Subscribe<EntityDestroyEvent<Nucleus>>(OnNucleusDestroyed);
+    }
+
+    private void OnNucleusDestroyed(in EntityDestroyEvent<Nucleus> nucleusDestroyEvent)
+    {
+        TaskScheduler.Remove(EndHorde);
+        TaskScheduler.Remove(SpawnEnemies);
+
+        EndHorde();
+    }
+
+    public void LateInit()
+    {
+        StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
+    }
+
+    private void StartNewHordeCountdown(float timer = HORDE_COOLDOWN)
+    {
+        TaskScheduler.Schedule(StartHorde, timer);
+    }
+
+    private void StartHorde()
+    {
+        EventBus.Raise<OnHordeStartedEvent>();
+    }
+
+    private void OnHordeStartedEvent(in OnHordeStartedEvent _)
+    {
+        foreach (Character character in EntityRegistry.FilterEntities<Character>())
+            character.transform.position = new Vector3(character.transform.position.x, 0, character.transform.position.z);
+
+        EnemyCounter = 0;
+        SpawnEnemies();
+
+        StartNewEndHordeCountdown();
+    }
+
+    private void StartNewEndHordeCountdown()
+    {
+        TaskScheduler.Schedule(EndHorde, HORDE_DURATION);
+    }
+
+    private void EndHorde()
+    {
+        EventBus.Raise<OnHordeEndedEvent>();
+    }
+
+    private void OnHordeEndedEvent(in OnHordeEndedEvent _)
+    {
+        ClearAllEnemies();
+        StartNewHordeCountdown();
+    }
+
+    private void ClearAllEnemies()
+    {
+        EntityRegistry.RemoveAllOfType<Enemy>();
+    }
+
+    private void SpawnEnemies()
+    {
+        if (EnemyCounter++ == ENEMIES_PER_HORDE)
+            return;
+
+        Vector3 enemySpawnPosition = EntityRegistry.GetRandomEntityOfType<EnemySpawner>().transform.position;
+        Type enemyType = GetRandomEnemyType();
+        Enemy enemySpawned = _createEnemiesMethod.MakeGenericMethod(enemyType).Invoke(EntityFactory, new object[] { enemySpawnPosition }) as Enemy;
+
+        if (enemySpawned != null)
+            enemySpawned.SwitchToHordeMode();
+
+        TaskScheduler.Schedule(SpawnEnemies, ENEMIES_SPAWN_COOLDOWN);
+    }
+
+    private Type GetRandomEnemyType()
+    {
+        int randomEnemyIndex = UnityEngine.Random.Range(0, _enemyTypesList.Count - 1);
+
+        return _enemyTypesList[randomEnemyIndex];
+    }
+
+    public void Dispose()
+    {
+        EventBus.Unsubscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
+        EventBus.Unsubscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
+    }
+}
