@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 
 public class HordeLogic : IInitiable, IDisposable
@@ -71,6 +72,9 @@ public class HordeLogic : IInitiable, IDisposable
 
     private void OnHordeStartedEvent(in OnHordeStartedEvent _)
     {
+        foreach (Character character in EntityRegistry.FilterEntities<Character>())
+            character.transform.position = new Vector3(character.transform.position.x, 0, character.transform.position.z);
+
         EnemyCounter = 0;
         SpawnEnemies();
 
