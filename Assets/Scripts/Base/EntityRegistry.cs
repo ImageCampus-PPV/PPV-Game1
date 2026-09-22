@@ -117,6 +117,8 @@ namespace GreenAbyss.Entities
 
             } while (currentEntityType != typeof(BaseEntity));
 
+            newEntity.Dispose();
+
             _entities.Remove(newEntity.ID);
 
             UnityEngine.Object.Destroy(newEntity.gameObject);
@@ -126,8 +128,9 @@ namespace GreenAbyss.Entities
         public void RemoveAllOfType<EntityType>() where EntityType : BaseEntity
         {
             IEnumerable<EntityType> entitiesToRemove = FilterEntities<EntityType>();
-
-            foreach (EntityType entity in entitiesToRemove)
+            List<EntityType> entitiesToRemoveList = new List<EntityType>(entitiesToRemove);
+            
+            foreach (EntityType entity in entitiesToRemoveList)
                 Remove(entity);
         }
 
