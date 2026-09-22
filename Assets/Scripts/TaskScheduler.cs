@@ -6,7 +6,7 @@ namespace ImageCampus.ToolBox.Scheduling
 {
     public sealed class TaskScheduler : IService, ITickable
     {
-        public sealed class ScheduledCall 
+        public sealed class ScheduledCall
         {
             public readonly Action callback;
             public float remainingTime;
@@ -16,7 +16,18 @@ namespace ImageCampus.ToolBox.Scheduling
                 this.callback = callback;
                 this.remainingTime = remainingTime;
             }
+
+            public static bool operator ==(ScheduledCall scheduledCall, Action action)
+            {
+                return scheduledCall.callback.Equals(action);
+            }
+
+            public static bool operator !=(ScheduledCall scheduledCall, Action action)
+            {
+                return !(scheduledCall == action);
+            }
         }
+
         public bool IsPersistance => false;
 
         private readonly List<ScheduledCall> scheduledCalls;
@@ -26,9 +37,22 @@ namespace ImageCampus.ToolBox.Scheduling
             this.scheduledCalls = new List<ScheduledCall>();
         }
 
-        public void Schedule(Action callback, float remainingTime) 
+        public void Schedule(Action callback, float remainingTime)
         {
             scheduledCalls.Add(new ScheduledCall(callback, remainingTime));
+        }
+
+        public void Remove(Action action)
+        {
+            for (int i = scheduledCalls.Count - 1; i >= 0; i--)
+            {
+                ScheduledCall call = scheduledCalls[i];
+                if (call == action)
+                {
+                    scheduledCalls.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
         public void Tick(float deltaTime)
