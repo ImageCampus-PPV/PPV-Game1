@@ -160,7 +160,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &8214479579750786648
 BoxCollider2D:
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba7278b21fe44849a6184e107625b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  _health: {fileID: 2039369700116197913}
+  _damageableEntity: {fileID: 0}
   _healthBar: {fileID: 8542585447198413836}
   _defaultFullHealth: 100
 --- !u!114 &6913589542571779159

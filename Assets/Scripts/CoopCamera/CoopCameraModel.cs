@@ -12,7 +12,7 @@ public struct CameraBounds
 
 public class CoopCameraModel
 {
-    public Vector3 currentCentroid { get; private set; }
+    public Vector3 currentCentroid;
     public float BoundsMargin { get; set; }
 
     public CoopCameraModel(float boundsMargin)
@@ -22,17 +22,35 @@ public class CoopCameraModel
 
     public Vector3 FindCentroid(List<Vector3> positions)
     {
-        Vector3 sum = Vector3.zero;
+        if (positions == null || positions.Count == 0)
+            return Vector3.zero;
 
-        if (positions.Count == 0)
-            return sum;
+        Vector3 sum = Vector3.zero;
 
         foreach (Vector3 pos in positions)
             sum += pos;
 
         currentCentroid = sum / positions.Count;
+
+        float maxDistance = 0f;
+
+        foreach (Vector3 pos in positions)
+            maxDistance = Mathf.Max(
+                maxDistance,
+                Vector3.Distance(currentCentroid, pos)
+            );
+
+        float halfFov = Camera.main.fieldOfView * 0.5f;
+
+        float requiredZ = maxDistance / Mathf.Tan(halfFov * Mathf.Deg2Rad);
+
+        requiredZ *= 1.1f;
+
+        currentCentroid.z = -requiredZ;
+
         return currentCentroid;
     }
+
 
     public CameraBounds GetBounds(Vector3 camPos, float orthographicSize, float aspect)
     {
