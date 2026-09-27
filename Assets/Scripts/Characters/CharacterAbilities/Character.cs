@@ -307,6 +307,18 @@ public class Character : DamageableEntity
         vel.x = xVel;
         _rb.linearVelocity = vel;
     }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        _activeMovement?.Dispose();
+        _activeJump?.Dispose();
+
+        foreach (CharacterAbility ability in _activeAbilities)
+        {
+            ability.Dispose();
+        }
+    }
 }
 
 public struct OnCharacterTouchedGround : IEvent

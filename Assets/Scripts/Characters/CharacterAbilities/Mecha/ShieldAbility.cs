@@ -144,4 +144,10 @@ public class ShieldAbility : CharacterAbility
         if (_isActive)
             DeactivateShield(broken: false);
     }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        EventBus.Unsubscribe<OnShieldBroken>(BreakShield);
+    }
 }
