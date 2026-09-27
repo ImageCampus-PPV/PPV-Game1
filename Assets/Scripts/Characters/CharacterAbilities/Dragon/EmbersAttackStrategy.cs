@@ -1,3 +1,5 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
@@ -15,7 +17,9 @@ public class EmbersAttackStrategy : AttackStrategy
     [SerializeField] private float _beamWidth = 0.5f;
     private Vector2 _currentAim;
 
-    private RuntimeDebugVisual _debugVisual;
+    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     public override void Execute(Vector2 aimDir)
     {
@@ -25,9 +29,6 @@ public class EmbersAttackStrategy : AttackStrategy
         isExecuting = true;
 
         _currentAim = aimDir;
-
-        if (!_debugVisual)
-            _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
     }
 
     public override void Tick()
@@ -51,38 +52,24 @@ public class EmbersAttackStrategy : AttackStrategy
         Vector2 beamSize = new(_beamRange, _beamWidth);
         float beamAngle = Mathf.Atan2(_currentAim.y, _currentAim.x) * Mathf.Rad2Deg;
 
-        if (_debugVisual)
-            _debugVisual.DrawOrientedBox(beamCenter, beamSize, beamAngle, Color.red, Time.deltaTime, _beamLineThickness <= 0f ? 0.05f : _beamLineThickness);
+        if (DebugVisual)
+            DebugVisual.DrawOrientedBox(beamCenter, beamSize, beamAngle, Color.red, Time.deltaTime, _beamLineThickness <= 0f ? 0.05f : _beamLineThickness);
 
-        Collider2D[] hits = Physics2D.OverlapBoxAll(beamCenter, beamSize, beamAngle, enemyLayer | _groundLayer);
-
-        foreach (Collider2D hit in hits)
+        foreach (Enemy enemy in EntityRegistry.GetAllEntitiesInBox<Enemy>(beamCenter, beamSize, beamAngle))
         {
-            if (((1 << hit.gameObject.layer) & enemyLayer) != 0)
-            {
-                DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
-                //mientras el ascuas toque al enemigo, le hace daño
-                damageable?.TakeDamage(damage * Time.deltaTime);
+            EventBus.Raise<OnCombatDamage>(enemy.ID, damage);
 
-                if (hit.TryGetComponent<IStatusEffectReceiver>(out IStatusEffectReceiver receiver))
-                //y, además, le aplica el efecto de quemadura por x tiempo.
-                {
-                    if (!receiver.HasEffect<BurnEffect>())
-                        receiver.ApplyEffect(new BurnEffect(_burnDuration, _burnDamagePerSecond));
-                }
-            }
+            if (!enemy.HasEffect<BurnEffect>())
+                enemy.ApplyEffect(new BurnEffect(_burnDuration, _burnDamagePerSecond));
+        }
 
-            if (groundHit.collider != null)
-            {
-                Vector2 rangeSize = new(_fireSpreadLength, _fireSpreadHeight);
+        if (groundHit.collider != null)
+        {
+            Vector2 rangeSize = new(_fireSpreadLength, _fireSpreadHeight);
 
-                Collider2D[] groundAoeHits = Physics2D.OverlapBoxAll(groundHit.point, rangeSize, 0f, enemyLayer);
-                DealDamageToTargets(groundAoeHits, damage * Time.deltaTime);
+            DealDamageToTargets<Enemy>(EntityRegistry.GetAllEntitiesInBox<Enemy>(groundHit.point, rangeSize), damage * Time.deltaTime);
 
-                _debugVisual.DrawBox(groundHit.point, rangeSize, Color.orange, Time.deltaTime);
-
-                break;
-            }
+            DebugVisual.DrawBox(groundHit.point, rangeSize, Color.orange, Time.deltaTime);
         }
     }
 }
