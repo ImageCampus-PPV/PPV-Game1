@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
@@ -22,7 +23,8 @@ public class BiteAttackStrategy : AttackStrategy
     private float _fullComboWindow;
     public int CurrentComboCount => _currentComboCount;
 
-    private RuntimeDebugVisual _debugVisual = null;
+    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     public override void Execute(Vector2 aimDir)
     {
@@ -60,9 +62,6 @@ public class BiteAttackStrategy : AttackStrategy
 
         Vector2 attackPos = (Vector2)character.transform.position + (_attackDir * hitboxRadius);
 
-        if (!_debugVisual)
-            _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
-
         Color comboColor = _currentComboCount switch
         {
             1 => _combo1Color,
@@ -71,10 +70,9 @@ public class BiteAttackStrategy : AttackStrategy
             _ => _combo3Color
         };
 
-        _debugVisual.DrawCircle(attackPos, hitboxRadius, comboColor, attackSpeed);
+        DebugVisual.DrawCircle(attackPos, hitboxRadius, comboColor, attackSpeed);
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos, hitboxRadius, enemyLayer);
-        DealDamageToTargets(hits, finalDamage);
+        DealDamageToTargets<Enemy>(EntityRegistry.GetAllEntitiesInRadius<Enemy>(attackPos, hitboxRadius), finalDamage);
     }
 
     public override void Tick()
