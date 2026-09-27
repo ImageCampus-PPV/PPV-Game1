@@ -1,3 +1,6 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +12,6 @@ public abstract class WeaponStrategy : ScriptableObject
     [SerializeField] protected float damage;
     [SerializeField] protected float range;
     [SerializeField] protected float cooldown;
-    [SerializeField] protected LayerMask enemyLayer;
 
     [Header("Slot Restriction")]
     [SerializeField] private WeaponSlot _allowedSlot;
@@ -18,6 +20,8 @@ public abstract class WeaponStrategy : ScriptableObject
     protected float lastFireTime = float.NegativeInfinity;
 
     public bool IsOnCooldown => Time.time - lastFireTime < cooldown;
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     public virtual float CooldownProgress
     {
@@ -46,8 +50,7 @@ public abstract class WeaponStrategy : ScriptableObject
 
     protected void DealDamageInArea(Vector2 center, float radius)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius, enemyLayer);
-        foreach (Collider2D hit in hits)
-            hit.GetComponent<DamageableEntity>()?.TakeDamage(damage);
+        foreach (Enemy enemy in EntityRegistry.GetAllEntitiesInRadius<Enemy>(center, radius))
+            EventBus.Raise<OnCombatDamage>(enemy.ID, damage);
     }
 }
