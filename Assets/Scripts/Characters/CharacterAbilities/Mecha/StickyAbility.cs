@@ -24,7 +24,7 @@ public class StickyAbility : CharacterAbility
         EventBus.Subscribe<OnCharacterJumpPressed>(JumpOff);
     }
 
-    public override void CharCollisionStay(Collision2D collision)
+    public override void CharacterCollisionStay(Collision2D collision)
     {
         if (IsSticking || Character.IsGrounded)
             return;

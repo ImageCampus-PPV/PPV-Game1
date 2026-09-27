@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
@@ -5,47 +6,48 @@ using UnityEngine;
 
 public class ShieldDome : DamageableEntity
 {
-    private SpriteRenderer _sr;
-    private CircleCollider2D _col;
+    private SpriteRenderer _spriteRenderer;
+    private CircleCollider2D _collider;
+
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     private void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
-        _col = GetComponent<CircleCollider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<CircleCollider2D>();
     }
 
-    public void Initialize(float maxHp, float minHp, float radius, Collider2D[] friendlyColliders)
+    public void Initialize(float maxHp, float minHp, float radius)
     {
-        _maxHealth = maxHp;
+        maxHealth = maxHp;
 
-        _currentHealth = maxHp;
+        currentHealth = maxHp;
 
-        if (_col != null)
-            _col.radius = radius;
+        if (_collider != null)
+            _collider.radius = radius;
 
         float spriteBaseDiameter = 1f;
         float scale = (radius * 2f) / spriteBaseDiameter;
         transform.localScale = Vector3.one * scale;
 
-        if (_col != null && friendlyColliders != null)
+        if (_collider != null)
         {
-            foreach (Collider2D friendly in friendlyColliders)
+            foreach (Character character in EntityRegistry.FilterEntities<Character>())
             {
-                if (friendly != null)
-                    Physics2D.IgnoreCollision(_col, friendly, true);
+                Physics2D.IgnoreCollision(_collider, character.Collider, true);
             }
         }
 
-        if (_sr != null)
-            _sr.color = new Color(0f, 1f, 1f, 0.35f);
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = new Color(0f, 1f, 1f, 0.35f);
     }
 
     public void Restore()
     {
-        Heal(_maxHealth);
+        Heal(maxHealth);
 
-        if (_sr != null)
-            _sr.color = new Color(0f, 1f, 1f, 0.35f);
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = new Color(0f, 1f, 1f, 0.35f);
     }
 }
 
