@@ -1,3 +1,5 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
 public class SeparationSteering : ISteeringBehaviour
@@ -6,8 +8,8 @@ public class SeparationSteering : ISteeringBehaviour
     private readonly float _weight;
     private readonly float _predictionTime;
     private readonly LayerMask _identityLayer;
-    private const int MAX_STORED_COLLIDERS = 16;
-    private readonly Collider2D[] _overlapBuffer = new Collider2D[MAX_STORED_COLLIDERS];
+
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     public SeparationSteering(LayerMask identityLayer, SteeringSettings settings)
     {
@@ -20,27 +22,15 @@ public class SeparationSteering : ISteeringBehaviour
 
     public Vector2 GetSteering(Rigidbody2D rb, Vector2 desiredDirection, SteeringContext context)
     {
-        int count = Physics2D.OverlapCircle(rb.position,
-                                            _radius,
-                                            new ContactFilter2D
-                                            {
-                                                useLayerMask = true,
-                                                layerMask = _identityLayer
-                                            },
-                                            _overlapBuffer);
-
-
-        //Debug.Log("Steering separation, " + count);
-
-        //if (count > 0)
-        //    Debug.Log("Stuff nearby: " + count);
-
         //separation force
         Vector2 force = Vector2.zero;
 
-        for (int i = 0; i < count; i++)
+        foreach (DamageableEntity damageable in EntityRegistry.GetAllEntitiesInRadius<DamageableEntity>(rb.position, _radius))
         {
-            Rigidbody2D otherRb = _overlapBuffer[i].attachedRigidbody;
+            if ((_identityLayer.value & (1 << damageable.gameObject.layer)) == 0)
+                continue;
+
+            Rigidbody2D otherRb = damageable.GetComponent<Rigidbody2D>();
 
             if (otherRb == rb)
                 continue;
