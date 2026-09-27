@@ -49,7 +49,6 @@ GameObject:
   - component: {fileID: 4641242830098775520}
   - component: {fileID: 8214479579750786648}
   - component: {fileID: 7125797993490839326}
-  - component: {fileID: 2039369700116197913}
   - component: {fileID: 6371174190988037585}
   - component: {fileID: 6913589542571779159}
   m_Layer: 7
@@ -223,19 +222,6 @@ MonoBehaviour:
   _character: {fileID: 6913589542571779159}
   _characterNameText: {fileID: 9107413912158374119}
   _spriteRenderer: {fileID: 5496692686696107244}
---- !u!114 &2039369700116197913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3288637428352067916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8734e8abdd78fcc4e9cce38aaf7f3e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  _maxHealth: 100
 --- !u!114 &6371174190988037585
 MonoBehaviour:
   m_ObjectHideFlags: 0
