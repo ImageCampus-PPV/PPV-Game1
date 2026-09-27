@@ -46,6 +46,7 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     public List<StatusEffect> ActiveEffects => _effects;
 
     public string CurrentStateName { get; set; }
+    public Rigidbody2D RigidBody { get => _rb;}
 
     private void Awake()
     {

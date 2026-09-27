@@ -21,11 +21,7 @@ public class ObstacleAvoidanceSteering : ISteeringBehaviour
 
     public Vector2 GetSteering(Rigidbody2D rb, Vector2 desiredDirection, SteeringContext context)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(rb.position,
-                                                _bodyRadius,
-                                                desiredDirection,
-                                                _obstacleLookDistance,
-                                                _obstacleLayers);
+        RaycastHit2D hit = Physics2D.CircleCast(rb.position, _bodyRadius, desiredDirection, _obstacleLookDistance, _obstacleLayers);
 
         if (!hit)
             return Vector2.zero;
