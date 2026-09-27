@@ -1,37 +1,34 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Services;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class TargetSelector
 {
-    //TODO: use the entity registry here
+    private static List<Transform> _validTargets = new List<Transform>();
+    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+
     public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, targetLayer);
-
         Transform closest = null;
-        float closestDist = Mathf.Infinity;
+        float closestDistanceSquared = Mathf.Infinity;
 
-        for (int i = 0; i < hits.Length; i++)
+        _validTargets.Clear();
+
+        foreach (DamageableEntity damageable in EntityRegistry.GetAllEntitiesInRadius<DamageableEntity>(origin, range))
         {
-            DamageableEntity damageable = hits[i].GetComponent<DamageableEntity>();
+            if ((targetLayer.value & (1 << damageable.gameObject.layer)) == 0)
+                continue;
 
-            if (damageable != null)
+            _validTargets.Add(damageable.transform);
+
+            float distanceSquared = ((Vector2)damageable.transform.position - (Vector2)origin).sqrMagnitude;
+
+            if (distanceSquared < closestDistanceSquared)
             {
-                float dist = Vector2.Distance(origin, hits[i].transform.position);
-
-                if (dist < closestDist)
-                {
-                    closestDist = dist;
-                    closest = hits[i].transform;
-                }
+                closestDistanceSquared = distanceSquared;
+                closest = damageable.transform;
             }
-        }
-
-        if (closest == null) 
-            return null;
-
-        if (Random.value > 0.5f)
-        {
-            return hits[Random.Range(0, hits.Length)].transform;
         }
 
         return closest;

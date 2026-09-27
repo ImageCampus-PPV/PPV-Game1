@@ -2,7 +2,9 @@
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Reflection;
+using UnityEngine.UIElements;
 
 namespace GreenAbyss.Entities
 {
@@ -129,7 +131,7 @@ namespace GreenAbyss.Entities
         {
             IEnumerable<EntityType> entitiesToRemove = FilterEntities<EntityType>();
             List<EntityType> entitiesToRemoveList = new List<EntityType>(entitiesToRemove);
-            
+
             foreach (EntityType entity in entitiesToRemoveList)
                 Remove(entity);
         }
@@ -139,6 +141,36 @@ namespace GreenAbyss.Entities
             int randomIndex = UnityEngine.Random.Range(0, _entityIdsPerType[typeof(EntityType)].Count);
 
             return GetEntityAtIndex<EntityType>(randomIndex);
+        }
+
+        public IEnumerable<EntityType> GetAllEntitiesInRadius<EntityType>(UnityEngine.Vector2 center, float radius) where EntityType : BaseEntity
+        {
+            float radiusSquared = radius * radius;
+
+            foreach (EntityType entity in FilterEntities<EntityType>())
+            {
+                UnityEngine.Vector2 distance = (UnityEngine.Vector2)entity.transform.position - center;
+
+                if (distance.sqrMagnitude <= radiusSquared)
+                    yield return entity;
+            }
+        }
+
+        public IEnumerable<EntityType> GetAllEntitiesInBox<EntityType>(UnityEngine.Vector2 center, UnityEngine.Vector2 size, float rotationAngle = 0f) where EntityType : BaseEntity
+        {
+            UnityEngine.Vector2 halfSize = size * 0.5f;
+            UnityEngine.Quaternion inverseRot = rotationAngle == 0f ? UnityEngine.Quaternion.identity : UnityEngine.Quaternion.Euler(0f, 0f, -rotationAngle);
+
+            foreach (EntityType entity in FilterEntities<EntityType>())
+            {
+                UnityEngine.Vector2 offset = (UnityEngine.Vector2)entity.transform.position - center;
+                UnityEngine.Vector2 rotatedOffset = inverseRot * ((UnityEngine.Vector2)entity.transform.position - center);
+
+                UnityEngine.Vector2 offsetUsed = rotationAngle == 0f ? offset : rotatedOffset;
+
+                if (Math.Abs(offsetUsed.x) <= halfSize.x && Math.Abs(offsetUsed.y) <= halfSize.y)
+                    yield return entity;
+            }
         }
 
         public bool Has(uint interactableID)
