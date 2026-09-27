@@ -1,15 +1,18 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AttackStrategy : ScriptableObject
 {
     [SerializeField] protected float hitboxRadius;
-    [SerializeField] protected LayerMask enemyLayer;
     public float damage;
     public float attackSpeed;
     protected Character character;
     protected bool isExecuting;
 
     public bool IsExecuting => isExecuting;
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     public virtual void Initialize(Character character)
     {
@@ -25,12 +28,9 @@ public abstract class AttackStrategy : ScriptableObject
     public virtual void Tick() { }
     public virtual void FixedTick() { }
 
-    protected void DealDamageToTargets(Collider2D[] hits, float damage)
+    protected void DealDamageToTargets<EntityType>(IEnumerable<DamageableEntity> hits, float damage) where EntityType : DamageableEntity
     {
-        foreach (Collider2D hit in hits)
-        {
-            DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
-            damageable?.TakeDamage(damage);
-        }
+        foreach (DamageableEntity hit in hits)
+            EventBus.Raise<OnCombatDamage>(hit.ID, damage);
     }
 }

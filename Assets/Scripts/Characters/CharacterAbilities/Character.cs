@@ -38,6 +38,7 @@ public class Character : DamageableEntity
     public bool IsBlockingJump { get; set; }
     public Vector2 CurrentAimDir { get; private set; }
     public Rigidbody2D Rb => _rb;
+    public Collider2D Collider => _ownCollider;
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
@@ -257,11 +258,11 @@ public class Character : DamageableEntity
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        _activeMovement?.CharCollisionStay(collision);
-        _activeJump?.CharCollisionStay(collision);
+        _activeMovement?.CharacterCollisionStay(collision);
+        _activeJump?.CharacterCollisionStay(collision);
         foreach (CharacterAbility ability in _activeAbilities)
         {
-            ability.CharCollisionStay(collision);
+            ability.CharacterCollisionStay(collision);
         }
     }
     private void CheckGrounded()
