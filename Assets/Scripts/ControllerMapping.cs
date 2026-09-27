@@ -91,6 +91,9 @@ public sealed class ControllerMapping : IService, IInitiable, ITickable
         InputUser user = InputUser.CreateUserWithoutPairedDevices();
         InputUser.PerformPairingWithDevice(device, user);
 
+        if (device is Keyboard)
+            InputUser.PerformPairingWithDevice(Mouse.current, user);
+
         user.AssociateActionsWithUser(newInputActionMap);
         newInputActionMap.Enable();
 
@@ -172,9 +175,9 @@ public sealed class ControllerMapping : IService, IInitiable, ITickable
 
     public void Dispose()
     {
-        inputActions.Player.Jump.performed -= OnJoinPlayerAction;
-        inputActions.Player.Jump.Disable();
-        inputActions.Player.Jump.Dispose();
+        inputActions.Constant.JoinGame.performed -= OnJoinPlayerAction;
+        inputActions.Constant.JoinGame.Disable();
+        inputActions.Constant.JoinGame.Dispose();
 
         InputSystem.onDeviceChange -= OnDeviceChange;
 
