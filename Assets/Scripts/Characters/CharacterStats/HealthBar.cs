@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] private DamageableEntity _damageableEntity;
     [SerializeField] private Slider _healthBar;
     [SerializeField] private float _defaultFullHealth = 100f;
-    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private EventBus EventBus => ServiceProvider.Instance.ContainsService<EventBus>()? ServiceProvider.Instance.GetService<EventBus>() : null;
 
     private void Awake()
     {
@@ -39,7 +39,10 @@ public class HealthBar : MonoBehaviour
         }    
 
         if (onHealthChange.entityAffectedID != _damageableEntity.ID)
+        {
+            Debug.Log($"Health change triggered by entity of id {onHealthChange.entityAffectedID}. Not updating healthbar, only listening for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
             return;
+        }
 
         if (_healthBar.maxValue != onHealthChange.maxHealth)
             _healthBar.maxValue = onHealthChange.maxHealth;
@@ -50,12 +53,16 @@ public class HealthBar : MonoBehaviour
                              $"The value should be between {_healthBar.minValue} and {_healthBar.maxValue}");
             return;
         }
+        Debug.Log($"Updating healthbar for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
 
         _healthBar.value = onHealthChange.currentHealth;
     }
 
     private void OnDestroy()
     {
+        if (EventBus == null)
+            return;
+
         EventBus.Unsubscribe<OnHealthChange>(UpdateHealthbar);
     }
 }

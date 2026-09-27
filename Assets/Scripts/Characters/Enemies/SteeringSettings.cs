@@ -28,9 +28,4 @@ public struct SteeringSettings
     [SerializeField] public float wanderWeight;
     [SerializeField] public float wanderJitter;
     [SerializeField] public float wanderStrength;
-
-    [Header("Orbit")]
-    [SerializeField] public float orbitWeight;
-    [SerializeField] public float orbitMinDistance;
-    [SerializeField] public float orbitMaxDistance;
 }

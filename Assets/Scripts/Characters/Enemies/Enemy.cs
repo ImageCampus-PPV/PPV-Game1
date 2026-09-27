@@ -57,12 +57,8 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
 
         SteeringMovement movement = new SteeringMovement(_steeringSettings,
                                     new SeekSteering(_steeringSettings),
-                                    new SeparationSteering(
-                                        _identityLayer,
-                                        _steeringSettings),
-                                    new ObstacleAvoidanceSteering(
-                                        _obstacleLayers,
-                                        _steeringSettings),
+                                    new SeparationSteering(_identityLayer, _steeringSettings),
+                                    new ObstacleAvoidanceSteering(_obstacleLayers, _steeringSettings),
                                     new WanderSteering(_steeringSettings)
                                     );
 

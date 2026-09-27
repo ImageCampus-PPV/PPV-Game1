@@ -9,9 +9,7 @@ public class SeekSteering : ISteeringBehaviour
         _weight = settings.seekWeight;
     }
 
-    public Vector2 GetSteering(Rigidbody2D rb,
-                               Vector2 desiredDirection,
-                               SteeringContext context)
+    public Vector2 GetSteering(Rigidbody2D rb, Vector2 desiredDirection, SteeringContext context)
     {
         return desiredDirection * _weight;
     }
