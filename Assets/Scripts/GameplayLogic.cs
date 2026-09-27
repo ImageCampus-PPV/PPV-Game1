@@ -25,6 +25,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private InteractionController _interactionController;
     private DepositUI _depositUI;
     private HordeLogic _hordeLogic;
+    private CombatSystem _combatSystem;
 
     private SceneRef _gamePlayScene;
 
@@ -54,6 +55,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _interactionController = new InteractionController();
         _depositUI = new DepositUI();
         _hordeLogic = new HordeLogic();
+        _combatSystem = new CombatSystem();
 
         _hatchLogic.Init();
         _nucleusLogic.Init();
@@ -65,6 +67,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         CoopCameraController.Init();
         _depositUI.Init();
         _hordeLogic.Init();
+        _combatSystem.Init();
     }
 
     public void LateInit()
@@ -79,6 +82,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         CoopCameraController.LateInit();
         _depositUI.LateInit();
         _hordeLogic.LateInit();
+        _combatSystem.LateInit();
 
         EntityFactory.Create<Mecha>();
         EntityFactory.Create<Dragon>();
@@ -112,6 +116,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         ControllerMapping.Dispose();
         _depositUI.Dispose();
         _hordeLogic.Dispose();
+        _combatSystem.Dispose();
 
         SceneManager.UnloadSceneAsync(_gamePlayScene.Index);
         ServiceProvider.Instance.ClearAllServices();
