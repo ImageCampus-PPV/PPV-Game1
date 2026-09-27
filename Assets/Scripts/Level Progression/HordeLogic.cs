@@ -5,13 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 
 public class HordeLogic : IInitiable, IDisposable
 {
     private const float HORDE_COOLDOWN = 120f;
-    private const float FIRST_HORDE_COOLDOWN = 3f;
+    private const float FIRST_HORDE_COOLDOWN = 20f;
     private const float HORDE_DURATION = HORDE_COOLDOWN / 3f;
     private const float ENEMIES_SPAWN_COOLDOWN = 3f;
     private const int ENEMIES_PER_HORDE = 50;
@@ -66,7 +65,7 @@ public class HordeLogic : IInitiable, IDisposable
 
     public void LateInit()
     {
-        //StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
+        StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
     }
 
     private void StartNewHordeCountdown(float timer = HORDE_COOLDOWN)
