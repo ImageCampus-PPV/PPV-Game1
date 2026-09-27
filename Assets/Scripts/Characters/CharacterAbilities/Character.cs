@@ -8,7 +8,7 @@ using UnityEngine.TextCore.Text;
 
 public class Character : DamageableEntity
 {
-    private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
+    private CoopCameraController CoopCameraController => ServiceProvider.Instance.ContainsService<CoopCameraController>() ? ServiceProvider.Instance.GetService<CoopCameraController>() : null;
 
     [Header("Ground checks")]
     [SerializeField] private float _coyoteTime = 0.12f;
@@ -218,6 +218,9 @@ public class Character : DamageableEntity
     }
     private void CalculateAim()
     {
+        if (CoopCameraController == null)
+            return;
+
         if (IsBlockingRotation)
             return;
         if (_isOnGamepad)
@@ -288,6 +291,9 @@ public class Character : DamageableEntity
     }
     private float ClampScreenMovement(float xVel)
     {
+        if (CoopCameraController == null)
+            return 0f;
+
         CameraBounds bounds = CoopCameraController.GetBounds();
         float posX = _rb.position.x;
         if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))

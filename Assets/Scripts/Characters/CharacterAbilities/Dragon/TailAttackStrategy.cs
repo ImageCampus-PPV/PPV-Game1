@@ -1,13 +1,15 @@
+using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Attacks/Ground Tail (Y)")]
 public class TailAttackStrategy : AttackStrategy
 {
-    [SerializeField] private float _hitboxSizeX = 3f; 
+    [SerializeField] private float _hitboxSizeX = 3f;
     [SerializeField] private float _hitboxSizeY = 1.5f;
     [SerializeField] private float _knockBackXForce = 10f;
     private float _currentAttackTimer;
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private RuntimeDebugVisual _debugVisual;
 
@@ -26,7 +28,7 @@ public class TailAttackStrategy : AttackStrategy
 
         Vector2 attackPos = (Vector2)character.transform.position + (Vector2.up * (_hitboxSizeY / 2f));
 
-        if(!_debugVisual)
+        if (!_debugVisual)
             _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
         _debugVisual.DrawBox(attackPos, new(_hitboxSizeX, _hitboxSizeY), Color.magenta, attackSpeed);
@@ -36,11 +38,18 @@ public class TailAttackStrategy : AttackStrategy
         foreach (Collider2D hit in hits)
         {
             //TODO: replace with combat registry
-            DamageableEntity damageable = hit.GetComponent<DamageableEntity>();
-            damageable?.TakeDamage(damage);
+            if (!hit.gameObject.TryGetComponent<DamageableEntity>(out DamageableEntity damageable))
+            {
+                Debug.Log($"{hit.gameObject.name} is not a damageable entity");
+                return;
+            }
+
+            Debug.Log($"Dealing damage to entity {damageable.name}");
+            EventBus.Raise<OnCombatDamage>(damageable.ID, damage);
 
             if (hit.TryGetComponent<Rigidbody2D>(out Rigidbody2D enemyRb))
             {
+                //TODO: make this a knockback event/effect
                 float dir = Mathf.Sign(hit.transform.position.x - character.transform.position.x);
                 enemyRb.linearVelocity = Vector2.zero;
                 enemyRb.AddForce(new(dir * _knockBackXForce, 0), ForceMode2D.Impulse);
