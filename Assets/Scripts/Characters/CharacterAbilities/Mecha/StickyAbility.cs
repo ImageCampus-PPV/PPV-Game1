@@ -9,6 +9,7 @@ public class StickyAbility : CharacterAbility
     [SerializeField] private float _jumpOffForceX = 10f;
     [SerializeField] private float _unstickForceXMultiplier = 0.5f;
     [SerializeField] private float _jumpOffForceY = 15f;
+    [SerializeField] private float _slowFallGravityScale = 0.3f;
 
     private float _stickTimer;
     private Vector2 _wallNormal;
@@ -49,7 +50,7 @@ public class StickyAbility : CharacterAbility
 
         Rb.linearVelocity = Vector2.zero;
 
-        Rb.gravityScale = 0f;
+        Rb.gravityScale = _slowFallGravityScale;
 
         Character.transform.position = _attachPoint;
     }
@@ -93,8 +94,6 @@ public class StickyAbility : CharacterAbility
             return;
 
         Character.transform.position += (Vector3)(_wallNormal * 0.1f);
-
-        Rb.AddForce(_wallNormal * _jumpOffForceX * _unstickForceXMultiplier, ForceMode2D.Impulse);
 
         IsSticking = false;
         Rb.gravityScale = 1f;
