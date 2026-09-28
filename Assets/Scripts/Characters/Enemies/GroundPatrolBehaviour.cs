@@ -5,6 +5,7 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private float _moveSpeed = 2f;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _wallLayer;
     [SerializeField] private float _lookAheadDistance = 0.5f;
     [SerializeField] private float _groundCheckDistance = 1f;
     [SerializeField] private float _wallCheckDistance = 0.25f;
@@ -57,7 +58,7 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
             Vector2 floorCheckOrigin = position + Vector2.right * (_direction * _lookAheadDistance);
 
             bool isThereGround = Physics2D.Raycast(floorCheckOrigin, Vector2.down * _floorCheckYOffset, _groundCheckDistance, _groundLayer);
-            bool isThereWall = Physics2D.Raycast(position, Vector2.right * _direction, _wallCheckDistance, _groundLayer);
+            bool isThereWall = Physics2D.Raycast(position, Vector2.right * _direction, _wallCheckDistance, _wallLayer);
 
             if (!isThereGround || isThereWall)
             {
