@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace GreenAbyss.Entities
@@ -143,32 +144,78 @@ namespace GreenAbyss.Entities
             return GetEntityAtIndex<EntityType>(randomIndex);
         }
 
+        /// <summary>
+        /// The entity type to get must implement IEntityDimensions
+        /// </summary>
+        /// <typeparam name="EntityType"></typeparam>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
         public IEnumerable<EntityType> GetAllEntitiesInRadius<EntityType>(UnityEngine.Vector2 center, float radius) where EntityType : BaseEntity
         {
             float radiusSquared = radius * radius;
 
             foreach (EntityType entity in FilterEntities<EntityType>())
             {
-                UnityEngine.Vector2 distance = (UnityEngine.Vector2)entity.transform.position - center;
+                if (entity is not IEntityDimensions entityDimensions)
+                    continue;
+
+                UnityEngine.Vector2 halfSize = entityDimensions.Size * 0.5f;
+
+                UnityEngine.Vector2 min = entityDimensions.Center - halfSize;
+                UnityEngine.Vector2 max = entityDimensions.Center + halfSize;
+
+                UnityEngine.Vector2 closestPoint = new UnityEngine.Vector2(Math.Clamp(center.x, min.x, max.x), Math.Clamp(center.y, min.y, max.y));
+
+                UnityEngine.Vector2 distance = closestPoint - center;
 
                 if (distance.sqrMagnitude <= radiusSquared)
                     yield return entity;
             }
         }
 
+        /// <summary>
+        /// The entity type to get must implement IEntityDimensions
+        /// </summary>
+        /// <typeparam name="EntityType"></typeparam>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
         public IEnumerable<EntityType> GetAllEntitiesInBox<EntityType>(UnityEngine.Vector2 center, UnityEngine.Vector2 size, float rotationAngle = 0f) where EntityType : BaseEntity
         {
             UnityEngine.Vector2 halfSize = size * 0.5f;
-            UnityEngine.Quaternion inverseRot = rotationAngle == 0f ? UnityEngine.Quaternion.identity : UnityEngine.Quaternion.Euler(0f, 0f, -rotationAngle);
+
+            UnityEngine.Quaternion inverseRotation = UnityEngine.Quaternion.Euler(0f, 0f, -rotationAngle);
 
             foreach (EntityType entity in FilterEntities<EntityType>())
             {
-                UnityEngine.Vector2 offset = (UnityEngine.Vector2)entity.transform.position - center;
-                UnityEngine.Vector2 rotatedOffset = inverseRot * ((UnityEngine.Vector2)entity.transform.position - center);
+                if (entity is not IEntityDimensions dimensions)
+                    continue;
 
-                UnityEngine.Vector2 offsetUsed = rotationAngle == 0f ? offset : rotatedOffset;
+                UnityEngine.Vector2 entityHalfSize = dimensions.Size * 0.5f;
 
-                if (Math.Abs(offsetUsed.x) <= halfSize.x && Math.Abs(offsetUsed.y) <= halfSize.y)
+                UnityEngine.Vector2[] corners =
+                {
+                    dimensions.Center + new UnityEngine.Vector2(-entityHalfSize.x, -entityHalfSize.y),
+                    dimensions.Center + new UnityEngine.Vector2(-entityHalfSize.x,  entityHalfSize.y),
+                    dimensions.Center + new UnityEngine.Vector2( entityHalfSize.x, -entityHalfSize.y),
+                    dimensions.Center + new UnityEngine.Vector2( entityHalfSize.x,  entityHalfSize.y)
+                };
+
+                bool overlaps = false;
+
+                foreach (UnityEngine.Vector2 corner in corners)
+                {
+                    UnityEngine.Vector2 localCorner = inverseRotation * (corner - center);
+
+                    if (Mathf.Abs(localCorner.x) <= halfSize.x && Mathf.Abs(localCorner.y) <= halfSize.y)
+                    {
+                        overlaps = true;
+                        break;
+                    }
+                }
+
+                if (overlaps)
                     yield return entity;
             }
         }
@@ -178,4 +225,11 @@ namespace GreenAbyss.Entities
             return _entities.ContainsKey(interactableID);
         }
     }
+}
+
+
+public interface IEntityDimensions
+{
+    UnityEngine.Vector2 Center { get; }
+    UnityEngine.Vector2 Size { get; }
 }
