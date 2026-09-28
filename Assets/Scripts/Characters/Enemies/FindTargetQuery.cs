@@ -4,9 +4,11 @@ public class FindTargetQuery : ICommandQuery<Transform>
 {
     public float Range { get; }
     public LayerMask TargetLayer { get; }
-    public FindTargetQuery(float range, LayerMask targetLayer) 
+    public bool DebugArea { get; }
+    public FindTargetQuery(float range, LayerMask targetLayer, bool debugArea = false) 
     { 
         Range = range; 
-        TargetLayer = targetLayer; 
+        TargetLayer = targetLayer;
+        DebugArea = debugArea;
     }
 }
