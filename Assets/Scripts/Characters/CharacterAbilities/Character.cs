@@ -1,7 +1,9 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
@@ -14,8 +16,7 @@ public class Character : DamageableEntity
     [SerializeField] private float _coyoteTime = 0.12f;
     //TODO: Make ground check with unity
     [SerializeField] private Transform _groundCheck;
-    [SerializeField] private float _groundCheckRadius = 0.1f;
-    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private float _groundCheckRadius = 1.2f;
 
     [SerializeField] private CharacterDebugInfo info;
 
@@ -29,6 +30,9 @@ public class Character : DamageableEntity
     private Collider2D _ownCollider;
 
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
     public float CoyoteTime => _coyoteTime;
@@ -42,6 +46,8 @@ public class Character : DamageableEntity
     public MovementAbility ActiveMovement => _activeMovement;
     public JumpAbility ActiveJump => _activeJump;
     public List<CharacterAbility> ActiveAbilities => _activeAbilities;
+    public override Vector2 Center => transform.position;
+    public override Vector2 Size => _ownCollider == null ? Vector2.zero : _ownCollider.bounds.size;
 
     public override void Init()
     {
@@ -67,6 +73,7 @@ public class Character : DamageableEntity
 
         CleanUpAbilities();
         _activeAbilities.Clear();
+
         if (info.MovementAbility != null)
         {
             _activeMovement = Instantiate(info.MovementAbility);
@@ -85,6 +92,7 @@ public class Character : DamageableEntity
                 Debug.LogError($"Null ability in {info.name}");
                 continue;
             }
+
             CharacterAbility clonedAbility = Instantiate(ability);
             clonedAbility.Initialize(this, _rb);
             _activeAbilities.Add(clonedAbility);
@@ -95,13 +103,13 @@ public class Character : DamageableEntity
     {
         if (_activeMovement != null)
             Destroy(_activeMovement);
+
         if (_activeJump != null)
             Destroy(_activeJump);
+
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             if (ability != null)
                 Destroy(ability);
-        }
     }
     public void OnAim(Vector2 dir)
     {
@@ -111,32 +119,31 @@ public class Character : DamageableEntity
         _rawAimInput = dir;
 
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             ability.ProcessAim(dir);
-        }
     }
+
     public void OnMove(Vector2 dir)
     {
         if (IsIgnoringInput)
             return;
 
         _activeMovement?.ProcessMove(dir);
+
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             ability.ProcessMove(dir);
-        }
     }
     public void OnJump(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
+
         _isOnGamepad = context.control.device is Gamepad;
         _activeJump?.ProcessJump(context);
+
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             ability.ProcessJump(context);
-        }
     }
+
     public void OnPrimaryAction(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
@@ -146,6 +153,7 @@ public class Character : DamageableEntity
             ability.ProcessAction(context);
         }
     }
+
     public void OnSecondaryAction(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
@@ -155,6 +163,7 @@ public class Character : DamageableEntity
             ability.ProcessSkill(context);
         }
     }
+
     public void OnShield(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
@@ -196,6 +205,7 @@ public class Character : DamageableEntity
             }
         }
     }
+
     public void OnSkillAction(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
@@ -212,11 +222,11 @@ public class Character : DamageableEntity
         CalculateAim();
         _activeMovement?.Tick();
         _activeJump?.Tick();
+
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             ability.Tick();
-        }
     }
+
     private void CalculateAim()
     {
         if (CoopCameraController == null)
@@ -224,6 +234,7 @@ public class Character : DamageableEntity
 
         if (IsBlockingRotation)
             return;
+
         if (_isOnGamepad)
         {
             if (_rawAimInput.sqrMagnitude > 0.05f)
@@ -231,6 +242,7 @@ public class Character : DamageableEntity
                 CurrentAimDir = _rawAimInput.normalized;
             }
         }
+
         else
         {
             if (CoopCameraController.Camera && Mouse.current != null)
@@ -244,18 +256,20 @@ public class Character : DamageableEntity
                 //Debug.Log(CurrentAimDir);
             }
         }
+
         if (CurrentAimDir == Vector2.zero)
             CurrentAimDir = Vector2.right;
     }
+
     private void FixedUpdate()
     {
         _activeMovement?.FixedTick();
         _activeJump?.FixedTick();
+
         foreach (CharacterAbility ability in _activeAbilities)
-        {
             ability.FixedTick();
-        }
     }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         _activeMovement?.CharacterCollisionStay(collision);
@@ -265,18 +279,23 @@ public class Character : DamageableEntity
             ability.CharacterCollisionStay(collision);
         }
     }
+
     private void CheckGrounded()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(_groundCheck.position, _groundCheckRadius, _groundLayer);
-        bool grounded = System.Array.Exists(hits, col => col != _ownCollider);
-        SetGrounded(grounded);
+        DebugVisual.DrawCircle(_groundCheck.position, _groundCheckRadius, Color.red, Time.deltaTime);
+        int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
+        Debug.Log("Ground detected: " + groundCount);
+        SetGrounded(groundCount != 0);
     }
+
     public void ForceSetGrounded(bool grounded)
     {
         IsGrounded = grounded;
+
         if (!grounded)
             LastGroundedTime = float.NegativeInfinity;
     }
+
     private void SetGrounded(bool grounded)
     {
         bool wasGrounded = IsGrounded;
@@ -290,6 +309,7 @@ public class Character : DamageableEntity
         if (!wasGrounded)
             EventBus.Raise<OnCharacterTouchedGround>(ID);
     }
+
     private float ClampScreenMovement(float xVel)
     {
         if (CoopCameraController == null)
@@ -297,8 +317,10 @@ public class Character : DamageableEntity
 
         CameraBounds bounds = CoopCameraController.GetBounds();
         float posX = _rb.position.x;
+
         if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
             xVel = 0;
+
         return xVel;
     }
     public void ApplyHVelocity(float xVel)

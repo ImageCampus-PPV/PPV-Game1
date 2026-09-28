@@ -6,9 +6,10 @@ using ImageCampus.ToolBox.Services;
 public class Main : MonoBehaviour
 {
     [SerializeField] private SceneRef _gamePlayScene;
-    [SerializeField] private GameplayLogic _gameplayLogic;
     [SerializeField] private GameCanvas _gameCanvas;
     [SerializeField] private PrefabsRegistry _prefabsRegistry;
+
+    private GameplayLogic _gameplayLogic;
 
     private void Awake()
     {

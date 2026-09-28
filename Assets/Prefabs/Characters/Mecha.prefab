@@ -249,13 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178a4d2480806fd4d85ad92cf835d3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mecha
-  _maxHealth: 100
+  maxHealth: 100
   _coyoteTime: 0.12
   _groundCheck: {fileID: 5234064675125401376}
   _groundCheckRadius: 0.3
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   info: {fileID: 11400000, guid: 4f9c031509c7cc34a9eaf74dd4e491ea, type: 2}
 --- !u!1 &3296486610146164903
 GameObject:
@@ -357,7 +354,7 @@ Transform:
   m_GameObject: {fileID: 3689468812772471908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0}
+  m_LocalPosition: {x: 0, y: -1.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
