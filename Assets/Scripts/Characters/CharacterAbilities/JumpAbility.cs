@@ -107,4 +107,9 @@ public class JumpAbility : CharacterAbility
         Rb.linearVelocity = vel;
         Rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
+    public override void Dispose()
+    {
+        base.Dispose();
+        EventBus.Unsubscribe<OnCharacterTouchedGround>(ResetJumps);
+    }
 }
