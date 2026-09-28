@@ -7,7 +7,7 @@ using UnityEngine;
 
 public sealed class CombatSystem : IInitiable, IService, IDisposable
 {
-    [SerializeField] private float _downedSpeedMultiplier = 0.3f;
+    private float _downedSpeedMultiplier = 0.3f;
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
@@ -35,6 +35,9 @@ public sealed class CombatSystem : IInitiable, IService, IDisposable
     {
         Character damagedEntity = EntityRegistry.GetAs<Character>(onCharacterRevived.entityRevivedID);
 
+        if (damagedEntity == null)
+            return;
+
         damagedEntity.IsBlockingAbilities = false;
         damagedEntity.ActiveMovement.SpeedMultiplier = 1f;
         Debug.Log("Revived.");
@@ -43,6 +46,9 @@ public sealed class CombatSystem : IInitiable, IService, IDisposable
     private void HandleDowned(in OnCharacterDowned onCharacterDowned)
     {
         Character damagedEntity = EntityRegistry.GetAs<Character>(onCharacterDowned.entityDownedID);
+
+        if (damagedEntity == null)
+            return;
 
         damagedEntity.IsBlockingAbilities = true;
         damagedEntity.ActiveMovement.SpeedMultiplier = _downedSpeedMultiplier;
