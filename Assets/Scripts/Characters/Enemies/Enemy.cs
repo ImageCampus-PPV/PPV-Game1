@@ -47,12 +47,17 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
 
     public string CurrentStateName { get; set; }
     public Rigidbody2D RigidBody { get => _rb;}
+    private Collider2D _collider;
+
+    public override Vector2 Center => transform.position;
+    public override Vector2 Size => _collider == null ? Vector2.zero : _collider.bounds.size;
 
     private void Awake()
     {
         _damageBehaviours = new List<DamageBehaviour>();
 
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
         _damageResponse = GetComponent<DamageResponse>();
         _positionOnSpawn = transform.position;
 
@@ -156,7 +161,7 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     {
         if (query is FindTargetQuery find)
             //TODO: fix this boxing!
-            return (ResultType)(object)TargetSelector.GetBestTarget(transform.position, find.Range, find.TargetLayer);
+            return (ResultType)(object)TargetSelector.GetBestTarget(transform.position, find.Range, find.TargetLayer, find.DebugArea);
 
         throw new NotSupportedException($"Query {query.GetType()} not supported.");
     }

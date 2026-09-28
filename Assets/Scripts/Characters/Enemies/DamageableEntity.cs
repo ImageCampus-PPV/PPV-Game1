@@ -3,7 +3,7 @@ using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
-public abstract class DamageableEntity : BaseEntity
+public abstract class DamageableEntity : BaseEntity, IEntityDimensions
 {
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
@@ -19,9 +19,12 @@ public abstract class DamageableEntity : BaseEntity
 
     public float MaxHealth => maxHealth;
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    public abstract Vector2 Center { get; }
+    public abstract Vector2 Size { get; }
 
-    private void Awake()
+    public override void Init()
     {
+        base.Init();
         currentHealth = maxHealth;
     }
 
@@ -40,6 +43,7 @@ public abstract class DamageableEntity : BaseEntity
             EntityRegistry.Remove(this);
         }
     }
+
 
     public void Heal(float amount)
     {

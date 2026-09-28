@@ -11,6 +11,10 @@ public class ShieldDome : DamageableEntity
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
+    public override Vector2 Center => transform.position;
+
+    public override Vector2 Size => _collider.bounds.size;
+
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
