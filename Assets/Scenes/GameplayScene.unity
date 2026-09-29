@@ -1469,6 +1469,7 @@ GameObject:
   - component: {fileID: 276623281}
   - component: {fileID: 276623280}
   - component: {fileID: 276623279}
+  - component: {fileID: 276623283}
   m_Layer: 6
   m_Name: Square (19)
   m_TagString: Untagged
@@ -1622,6 +1623,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &276623283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276623277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1 &331963649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,6 +2566,7 @@ GameObject:
   - component: {fileID: 830074338}
   - component: {fileID: 830074337}
   - component: {fileID: 830074341}
+  - component: {fileID: 830074342}
   m_Layer: 6
   m_Name: Square (2)
   m_TagString: Untagged
@@ -2706,6 +2720,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &830074342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830074336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1001 &867913570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3767,6 +3793,7 @@ GameObject:
   - component: {fileID: 1420977832}
   - component: {fileID: 1420977831}
   - component: {fileID: 1420977830}
+  - component: {fileID: 1420977834}
   m_Layer: 6
   m_Name: Square (9)
   m_TagString: Untagged
@@ -3920,6 +3947,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1420977834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420977828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1 &1430924105 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3531608655804087334, guid: 63dccfeee6f707d4c9b6dac1024edeb3, type: 3}
@@ -4393,6 +4432,7 @@ GameObject:
   - component: {fileID: 1560016400}
   - component: {fileID: 1560016399}
   - component: {fileID: 1560016398}
+  - component: {fileID: 1560016403}
   m_Layer: 6
   m_Name: Square (3)
   m_TagString: Untagged
@@ -4546,6 +4586,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1560016403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560016397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1001 &1591995723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5191,6 +5243,7 @@ GameObject:
   - component: {fileID: 1903182050}
   - component: {fileID: 1903182049}
   - component: {fileID: 1903182048}
+  - component: {fileID: 1903182052}
   m_Layer: 6
   m_Name: Square (18)
   m_TagString: Untagged
@@ -5344,6 +5397,18 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1903182052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903182046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1 &2014373965
 GameObject:
   m_ObjectHideFlags: 0

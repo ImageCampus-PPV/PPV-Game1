@@ -7,7 +7,9 @@ public class ForceEntityRegistry : MonoBehaviour
 
     private void Awake()
     {
-        EntityFactory.RegisterEntity(GetComponent<BaseEntity>());
+        foreach (BaseEntity entity in GetComponents<BaseEntity>())
+            EntityFactory.RegisterEntity(entity);
+
         Destroy(this);
     }
 }
