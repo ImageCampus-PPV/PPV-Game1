@@ -1,8 +1,9 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuntimeDebugVisual : MonoBehaviour, IService
+public class RuntimeDebugVisual : BaseEntity, IService
 {
     private struct TimedLine
     {
@@ -24,7 +25,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
 
     private void OnDestroy()
     {
-        ServiceProvider.Instance.RemoveService<RuntimeDebugVisual>();
+
     }
 
     private void Update()
@@ -57,7 +58,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
 
     private LineRenderer GetOrCreateLine()
     {
-        foreach (var pooledLine in _linePool)
+        foreach (LineRenderer pooledLine in _linePool)
         {
             if (!pooledLine.gameObject.activeSelf)
                 return pooledLine;
@@ -82,8 +83,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
         line.gameObject.SetActive(false);
     }
 
-    public void DrawRay(Vector2 start, Vector2 dir, float length,
-                        Color color, float duration, float thickness = 0.05f)
+    public void DrawRay(Vector2 start, Vector2 dir, float length, Color color, float duration, float thickness = 0.05f)
     {
         LineRenderer line = RequestPersistentLine(color, thickness);
         line.positionCount = 2;
@@ -97,8 +97,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
         });
     }
 
-    public void DrawCircle(Vector2 center, float radius, Color color,
-                           float duration, float thickness = 0.05f)
+    public void DrawCircle(Vector2 center, float radius, Color color, float duration, float thickness = 0.05f)
     {
         LineRenderer line = RequestPersistentLine(color, thickness);
 
@@ -140,7 +139,7 @@ public class RuntimeDebugVisual : MonoBehaviour, IService
         });
     }
 
-    internal void DrawOrientedBox(Vector2 center, Vector2 size, float angle, Color color, float duration, float thickness)
+    public void DrawOrientedBox(Vector2 center, Vector2 size, float angle, Color color, float duration, float thickness)
     {
         LineRenderer line = RequestPersistentLine(color, thickness);
         line.positionCount = 5;

@@ -10,6 +10,6 @@ public abstract class EnemyAttackStrategy : ScriptableObject
     public float AttackCooldown => _attackCooldown;
     public float AnticipationTime => _anticipationTime;
 
-    public abstract bool CanAttack(Transform self, Transform target);
-    public abstract void Execute(Transform self, Transform attackOffset, Transform target);
+    public abstract bool CanAttack(IEnemyContext self, Transform target);
+    public abstract void Execute(IEnemyContext self, Transform target);
 }

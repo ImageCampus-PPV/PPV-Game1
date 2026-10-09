@@ -8,6 +8,7 @@ public class CannonWeapon : WeaponStrategy
     [Header("Cannon Config")]
     [SerializeField] private float _projectileSpeed = 12f;
     [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private LayerMask _enemyLayer;
 
     public override void OnPressed(InputAction.CallbackContext context, Vector2 aimDir)
     {
@@ -32,6 +33,6 @@ public class CannonWeapon : WeaponStrategy
 
         Projectile proj = Object.Instantiate(_projectilePrefab, character.transform.position, Quaternion.identity);
 
-        proj.Initialize(damage, _projectileSpeed, range, enemyLayer, aimDir);
+        proj.Initialize(damage, _projectileSpeed, range, _enemyLayer, aimDir);
     }
 }

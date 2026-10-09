@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,21 +20,27 @@ public class ShieldAbility : CharacterAbility
     [SerializeField] private ShieldDome _shieldPrefab;
 
     private ShieldDome _activeDome;
-    private bool _isActive;
     private bool _isOnCooldown;
     private float _lifetimeTimer;
     private float _cooldownTimer;
     private float _currentCooldown;
 
-    public bool IsActive => _isActive;
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    public bool IsActive => _activeDome != null && _activeDome.gameObject.activeSelf;
     public bool IsOnCooldown => _isOnCooldown;
     public float CooldownProgress => _isOnCooldown && _currentCooldown > 0f ? 1f - (_cooldownTimer / _currentCooldown) : 1f;
-
-
-    public float ShieldHpProgress => _isActive && _lifetime > 0f ? _lifetimeTimer / _lifetime : 1f;
+    public float ShieldHpProgress => IsActive && _lifetime > 0f ? _lifetimeTimer / _lifetime : 1f;
 
     public float ShieldArmorProgress => _activeDome != null ? _activeDome.HpPercent : 1f;
 
+    public override void Initialize(Character character, Rigidbody2D rb)
+    {
+        base.Initialize(character, rb);
+        _activeDome = Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
+        _activeDome.gameObject.SetActive(false);
+        _activeDome.Initialize(_maxHp, _minHp, _domeRadius);
+        EventBus.Subscribe<OnShieldBroken>(BreakShield);
+    }
 
     public void OnShieldInput(InputAction.CallbackContext context)
     {
@@ -51,7 +59,8 @@ public class ShieldAbility : CharacterAbility
 
     private void HandleLifetime()
     {
-        if (!_isActive) return;
+        if (!IsActive)
+            return;
 
         _lifetimeTimer -= Time.deltaTime;
         if (_lifetimeTimer <= 0f)
@@ -60,7 +69,8 @@ public class ShieldAbility : CharacterAbility
 
     private void HandleCooldown()
     {
-        if (!_isOnCooldown) return;
+        if (!_isOnCooldown)
+            return;
 
         _cooldownTimer -= Time.deltaTime;
 
@@ -70,13 +80,14 @@ public class ShieldAbility : CharacterAbility
 
     private void UpdateDomePosition()
     {
-        if (_isActive && _activeDome != null)
+        if (IsActive)
             _activeDome.transform.position = Character.transform.position;
     }
 
     private void TryActivateShield()
     {
-        if (_isActive || _isOnCooldown) return;
+        if (IsActive || _isOnCooldown)
+            return;
 
         if (_shieldPrefab == null)
         {
@@ -84,18 +95,10 @@ public class ShieldAbility : CharacterAbility
             return;
         }
 
-        _activeDome = Object.Instantiate(_shieldPrefab, Character.transform.position, Quaternion.identity);
+        _activeDome.transform.position = Character.transform.position;
 
-        Character[] allCharacters = Object.FindObjectsByType<Character>(FindObjectsSortMode.None);
-        Collider2D[] friendlyColliders = new Collider2D[allCharacters.Length];
 
-        for (int i = 0; i < allCharacters.Length; i++)
-            friendlyColliders[i] = allCharacters[i].GetComponent<Collider2D>();
-
-        _activeDome.Initialize(_maxHp, _minHp, _domeRadius, friendlyColliders);
-        _activeDome.OnShieldBroken += () => DeactivateShield(broken: true);
-
-        _isActive = true;
+        _activeDome.gameObject.SetActive(true);
         _lifetimeTimer = _lifetime;
 
         if (Character.ActiveMovement != null)
@@ -104,12 +107,20 @@ public class ShieldAbility : CharacterAbility
         Debug.Log("[ShieldAbility] Shield activated.");
     }
 
-    private void DeactivateShield(bool broken)
+    private void BreakShield(in OnShieldBroken onShieldBroken)
     {
-        if (!_isActive) 
+        if (_activeDome.ID != onShieldBroken.shieldID)
             return;
 
-        _isActive = false;
+        DeactivateShield(true);
+    }
+
+    private void DeactivateShield(bool broken)
+    {
+        if (!IsActive)
+            return;
+
+        _activeDome.gameObject.SetActive(false);
 
         if (Character.ActiveMovement != null)
             Character.ActiveMovement.SpeedMultiplier = 1f;
@@ -132,7 +143,13 @@ public class ShieldAbility : CharacterAbility
 
     public void Cancel()
     {
-        if (_isActive)
+        if (IsActive)
             DeactivateShield(broken: false);
+    }
+
+    public override void Dispose()
+    {
+        base.Dispose();
+        EventBus.Unsubscribe<OnShieldBroken>(BreakShield);
     }
 }
