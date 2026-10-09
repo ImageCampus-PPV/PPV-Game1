@@ -10,6 +10,7 @@ public class GatlingWeapon : WeaponStrategy
     [SerializeField] private int _magazineSize = 50;
     [SerializeField] private float _reloadTime = 5f;
     [SerializeField] private Projectile _projectilePrefab;
+    [SerializeField] private LayerMask _enemyLayer;
 
     private int _currentAmmo;
     private bool _isReloading;
@@ -104,7 +105,7 @@ public class GatlingWeapon : WeaponStrategy
         float spread = Random.Range(-3f, 3f);
         Vector2 dir = Quaternion.Euler(0, 0, spread) * _currentAimDir;
         Projectile proj = Object.Instantiate(_projectilePrefab, character.transform.position, Quaternion.identity);
-        proj.Initialize(damage, _projectileSpeed, range, enemyLayer, dir);
+        proj.Initialize(damage, _projectileSpeed, range, _enemyLayer, dir);
 
         if (_currentAmmo <= 0)
             StartReload();

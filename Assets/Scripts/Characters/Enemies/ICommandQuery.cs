@@ -1,0 +1,4 @@
+public interface ICommandQuery<ResultType>
+{
+
+}

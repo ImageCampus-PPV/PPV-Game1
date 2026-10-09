@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: EmbersAttack
   m_EditorClassIdentifier: Assembly-CSharp::EmbersAttackStrategy
   hitboxRadius: 1
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  damage: 10
+  damage: 100
   attackSpeed: 1
-  _range: 5
-  _groundRadius: 2
-  _continuousBurnDamage: 5
+  _beamRange: 5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _burnDamagePerSecond: 3
+  _burnDuration: 3
+  _fireSpreadLength: 5
+  _fireSpreadHeight: 1
+  _beamLineThickness: 0.05
+  _beamWidth: 0.5

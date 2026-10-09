@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
@@ -10,13 +11,14 @@ public class DiveAttackStrategy : AttackStrategy
     [SerializeField] private float _distanceToMaxDamage = 10f;
     [SerializeField] private float _fallSpeedMultiplier = 1.2f;
 
-    private RuntimeDebugVisual _debugVisual;
-
     private float _startYPos;
     private bool _isFalling;
     private bool _isWeakened;
     private float _vulnerabilityTimer;
     private float _calculatedAoe;
+
+    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
     public override void Execute(Vector2 aimDir)
     {
@@ -66,13 +68,9 @@ public class DiveAttackStrategy : AttackStrategy
         _calculatedAoe = Mathf.Lerp(1f, _maxAoeRadius, scaleFactor);
         _vulnerabilityTimer = Mathf.Lerp(1f, _maxVulnerabilityTime, scaleFactor);
 
-        if (!_debugVisual)
-            _debugVisual = ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
-
-        _debugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.purple, 1.5f, 0.15f);
-
-        Collider2D[] hits = Physics2D.OverlapCircleAll(character.transform.position, _calculatedAoe, enemyLayer);
-        DealDamageToTargets(hits, calculatedDamage);
+        DebugVisual.DrawCircle(character.transform.position, _calculatedAoe, Color.purple, 1.5f, 0.15f);
+        
+        DealDamageToTargets<Enemy>(EntityRegistry.GetAllEntitiesInRadius<Enemy>(character.transform.position, _calculatedAoe), calculatedDamage);
     }
 
     private void Recover()

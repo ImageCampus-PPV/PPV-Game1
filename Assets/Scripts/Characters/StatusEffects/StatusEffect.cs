@@ -7,4 +7,9 @@ public abstract class StatusEffect
     public virtual string DisplayName => GetType().Name;
 
     public abstract void Tick(IStatusEffectReceiver target, float dt);
+
+    protected StatusEffect(float remainingTime)
+    {
+        this.remainingTime = remainingTime;
+    }
 }

@@ -1,35 +1,48 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Services;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class TargetSelector
 {
-    public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer)
+    private static List<Transform> _validTargets = new List<Transform>();
+    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private static RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+
+    public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer, bool debug)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(origin, range, targetLayer);
-
         Transform closest = null;
-        float closestDist = Mathf.Infinity;
+        float closestDistanceSquared = Mathf.Infinity;
 
-        for (int i = 0; i < hits.Length; i++)
+        if (debug)
         {
-            IDamageable damageable = hits[i].GetComponent<IDamageable>();
-
-            if (damageable != null)
-            {
-                float dist = Vector2.Distance(origin, hits[i].transform.position);
-
-                if (dist < closestDist)
-                {
-                    closestDist = dist;
-                    closest = hits[i].transform;
-                }
-            }
+            Debug.Log("Selecting target from " + origin + " in range " + range);
+            DebugVisual.DrawCircle(origin, range, Color.azure, Time.deltaTime);
         }
 
-        if (closest == null) return null;
+        _validTargets.Clear();
 
-        if (Random.value > 0.5f)
+        foreach (BaseEntity damageable in EntityRegistry.GetAllEntitiesInRadius<BaseEntity>(origin, range))
         {
-            return hits[Random.Range(0, hits.Length)].transform;
+            if ((targetLayer.value & (1 << damageable.gameObject.layer)) == 0)
+            {
+                if (debug)
+                    Debug.Log("Target " + damageable.name + " does not possess the required layer. From " + origin + " in range " + range);
+                continue;
+            }
+
+            if (debug)
+                Debug.Log("Found target from " + origin + " in range " + range + ": " + damageable.name);
+
+            _validTargets.Add(damageable.transform);
+
+            float distanceSquared = ((Vector2)damageable.transform.position - (Vector2)origin).sqrMagnitude;
+
+            if (distanceSquared < closestDistanceSquared)
+            {
+                closestDistanceSquared = distanceSquared;
+                closest = damageable.transform;
+            }
         }
 
         return closest;

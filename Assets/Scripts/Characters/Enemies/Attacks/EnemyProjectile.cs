@@ -35,7 +35,7 @@ public class EnemyProjectile : MonoBehaviour
         if (((1 << other.gameObject.layer) & _ignore) != 0)
             return;
 
-        IDamageable damageable = other.GetComponent<IDamageable>();
+        DamageableEntity damageable = other.GetComponent<DamageableEntity>();
 
         damageable?.TakeDamage(_damage);
 
