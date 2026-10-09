@@ -55,9 +55,10 @@ public class WeaponHUDController : MonoBehaviour
 
     private void FindMechaCombat()
     {
-        if (_mechaCharacter == null) return;
+        if (_mechaCharacter == null) 
+            return;
 
-        foreach (var ability in _mechaCharacter.ActiveAbilities)
+        foreach (CharacterAbility ability in _mechaCharacter.ActiveAbilities)
         {
             if (ability is MechaCombat combat)
             {
@@ -118,10 +119,11 @@ public class WeaponHUDController : MonoBehaviour
 
     private void ApplyIcon(WeaponSlotUI slotUI, WeaponStrategy weapon)
     {
-        if (slotUI == null || weapon == null || _weaponIcons == null) return;
+        if (slotUI == null || weapon == null || _weaponIcons == null)
+            return;
 
         string typeName = weapon.GetType().Name;
-        foreach (var entry in _weaponIcons)
+        foreach (WeaponIconEntry entry in _weaponIcons)
         {
             if (entry.weaponTypeName == typeName)
             {

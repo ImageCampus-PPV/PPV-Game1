@@ -1,3 +1,5 @@
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
 
@@ -38,10 +40,11 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((_enemyLayer.value & (1 << other.gameObject.layer)) == 0) 
+        if ((_enemyLayer.value & (1 << other.gameObject.layer)) == 0)
             return;
 
-        other.GetComponent<IDamageable>()?.TakeDamage(_damage);
+        //TODO: nuke this
+        other.GetComponent<DamageableEntity>()?.TakeDamage(_damage);
         Destroy(gameObject);
     }
 }

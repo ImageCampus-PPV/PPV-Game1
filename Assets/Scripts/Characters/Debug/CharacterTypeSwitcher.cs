@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+//TODO: wtf
 [DefaultExecutionOrder(-100)]
 public class CharacterTypeSwitcher : MonoBehaviour
 {

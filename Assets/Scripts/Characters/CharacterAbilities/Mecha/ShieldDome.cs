@@ -1,77 +1,86 @@
+using GreenAbyss.Entities;
+using ImageCampus.ToolBox.Events;
+using ImageCampus.ToolBox.Services;
 using System;
 using UnityEngine;
 
-public class ShieldDome : MonoBehaviour, IDamageable
+public class ShieldDome : DamageableEntity
 {
-    private float _currentHp;
-    private float _maxHp;
-    private float _minHp;
+    private SpriteRenderer _spriteRenderer;
+    private CircleCollider2D _collider;
 
-    private SpriteRenderer _sr;
-    private CircleCollider2D _col;
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
-    public System.Action OnShieldBroken;
-    public System.Action OnShieldDissipated;
+    public override Vector2 Center => transform.position;
 
-    public float CurrentHp => _currentHp;
-    public float MaxHp => _maxHp;
-    public float HpPercent => _currentHp / _maxHp;
-
-    public Action<float> OnTakeDamage { get; set; }
+    public override Vector2 Size => _collider.bounds.size;
 
     private void Awake()
     {
-        _sr = GetComponent<SpriteRenderer>();
-        _col = GetComponent<CircleCollider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<CircleCollider2D>();
     }
 
-    public void Initialize(float maxHp, float minHp, float radius, Collider2D[] friendlyColliders)
+    public void Initialize(float maxHp, float minHp, float radius)
     {
-        _maxHp = maxHp;
-        _minHp = minHp;
-        _currentHp = maxHp;
+        maxHealth = maxHp;
 
-        if (_col != null)
-            _col.radius = radius;
+        currentHealth = maxHp;
+
+        if (_collider != null)
+            _collider.radius = radius;
 
         float spriteBaseDiameter = 1f;
         float scale = (radius * 2f) / spriteBaseDiameter;
         transform.localScale = Vector3.one * scale;
 
-        if (_col != null && friendlyColliders != null)
+        if (_collider != null)
         {
-            foreach (Collider2D friendly in friendlyColliders)
+            foreach (Character character in EntityRegistry.FilterEntities<Character>())
             {
-                if (friendly != null)
-                    Physics2D.IgnoreCollision(_col, friendly, true);
+                Physics2D.IgnoreCollision(_collider, character.Collider, true);
             }
         }
 
-        if (_sr != null)
-            _sr.color = new Color(0f, 1f, 1f, 0.35f);
-    }
-
-    public void TakeDamage(float damage)
-    {
-        if (_currentHp <= _minHp)
-            return;
-
-        _currentHp = Mathf.Max(_minHp, _currentHp - damage);
-
-        if (_sr != null)
-            _sr.color = Color.Lerp(new Color(1f, 0f, 0f, 0.35f), new Color(0f, 1f, 1f, 0.35f), HpPercent);
-
-        if (_currentHp <= _minHp)
-            OnShieldBroken?.Invoke();
-
-        OnTakeDamage?.Invoke(damage);
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = new Color(0f, 1f, 1f, 0.35f);
     }
 
     public void Restore()
     {
-        _currentHp = _maxHp;
+        Heal(maxHealth);
 
-        if (_sr != null)
-            _sr.color = new Color(0f, 1f, 1f, 0.35f);
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = new Color(0f, 1f, 1f, 0.35f);
+    }
+}
+
+public struct OnShieldBroken : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
+    }
+}
+
+public struct OnShieldDispatched : IEvent
+{
+    public uint shieldID;
+
+    public void Assign(params object[] parameters)
+    {
+        shieldID = (uint)parameters[0];
+    }
+
+    public void Reset()
+    {
+        shieldID = default(uint);
     }
 }

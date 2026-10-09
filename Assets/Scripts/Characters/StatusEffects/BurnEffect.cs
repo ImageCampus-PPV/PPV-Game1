@@ -1,12 +1,11 @@
 public class BurnEffect : StatusEffect
 {
-    private float _damagePerSecond;
+    private readonly float _damagePerSecond;
 
     public override string DisplayName => "Burning";
 
-    public BurnEffect(float duration, float damagePerSecond)
+    public BurnEffect(float duration, float damagePerSecond) : base(duration)
     {
-        remainingTime = duration;
         _damagePerSecond = damagePerSecond;
     }
 
@@ -14,7 +13,7 @@ public class BurnEffect : StatusEffect
     {
         remainingTime -= dt;
 
-        if (target is IDamageable damageable)
+        if (target is DamageableEntity damageable)
             damageable.TakeDamage(_damagePerSecond * dt);
     }
 }
