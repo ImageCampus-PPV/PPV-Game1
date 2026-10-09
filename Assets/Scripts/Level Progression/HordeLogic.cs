@@ -10,7 +10,7 @@ using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
 public class HordeLogic : IInitiable, IDisposable
 {
     private const float HORDE_COOLDOWN = 120f;
-    private const float FIRST_HORDE_COOLDOWN = 20f;
+    private const float FIRST_HORDE_COOLDOWN = 4f;
     private const float HORDE_DURATION = HORDE_COOLDOWN / 3f;
     private const float ENEMIES_SPAWN_COOLDOWN = 3f;
     private const int ENEMIES_PER_HORDE = 50;
@@ -136,5 +136,6 @@ public class HordeLogic : IInitiable, IDisposable
     {
         EventBus.Unsubscribe<OnHordeStartedEvent>(OnHordeStartedEvent);
         EventBus.Unsubscribe<OnHordeEndedEvent>(OnHordeEndedEvent);
+        EventBus.Unsubscribe<EntityDestroyEvent<Nucleus>>(OnNucleusDestroyed);
     }
 }
