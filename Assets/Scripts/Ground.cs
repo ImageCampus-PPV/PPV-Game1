@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GreenAbyss.Entities;
+using UnityEngine;
 
 public class Ground : BaseEntity, IEntityDimensions
 {

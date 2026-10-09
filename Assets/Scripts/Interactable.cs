@@ -1,5 +1,4 @@
-﻿using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Entities;
 
 public abstract class Interactable : BaseEntity
 {

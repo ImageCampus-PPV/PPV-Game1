@@ -3591,7 +3591,6 @@ MonoBehaviour:
   _debugFieldPrefab: {fileID: 3552247887205591141, guid: ecd0f52d00b89054caaf4939a5e3acb2, type: 3}
   _targetPlayerText: {fileID: 1921883678}
   _debugHeaderPrefab: {fileID: 3992739461909408221, guid: 6b6ea1974b33494468a674a1293844fe, type: 3}
-  _playersContainer: {fileID: 533771793}
 --- !u!1 &1348040876
 GameObject:
   m_ObjectHideFlags: 0

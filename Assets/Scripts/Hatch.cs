@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using UnityEngine;
 
 public class Hatch : BaseEntity
