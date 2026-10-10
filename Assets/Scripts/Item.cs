@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GreenAbyss.Entities;
+using System;
 
 public abstract class Item : BaseEntity
 {

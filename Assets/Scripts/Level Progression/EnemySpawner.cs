@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 
 public class EnemySpawner : BaseEntity

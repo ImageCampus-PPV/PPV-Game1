@@ -1,4 +1,6 @@
-﻿public class Wall : BaseEntity
+﻿using GreenAbyss.Entities;
+
+public class Wall : BaseEntity
 {
 
 }

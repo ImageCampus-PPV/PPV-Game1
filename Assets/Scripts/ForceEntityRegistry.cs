@@ -1,3 +1,4 @@
+using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using UnityEngine;
 
