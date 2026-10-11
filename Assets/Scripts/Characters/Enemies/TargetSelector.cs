@@ -6,11 +6,14 @@ using UnityEngine;
 public static class TargetSelector
 {
     private static List<Transform> _validTargets = new List<Transform>();
-    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.ContainsService<EntityRegistry>() ? ServiceProvider.Instance.GetService<EntityRegistry>() : null;
     private static RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
     public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer, bool debug)
     {
+        if (EntityRegistry == null)
+            return null;
+
         Transform closest = null;
         float closestDistanceSquared = Mathf.Infinity;
 
