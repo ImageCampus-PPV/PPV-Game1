@@ -225,6 +225,34 @@ namespace GreenAbyss.Entities
             return _entities.ContainsKey(interactableID);
         }
     }
+
+    public abstract class BaseEntity : MonoBehaviour, IInitiable, IDisposable
+    {
+        public const uint NULL_BASE_ENTITY = 0;
+        private uint _id = NULL_BASE_ENTITY;
+        public uint ID => _id;
+
+        public static string SetIDName => nameof(SetID);
+
+        private void SetID(uint id)
+        {
+            _id = id;
+        }
+
+        public virtual void Init()
+        {
+        }
+
+        public virtual void LateInit()
+        {
+        }
+
+        public virtual void Dispose()
+        {
+
+        }
+    }
+
 }
 
 
