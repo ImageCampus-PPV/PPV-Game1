@@ -1,17 +1,20 @@
-﻿using Assets.Scripts.Entities;
+﻿using Arch_IA_Piccioni.Voronoi;
+using Assets.Scripts.Entities;
 using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class NearestObjectDetector : ITickable, IService
+public class NearestObjectDetector : ITickable, IService, IInitiable
 {
     public bool IsPersistance => false;
 
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 
-    private Dictionary<uint, (uint, Type)> _interactablePerCharacter = new Dictionary<uint, (uint, Type)>();
+    Voronoi<uint> dragonInteractableVoronoi;
+    Voronoi<uint> mechaInteractableVoronoi;
+
+    private Dictionary<uint, (uint objectID, Type objectType)> _interactablePerCharacter = new Dictionary<uint, (uint, Type)>();
     private float _tolerance = 3f;
 
     public Dictionary<uint, (uint objectID, Type objectType)> InteractablePerCharacter => _interactablePerCharacter;
@@ -19,30 +22,57 @@ public class NearestObjectDetector : ITickable, IService
 
     public void Tick(float deltaTime)
     {
-        FindNearestTypeToType<Mecha, MechaInteractable>();
-        FindNearestTypeToType<Dragon, DragonInteractable>();
-    }
+        Interactable nearestInteractable = null;
 
-    private void FindNearestTypeToType<TypeReference, TypeToFind>() where TypeReference : Character where TypeToFind : Interactable
-    {
-        foreach (Character character in EntityRegistry.FilterEntities<TypeReference>())
+        IEnumerator<Deposit> deposits = EntityRegistry.FilterEntities<Deposit>().GetEnumerator();
+
+        deposits.MoveNext();
+
+        Deposit deposit = deposits.Current;
+
+        foreach (Character character in EntityRegistry.FilterEntities<Character>())
         {
-            float nearestDistance = float.MaxValue;
-            (uint, Type) nearestObject = (BaseEntity.NULL_BASE_ENTITY, null);
-
-            foreach (Interactable interactable in EntityRegistry.FilterEntities<TypeToFind>())
+            if (Vector3.Distance(character.transform.position, deposit.transform.position) < _tolerance)
             {
-                float distance = Vector3.SqrMagnitude(character.transform.position - interactable.transform.position);
-
-                if (distance > _tolerance * _tolerance || distance >= nearestDistance)
-                    continue;
-
-                nearestDistance = distance;
-                nearestObject = (interactable.ID, interactable.GetType());
+                _interactablePerCharacter[character.ID] = (deposit.ID, deposit.GetType());
+                continue;
             }
 
-            _interactablePerCharacter[character.ID] = nearestDistance < _tolerance * _tolerance ? nearestObject : (BaseEntity.NULL_BASE_ENTITY, null);
+            if (character.GetType() == typeof(Dragon))
+            {
+                if (dragonInteractableVoronoi.TryGetNearestObject(character.transform.position, out uint interactableID))
+                {
+                    nearestInteractable = EntityRegistry.GetAs<Interactable>(interactableID);
+
+                    _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
+                }
+            }
+            else
+            {
+                if (mechaInteractableVoronoi.TryGetNearestObject(character.transform.position, out uint interactableID))
+                {
+                    nearestInteractable = EntityRegistry.GetAs<Interactable>(interactableID);
+
+                    _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
+                }
+            }
+
+            _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
         }
     }
 
+    public void Init()
+    {
+        dragonInteractableVoronoi = new Voronoi<uint>();
+        mechaInteractableVoronoi = new Voronoi<uint>();
+    }
+
+    public void LateInit()
+    {
+        foreach (Interactable interactable in EntityRegistry.FilterEntities<DragonInteractable>())
+            dragonInteractableVoronoi.Add(interactable.ID, interactable.transform.position);
+
+        foreach (Interactable interactable in EntityRegistry.FilterEntities<MechaInteractable>())
+            mechaInteractableVoronoi.Add(interactable.ID, interactable.transform.position);
+    }
 }
