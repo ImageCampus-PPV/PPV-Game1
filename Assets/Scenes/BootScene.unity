@@ -158,6 +158,7 @@ MonoBehaviour:
     <Name>k__BackingField: BootScene
   _gameCanvas: {fileID: 1885080424}
   _prefabsRegistry: {fileID: 11400000, guid: 3eb4b2e4b1d8efb40848f913fc3fb867, type: 2}
+  _lostGO: {fileID: 8196962036637999025, guid: 7755e79e1e68cd2418aeac0b806a57af, type: 3}
 --- !u!4 &971430171
 Transform:
   m_ObjectHideFlags: 0

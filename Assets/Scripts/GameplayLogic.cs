@@ -26,11 +26,12 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private GameResultManager _gameResultManager;
 
     private SceneRef _gamePlayScene;
-    private SceneRef _bootScene;
+    private GameObject _lostGameGO;
 
-    public GameplayLogic(SceneRef gamePlayScene)
+    public GameplayLogic(SceneRef gamePlayScene, GameObject lostGameGO)
     {
         _gamePlayScene = gamePlayScene;
+        _lostGameGO = lostGameGO;
     }
 
     public void Init()
@@ -55,7 +56,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI = new DepositUI();
         _hordeLogic = new HordeLogic();
         _combatSystem = new CombatSystem();
-        _gameResultManager = new GameResultManager();
+        _gameResultManager = new GameResultManager(_lostGameGO);
 
         _hatchLogic.Init();
         _nucleusLogic.Init();
@@ -129,9 +130,16 @@ public class GameResultManager : ITickable
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
+    private GameCanvas GameCanvas => ServiceProvider.Instance.GetService<GameCanvas>();
 
     private float _restartDelay = 4f;
     private bool _restarted = false;
+    private GameObject _lostGameGO;
+
+    public GameResultManager(GameObject lostGameGO)
+    {
+        _lostGameGO = lostGameGO;
+    }
 
     public void Tick(float deltaTime)
     {
@@ -139,6 +147,8 @@ public class GameResultManager : ITickable
         {
             _restarted = true;
             Debug.Log("All characters died.");
+            GameObject lostGO = GameObject.Instantiate(_lostGameGO);
+            GameCanvas.AddDynmic("LostGO", lostGO);
             EventBus.Raise<OnLoseEvent>();
             TaskScheduler.Schedule(RestartGame, _restartDelay);
         }

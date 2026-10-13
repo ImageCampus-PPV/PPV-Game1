@@ -12,6 +12,7 @@ public class Main : MonoBehaviour, IInitiable, ITickable, IDisposable
     [SerializeField] private SceneRef _bootScene;
     [SerializeField] private GameCanvas _gameCanvas;
     [SerializeField] private PrefabsRegistry _prefabsRegistry;
+    [SerializeField] private GameObject _lostGO;
 
     private GameplayLogic _gameplayLogic;
     private bool _isRestarting;
@@ -48,7 +49,7 @@ public class Main : MonoBehaviour, IInitiable, ITickable, IDisposable
 
         EventBus.Subscribe<OnRestartEvent>(RestartGame);
 
-        _gameplayLogic = new GameplayLogic(_gamePlayScene);
+        _gameplayLogic = new GameplayLogic(_gamePlayScene, _lostGO);
 
         _gameCanvas.Init();
         _gameplayLogic.Init();
