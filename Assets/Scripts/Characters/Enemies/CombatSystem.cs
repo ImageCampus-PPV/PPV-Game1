@@ -1,7 +1,6 @@
-using Assets.Scripts.Entities;
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public sealed class CombatSystem : IInitiable, IService, IDisposable
 {
     private float _downedSpeedMultiplier = 0.3f;
 
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     public bool IsPersistance => false;

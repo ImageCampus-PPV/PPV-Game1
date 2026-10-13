@@ -1,9 +1,9 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using UnityEngine;
 
-public abstract class DamageableEntity : BaseEntity, IEntityDimensions
+public abstract class DamageableEntity : GreenAbyss.Entities.BaseEntity, IEntityDimensions
 {
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
 

@@ -1,7 +1,7 @@
 using GreenAbyss.Entities;
 using UnityEngine;
 
-public class Hatch : BaseEntity
+public class Hatch : GreenAbyss.Entities.BaseEntity
 {
     public PressurePlate[] pressurePlatesToOpen;
 

@@ -1,16 +1,19 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class TargetSelector
 {
     private static List<Transform> _validTargets = new List<Transform>();
-    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private static EntityRegistry EntityRegistry => ServiceProvider.Instance.ContainsService<EntityRegistry>() ? ServiceProvider.Instance.GetService<EntityRegistry>() : null;
     private static RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
     public static Transform GetBestTarget(Vector3 origin, float range, LayerMask targetLayer, bool debug)
     {
+        if (EntityRegistry == null)
+            return null;
+
         Transform closest = null;
         float closestDistanceSquared = Mathf.Infinity;
 
@@ -22,7 +25,7 @@ public static class TargetSelector
 
         _validTargets.Clear();
 
-        foreach (BaseEntity damageable in EntityRegistry.GetAllEntitiesInRadius<BaseEntity>(origin, range))
+        foreach (GreenAbyss.Entities.BaseEntity damageable in EntityRegistry.GetAllEntitiesInRadius<GreenAbyss.Entities.BaseEntity>(origin, range))
         {
             if ((targetLayer.value & (1 << damageable.gameObject.layer)) == 0)
             {

@@ -1,8 +1,7 @@
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 
 [CreateAssetMenu(menuName = "Abilities/ShieldAbility")]
 public class ShieldAbility : CharacterAbility

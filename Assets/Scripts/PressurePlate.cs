@@ -1,9 +1,9 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using UnityEngine;
 
-public class PressurePlate : BaseEntity
+public class PressurePlate : GreenAbyss.Entities.BaseEntity
 {
     private uint entityPressingCount = 0;
 

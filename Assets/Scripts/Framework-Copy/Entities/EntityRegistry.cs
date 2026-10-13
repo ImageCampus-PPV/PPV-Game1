@@ -1,11 +1,9 @@
-﻿using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace GreenAbyss.Entities
 {
@@ -97,7 +95,7 @@ namespace GreenAbyss.Entities
 
         public int GetCountOf<EntityType>() where EntityType : BaseEntity
         {
-            return _entityIdsPerType[typeof(EntityType)].Count;
+            return _entityIdsPerType.TryGetValue(typeof(EntityType), out List<uint> ids) ? ids.Count : 0;
         }
 
         private void InvokeEntityDestroyEvent<EntityType>(uint ID) where EntityType : BaseEntity

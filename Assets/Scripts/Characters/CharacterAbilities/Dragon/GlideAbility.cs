@@ -1,6 +1,5 @@
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using System;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Glide")]

@@ -1,7 +1,4 @@
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
 using UnityEngine;
-
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour

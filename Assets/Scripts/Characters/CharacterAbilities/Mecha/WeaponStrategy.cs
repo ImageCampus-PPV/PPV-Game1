@@ -1,8 +1,8 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine .InputSystem;
 
 public enum WeaponSlot { Melee, Ranged }
 
@@ -20,7 +20,7 @@ public abstract class WeaponStrategy : ScriptableObject
     protected float lastFireTime = float.NegativeInfinity;
 
     public bool IsOnCooldown => Time.time - lastFireTime < cooldown;
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance. GetService<EntityRegistry>();
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     public virtual float CooldownProgress

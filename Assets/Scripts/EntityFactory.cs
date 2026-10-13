@@ -1,5 +1,5 @@
 ﻿using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class EntityFactory : IService, IInitiable
 
     public void Init()
     {
-        setIDFunction = typeof(BaseEntity).GetMethod(BaseEntity.SetIDName, BindingFlags.NonPublic | BindingFlags.Instance);
+        setIDFunction = typeof(GreenAbyss.Entities.BaseEntity).GetMethod(GreenAbyss.Entities.BaseEntity.SetIDName, BindingFlags.NonPublic | BindingFlags.Instance);
     }
 
     public void LateInit()
@@ -25,7 +25,7 @@ public class EntityFactory : IService, IInitiable
 
     }
 
-    public EntityType Create<EntityType>(Vector3 position = default) where EntityType : BaseEntity
+    public EntityType Create<EntityType>(Vector3 position = default) where EntityType : GreenAbyss.Entities.BaseEntity
     {
         Type entityType = typeof(EntityType);
 
@@ -33,7 +33,7 @@ public class EntityFactory : IService, IInitiable
 
         GameObject gameObjectGo = UnityEngine.Object.Instantiate(objectToUse, position, rotation: Quaternion.identity);
 
-        if (!gameObjectGo.TryGetComponent<BaseEntity>(out BaseEntity entity))
+        if (!gameObjectGo.TryGetComponent<GreenAbyss.Entities.BaseEntity>(out GreenAbyss.Entities.BaseEntity entity))
             entity = gameObjectGo.AddComponent<EntityType>();
 
         RegisterEntity(entity);
@@ -41,7 +41,7 @@ public class EntityFactory : IService, IInitiable
         return entity as EntityType;
     }
 
-    public void RegisterEntity(BaseEntity entity)
+    public void RegisterEntity(GreenAbyss.Entities.BaseEntity entity)
     {
         setIDFunction.Invoke(entity, new object[] { ++lastAssignedID });
 

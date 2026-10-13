@@ -1,6 +1,6 @@
-﻿using ImageCampus.ToolBox.Events;
+﻿using GreenAbyss.Events;
 
-namespace Pawgineers.Gameplay.Inputs
+namespace GreenAbyss.Inputs
 {
     public struct InputDeviceDisconnectRequestEvent : IEvent
     {

@@ -1,22 +1,19 @@
-﻿using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Scheduling;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Entities;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
+using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
 {
     private EntityFactory EntityFactory => ServiceProvider.Instance.GetService<EntityFactory>();
-    private CoopCameraController CoopCameraController => ServiceProvider.Instance.GetService<CoopCameraController>();
-    private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
-    private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.GetService<NearestObjectDetector>();
-    private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
-    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private CoopCameraController CoopCameraController => ServiceProvider.Instance.ContainsService<CoopCameraController>() ? ServiceProvider.Instance.GetService<CoopCameraController>() : null;
+    private ControllerMapping ControllerMapping => ServiceProvider.Instance.ContainsService<ControllerMapping>() ? ServiceProvider.Instance.GetService<ControllerMapping>() : null;
+    private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.ContainsService<NearestObjectDetector>() ? ServiceProvider.Instance.GetService<NearestObjectDetector>() : null;
+    private TaskScheduler TaskScheduler => ServiceProvider.Instance.ContainsService<TaskScheduler>() ? ServiceProvider.Instance.GetService<TaskScheduler>() : null;
 
     private NucleusLogic _nucleusLogic;
     private HatchLogic _hatchLogic;
@@ -26,12 +23,15 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private DepositUI _depositUI;
     private HordeLogic _hordeLogic;
     private CombatSystem _combatSystem;
+    private GameResultManager _gameResultManager;
 
     private SceneRef _gamePlayScene;
+    private GameObject _lostGameGO;
 
-    public GameplayLogic(SceneRef _gamePlayScene)
+    public GameplayLogic(SceneRef gamePlayScene, GameObject lostGameGO)
     {
-        this._gamePlayScene = _gamePlayScene;
+        _gamePlayScene = gamePlayScene;
+        _lostGameGO = lostGameGO;
     }
 
     public void Init()
@@ -56,6 +56,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI = new DepositUI();
         _hordeLogic = new HordeLogic();
         _combatSystem = new CombatSystem();
+        _gameResultManager = new GameResultManager(_lostGameGO);
 
         _hatchLogic.Init();
         _nucleusLogic.Init();
@@ -89,21 +90,22 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Deposit>();
         EntityFactory.Create<Nucleus>();
 
-        void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
+        void SpawnEntities<ItemType>(int amount) where ItemType : GreenAbyss.Entities.BaseEntity
         {
             for (int i = 0; i < amount; ++i)
             {
-                EntityFactory.Create<ItemType>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
+                EntityFactory.Create<ItemType>(new global::UnityEngine.Vector2(global::UnityEngine.Random.Range(-50, 50), global::UnityEngine.Random.Range(0, 10)));
             }
         }
     }
 
     public void Tick(float deltaTime)
     {
-        TaskScheduler.Tick(deltaTime);
-        ControllerMapping.Tick(deltaTime);
-        CoopCameraController.Tick(deltaTime);
-        NearestObjectDetector.Tick(deltaTime);
+        TaskScheduler?.Tick(deltaTime);
+        ControllerMapping?.Tick(deltaTime);
+        CoopCameraController?.Tick(deltaTime);
+        NearestObjectDetector?.Tick(deltaTime);
+        _gameResultManager?.Tick(deltaTime);
     }
 
     public void Dispose()
@@ -117,8 +119,77 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI.Dispose();
         _hordeLogic.Dispose();
         _combatSystem.Dispose();
+        _gameResultManager = null;
 
-        SceneManager.UnloadSceneAsync(_gamePlayScene.Index);
         ServiceProvider.Instance.ClearAllServices();
+    }
+}
+
+public class GameResultManager : ITickable
+{
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+    private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
+    private GameCanvas GameCanvas => ServiceProvider.Instance.GetService<GameCanvas>();
+
+    private float _restartDelay = 4f;
+    private bool _restarted = false;
+    private GameObject _lostGameGO;
+
+    public GameResultManager(GameObject lostGameGO)
+    {
+        _lostGameGO = lostGameGO;
+    }
+
+    public void Tick(float deltaTime)
+    {
+        if (EntityRegistry.GetCountOf<Character>() == 0 && !_restarted)
+        {
+            _restarted = true;
+            Debug.Log("All characters died.");
+            GameObject lostGO = GameObject.Instantiate(_lostGameGO);
+            GameCanvas.AddDynmic("LostGO", lostGO);
+            EventBus.Raise<OnLoseEvent>();
+            TaskScheduler.Schedule(RestartGame, _restartDelay);
+        }
+    }
+
+    private void RestartGame()
+    {
+        _restarted = false;
+        EventBus.Raise<OnRestartEvent>();
+    }
+}
+
+public struct OnWinEvent : IEvent
+{
+    public void Assign(params object[] parameters)
+    {
+    }
+
+    public void Reset()
+    {
+    }
+}
+
+public struct OnLoseEvent : IEvent
+{
+    public void Assign(params object[] parameters)
+    {
+    }
+
+    public void Reset()
+    {
+    }
+}
+
+public struct OnRestartEvent : IEvent
+{
+    public void Assign(params object[] parameters)
+    {
+    }
+
+    public void Reset()
+    {
     }
 }

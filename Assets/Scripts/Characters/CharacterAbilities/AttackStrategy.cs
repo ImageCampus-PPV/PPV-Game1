@@ -1,5 +1,5 @@
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +30,8 @@ public abstract class AttackStrategy : ScriptableObject
 
     protected void DealDamageToTargets<EntityType>(IEnumerable<DamageableEntity> hits, float damage) where EntityType : DamageableEntity
     {
+        List<DamageableEntity> entitiesToDamage = new List<DamageableEntity>(hits);
+
         foreach (DamageableEntity hit in hits)
             EventBus.Raise<OnCombatDamage>(hit.ID, damage);
     }

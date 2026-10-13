@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EmbersAttack
   m_EditorClassIdentifier: Assembly-CSharp::EmbersAttackStrategy
   hitboxRadius: 1
-  damage: 100
+  damage: 0.5
   attackSpeed: 1
   _beamRange: 5
   _groundLayer:

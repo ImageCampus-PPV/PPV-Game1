@@ -15,9 +15,9 @@ MonoBehaviour:
   damage: 20
   range: 3
   cooldown: 1
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 256
   _allowedSlot: 1
   _projectileSpeed: 12
   _projectilePrefab: {fileID: 4006366309282531498, guid: 5b7f7f7608a52f84dbf309643bb6d0a5, type: 3}
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
