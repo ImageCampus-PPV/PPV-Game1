@@ -1,11 +1,12 @@
-﻿using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using System;
+﻿using System;
 using Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
+using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using EventBus = GreenAbyss.Events.EventBus;
+using IEvent = GreenAbyss.Events.IEvent;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
 {
@@ -14,6 +15,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.ContainsService<ControllerMapping>() ? ServiceProvider.Instance.GetService<ControllerMapping>() : null;
     private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.ContainsService<NearestObjectDetector>() ? ServiceProvider.Instance.GetService<NearestObjectDetector>() : null;
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.ContainsService<TaskScheduler>() ? ServiceProvider.Instance.GetService<TaskScheduler>() : null;
+
+    private GameObject _lostGo;
 
     private NucleusLogic _nucleusLogic;
     private HatchLogic _hatchLogic;
@@ -28,9 +31,10 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private SceneRef _gamePlayScene;
     private SceneRef _bootScene;
 
-    public GameplayLogic(SceneRef gamePlayScene)
+    public GameplayLogic(SceneRef gamePlayScene, GameObject lostGo)
     {
         _gamePlayScene = gamePlayScene;
+        _lostGo = lostGo;
     }
 
     public void Init()
@@ -55,7 +59,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI = new DepositUI();
         _hordeLogic = new HordeLogic();
         _combatSystem = new CombatSystem();
-        _gameResultManager = new GameResultManager();
+        _gameResultManager = new GameResultManager(_lostGo);
 
         GameObject gameObject = new GameObject("invertoryView");
         _invertoryView = gameObject.AddComponent<DepositView>();
@@ -98,7 +102,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
         NearestObjectDetector.LateInit();
 
-        void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
+        void SpawnEntities<ItemType>(int amount) where ItemType : GreenAbyss.Entities.BaseEntity
         {
             for (int i = 0; i < amount; ++i)
             {
@@ -139,9 +143,16 @@ public class GameResultManager : ITickable
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
+    private GameCanvas GameCanvas => ServiceProvider.Instance.GetService<GameCanvas>();
 
     private float _restartDelay = 4f;
     private bool _restarted = false;
+    private GameObject _lostGameGO;
+
+    public GameResultManager(GameObject lostGameGO)
+    {
+        _lostGameGO = lostGameGO;
+    }
 
     public void Tick(float deltaTime)
     {
@@ -149,6 +160,8 @@ public class GameResultManager : ITickable
         {
             _restarted = true;
             Debug.Log("All characters died.");
+            GameObject lostGO = GameObject.Instantiate(_lostGameGO);
+            GameCanvas.AddDynmic("LostGO", lostGO);
             EventBus.Raise<OnLoseEvent>();
             TaskScheduler.Schedule(RestartGame, _restartDelay);
         }

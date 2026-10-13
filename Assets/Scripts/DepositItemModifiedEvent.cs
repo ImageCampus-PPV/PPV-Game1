@@ -1,4 +1,4 @@
-﻿using ImageCampus.ToolBox.Events;
+﻿using IEvent = GreenAbyss.Events.IEvent;
 
 public struct DepositItemModifiedEvent<ItemType> : IEvent where ItemType : Item
 {

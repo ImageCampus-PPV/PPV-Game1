@@ -1,8 +1,9 @@
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
+using IService = GreenAbyss.Services.IService;
 
 public sealed class Wallet : IService, IDisposable
 {

@@ -1,10 +1,10 @@
-﻿using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using Mono.Cecil;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
+using IService = GreenAbyss.Services.IService;
 
 public class Inventory : IService
 {

@@ -1,10 +1,13 @@
 ﻿using Arch_IA_Piccioni.Voronoi;
-using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
+using IService = GreenAbyss.Services.IService;
+
 public class NearestObjectDetector : ITickable, IService, IInitiable
 {
     public bool IsPersistance => false;

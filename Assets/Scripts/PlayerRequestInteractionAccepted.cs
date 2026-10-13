@@ -1,4 +1,4 @@
-﻿using GreenAbyss.Events;
+﻿using IEvent = GreenAbyss.Events.IEvent;
 
 public struct PlayerRequestInteractionAccepted<ObjectType> : IEvent where ObjectType : Interactable
 {

@@ -1,11 +1,11 @@
-﻿using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
 
 public class DepositView : MonoBehaviour, IInitiable, IDisposable
 {
