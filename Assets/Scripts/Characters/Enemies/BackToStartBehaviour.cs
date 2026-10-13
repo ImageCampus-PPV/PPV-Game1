@@ -6,9 +6,9 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
 {
     [SerializeField] private float _moveSpeed = 2f;
 
-    public override BehaviourActions GetOnEnter(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             //Debug.Log("Enemy " + context.Transform.name + " heading to " + _startPos + ". Current pos: " + context.Position);
@@ -16,9 +16,9 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnTick(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnTick(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             //Debug.Log("Enemy " + context.Transform.name + " heading to " + context.PositionOnSpawn + ". Current pos: " + context.Position);
@@ -28,9 +28,9 @@ public class BackToStartBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnExit(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnExit(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new StopMovementCommand()));
         return actions;
     }

@@ -20,7 +20,7 @@ namespace GreenAbyss.FSM
 
         public FSM(Type defaultState)
         {
-            _states = new Dictionary<Type, State>();
+            _states = new Dictionary<Type, GreenAbyss.FSM.State>();
 
             _behaviourOnTickParameters = new Dictionary<Type, Func<object[]>>();
             _behaviourOnEnterParameters = new Dictionary<Type, Func<object[]>>();
@@ -28,7 +28,7 @@ namespace GreenAbyss.FSM
             ForceState(defaultState);
         }
 
-        public void AddState<TState>(Func<object[]> onTickParameters = null, Func<object[]> onEnterParameters = null, Func<object[]> onExitParameters = null) where TState : State, new()
+        public void AddState<TState>(Func<object[]> onTickParameters = null, Func<object[]> onEnterParameters = null, Func<object[]> onExitParameters = null) where TState : GreenAbyss.FSM.State, new()
         {
             Type stateType = typeof(TState);
 
@@ -71,7 +71,7 @@ namespace GreenAbyss.FSM
             ExcecuteBehaviour(GetCurrentTickBehaviour);
         }
 
-        private void ExcecuteBehaviour(BehaviourActions behaviourActions)
+        private void ExcecuteBehaviour(GreenAbyss.FSM.BehaviourActions behaviourActions)
         {
             if (behaviourActions.Equals(default))
                 return;
