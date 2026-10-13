@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Entities;
-using CustomInputClass;
+﻿using CustomInputClass;
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +11,7 @@ public sealed class CustomPlayerInput : IInitiable, ITickable, IDisposable
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.GetService<ControllerMapping>();
     private InputSystem_Actions EntityInput => ControllerMapping.GetPlayerInputMaps(entityID);
 
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     private Character ControllerCharacter => EntityRegistry.Has(entityID) ? EntityRegistry.GetAs<Character>(entityID) : null;
 

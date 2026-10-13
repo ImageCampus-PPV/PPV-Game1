@@ -1,7 +1,7 @@
 ﻿using GreenAbyss.Entities;
 using System;
 
-public abstract class Item : BaseEntity
+public abstract class Item : GreenAbyss.Entities.BaseEntity
 {
 }
 

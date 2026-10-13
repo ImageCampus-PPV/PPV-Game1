@@ -1,6 +1,6 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 
 public class HatchLogic : IInitiable, IDisposable

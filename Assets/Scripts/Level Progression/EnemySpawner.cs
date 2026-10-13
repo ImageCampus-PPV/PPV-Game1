@@ -1,7 +1,6 @@
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
+using GreenAbyss.Events;
 
-public class EnemySpawner : BaseEntity
+public class EnemySpawner : GreenAbyss.Entities.BaseEntity
 {
 
 }

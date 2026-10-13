@@ -1,4 +1,4 @@
-﻿using ImageCampus.ToolBox.Events;
+﻿using GreenAbyss.Events;
 
 public struct PlayerRequestInteractionAccepted<ObjectType> : IEvent where ObjectType : Interactable
 {
