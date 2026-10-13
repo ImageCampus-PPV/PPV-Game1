@@ -1,3 +1,4 @@
+using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,8 @@ using System.Reflection;
 public sealed class Wallet : IService, IDisposable
 {
     public bool IsPersistance => false;
+
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
 
     private readonly Dictionary<string, ResourceData> _resources;
 
@@ -28,10 +31,13 @@ public sealed class Wallet : IService, IDisposable
 
     }
 
-    public void AddResource<ResourceType>(uint amount)
+    public void AddResourceByType<ResourceType>(uint amount) where ResourceType : Item
     {
-        AddResource(amount, typeof(ResourceType).Name);
+        string resourceName = typeof(ResourceType).Name;
+        AddResource(amount, resourceName);
+        EventBus.Raise<DepositItemModifiedEvent<ResourceType>>(_resources[resourceName].CurrentValue - amount, _resources[resourceName].CurrentValue);
     }
+
     public void AddResource(uint amount, string typeName)
     {
         if (!_resources.ContainsKey(typeName))
@@ -40,9 +46,11 @@ public sealed class Wallet : IService, IDisposable
         _resources[typeName].AddResource(amount);
     }
 
-    public void RemoveResource<ResourceType>(uint amount)
+    public void RemoveResource<ResourceType>(uint amount) where ResourceType : Item
     {
-        RemoveResource(amount, typeof(ResourceType).Name);
+        string resourceName = typeof(ResourceType).Name;
+        RemoveResource(amount, resourceName);
+        EventBus.Raise<DepositItemModifiedEvent<ResourceType>>(_resources[resourceName].CurrentValue - amount, _resources[resourceName].CurrentValue);
     }
 
     public void RemoveResource(uint amount, string typeName)
@@ -53,7 +61,7 @@ public sealed class Wallet : IService, IDisposable
         _resources[typeName].RemoveResource(amount);
     }
 
-    public bool HasResourceAmount<ResourceType>(uint amount)
+    public bool HasResourceAmount<ResourceType>(uint amount) where ResourceType : Item
     {
         return HasResourceAmount(amount, typeof(ResourceType).Name);
     }
@@ -62,7 +70,7 @@ public sealed class Wallet : IService, IDisposable
         return _resources[typeName].CurrentValue >= amount;
     }
 
-    public long GetResourceAmount<ResourceType>()
+    public long GetResourceAmount<ResourceType>() where ResourceType : Item
     {
         return GetResourceAmount(typeof(ResourceType).Name);
     }
