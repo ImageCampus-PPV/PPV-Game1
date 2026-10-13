@@ -17,7 +17,12 @@ public class CharacterDebugger : MonoBehaviour
             return;
 
         _characterNameText.text = _debugInfo.CharacterName;
-        _spriteRenderer.color = _debugInfo.DebugColor;
+
+        if (_spriteRenderer == null)
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = _debugInfo.DebugColor;
         //_collector.Filter = _debugInfo.ItemFilter;
 
         if (_character != null)
