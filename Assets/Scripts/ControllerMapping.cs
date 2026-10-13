@@ -1,8 +1,8 @@
 using CustomInputClass;
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using Pawgineers.Gameplay.Inputs;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
+using GreenAbyss.Inputs;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

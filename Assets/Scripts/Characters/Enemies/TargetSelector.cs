@@ -1,5 +1,5 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ public static class TargetSelector
 
         _validTargets.Clear();
 
-        foreach (BaseEntity damageable in EntityRegistry.GetAllEntitiesInRadius<BaseEntity>(origin, range))
+        foreach (GreenAbyss.Entities.BaseEntity damageable in EntityRegistry.GetAllEntitiesInRadius<GreenAbyss.Entities.BaseEntity>(origin, range))
         {
             if ((targetLayer.value & (1 << damageable.gameObject.layer)) == 0)
             {

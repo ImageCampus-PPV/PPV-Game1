@@ -1,6 +1,5 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
-using System;
+using GreenAbyss.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Attacks/Ground Bite (X)")]

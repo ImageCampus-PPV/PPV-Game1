@@ -1,5 +1,5 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using UnityEngine;
 
 public class SeparationSteering : ISteeringBehaviour

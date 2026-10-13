@@ -1,17 +1,15 @@
-using Assets.Scripts.Entities;
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InGameInspector : MonoBehaviour
 {
-    EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     [Header("UI refs")]
     [SerializeField] private Button _openMenuButton;

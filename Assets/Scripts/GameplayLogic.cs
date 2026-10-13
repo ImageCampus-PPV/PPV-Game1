@@ -1,11 +1,11 @@
 ﻿using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
+using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
 {
@@ -90,11 +90,11 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Deposit>();
         EntityFactory.Create<Nucleus>();
 
-        void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
+        void SpawnEntities<ItemType>(int amount) where ItemType : GreenAbyss.Entities.BaseEntity
         {
             for (int i = 0; i < amount; ++i)
             {
-                EntityFactory.Create<ItemType>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
+                EntityFactory.Create<ItemType>(new global::UnityEngine.Vector2(global::UnityEngine.Random.Range(-50, 50), global::UnityEngine.Random.Range(0, 10)));
             }
         }
     }

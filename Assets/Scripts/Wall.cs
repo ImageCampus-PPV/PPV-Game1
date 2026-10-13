@@ -1,6 +1,6 @@
 ﻿using GreenAbyss.Entities;
 
-public class Wall : BaseEntity
+public class Wall : GreenAbyss.Entities.BaseEntity
 {
 
 }
