@@ -3,6 +3,11 @@ using GreenAbyss.Services;
 using System;
 using UnityEngine;
 
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
+using IService = GreenAbyss.Services.IService;
+
 public class DepositUI : IInitiable, ITickable, IDisposable
 {
     private PrefabsRegistry PrefabsRegistry => ServiceProvider.Instance.GetService<PrefabsRegistry>();

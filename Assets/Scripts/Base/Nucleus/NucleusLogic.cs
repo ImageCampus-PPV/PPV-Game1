@@ -38,7 +38,7 @@ class NucleusLogic : IInitiable, IDisposable
         if (EntityRegistry.GetCountOf<Nucleus>() == 0)
             return;
 
-        Wallet.AddResource<Sap>(5);
+        Wallet.AddResourceByType<Sap>(5);
 
         StartSapProduction();
     }
@@ -58,7 +58,7 @@ class NucleusLogic : IInitiable, IDisposable
 
     private void StartSapProduction()
     {
-        TaskScheduler.Schedule(SapGenerator, SAP_COOLDOWN);
+        TaskScheduler.Schedule(SapGenerator, 5);
     }
 
     public void Dispose()
