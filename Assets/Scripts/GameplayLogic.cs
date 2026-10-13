@@ -24,7 +24,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private HordeLogic _hordeLogic;
     private CombatSystem _combatSystem;
     private GameResultManager _gameResultManager;
-
+    private DepositView _invertoryView;
     private SceneRef _gamePlayScene;
     private SceneRef _bootScene;
 
@@ -57,6 +57,10 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _combatSystem = new CombatSystem();
         _gameResultManager = new GameResultManager();
 
+        GameObject gameObject = new GameObject("invertoryView");
+        _invertoryView = gameObject.AddComponent<DepositView>();
+
+        _invertoryView.Init();
         _hatchLogic.Init();
         _nucleusLogic.Init();
         _inventoryController.Init();
@@ -68,10 +72,13 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI.Init();
         _hordeLogic.Init();
         _combatSystem.Init();
+
+        NearestObjectDetector.Init();
     }
 
     public void LateInit()
     {
+        _invertoryView.LateInit();
         _hatchLogic.LateInit();
         _nucleusLogic.LateInit();
         _inventoryController.LateInit();
@@ -88,6 +95,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Dragon>();
         EntityFactory.Create<Deposit>();
         EntityFactory.Create<Nucleus>();
+
+        NearestObjectDetector.LateInit();
 
         void SpawnEntities<ItemType>(int amount) where ItemType : BaseEntity
         {
@@ -109,6 +118,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Dispose()
     {
+        _invertoryView.Dispose();
         _hatchLogic.Dispose();
         _nucleusLogic.Dispose();
         _inventoryController.Dispose();
