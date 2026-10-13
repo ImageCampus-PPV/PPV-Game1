@@ -1,8 +1,9 @@
-﻿using GreenAbyss.Entities;
-using GreenAbyss.Services;
-using System;
+﻿using System;
 using System.Reflection;
 using UnityEngine;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using IService = GreenAbyss.Services.IService;
 
 public class EntityFactory : IService, IInitiable
 {

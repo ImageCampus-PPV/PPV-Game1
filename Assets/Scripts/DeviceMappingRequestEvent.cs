@@ -1,5 +1,5 @@
 ﻿using GreenAbyss.Events;
-
+using IEvent = GreenAbyss.Events.IEvent;
 public struct DeviceMappingRequestEvent : IEvent
 {
     public uint entityID;

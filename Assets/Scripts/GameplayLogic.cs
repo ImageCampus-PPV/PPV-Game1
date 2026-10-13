@@ -1,11 +1,12 @@
-﻿using GreenAbyss.Entities;
-using GreenAbyss.Events;
-using GreenAbyss.Services;
-using System;
+﻿using System;
 using Systems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using EventBus = GreenAbyss.Events.EventBus;
+using IEvent = GreenAbyss.Events.IEvent;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
 {
@@ -14,6 +15,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private ControllerMapping ControllerMapping => ServiceProvider.Instance.ContainsService<ControllerMapping>() ? ServiceProvider.Instance.GetService<ControllerMapping>() : null;
     private NearestObjectDetector NearestObjectDetector => ServiceProvider.Instance.ContainsService<NearestObjectDetector>() ? ServiceProvider.Instance.GetService<NearestObjectDetector>() : null;
     private TaskScheduler TaskScheduler => ServiceProvider.Instance.ContainsService<TaskScheduler>() ? ServiceProvider.Instance.GetService<TaskScheduler>() : null;
+
+    private GameObject _lostGo;
 
     private NucleusLogic _nucleusLogic;
     private HatchLogic _hatchLogic;
@@ -24,14 +27,14 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private HordeLogic _hordeLogic;
     private CombatSystem _combatSystem;
     private GameResultManager _gameResultManager;
-
+    private DepositView _invertoryView;
     private SceneRef _gamePlayScene;
-    private GameObject _lostGameGO;
+    private SceneRef _bootScene;
 
-    public GameplayLogic(SceneRef gamePlayScene, GameObject lostGameGO)
+    public GameplayLogic(SceneRef gamePlayScene, GameObject lostGo)
     {
         _gamePlayScene = gamePlayScene;
-        _lostGameGO = lostGameGO;
+        _lostGo = lostGo;
     }
 
     public void Init()
@@ -56,8 +59,12 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI = new DepositUI();
         _hordeLogic = new HordeLogic();
         _combatSystem = new CombatSystem();
-        _gameResultManager = new GameResultManager(_lostGameGO);
+        _gameResultManager = new GameResultManager(_lostGo);
 
+        GameObject gameObject = new GameObject("invertoryView");
+        _invertoryView = gameObject.AddComponent<DepositView>();
+
+        _invertoryView.Init();
         _hatchLogic.Init();
         _nucleusLogic.Init();
         _inventoryController.Init();
@@ -69,10 +76,13 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _depositUI.Init();
         _hordeLogic.Init();
         _combatSystem.Init();
+
+        NearestObjectDetector.Init();
     }
 
     public void LateInit()
     {
+        _invertoryView.LateInit();
         _hatchLogic.LateInit();
         _nucleusLogic.LateInit();
         _inventoryController.LateInit();
@@ -90,11 +100,13 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         EntityFactory.Create<Deposit>();
         EntityFactory.Create<Nucleus>();
 
+        NearestObjectDetector.LateInit();
+
         void SpawnEntities<ItemType>(int amount) where ItemType : GreenAbyss.Entities.BaseEntity
         {
             for (int i = 0; i < amount; ++i)
             {
-                EntityFactory.Create<ItemType>(new global::UnityEngine.Vector2(global::UnityEngine.Random.Range(-50, 50), global::UnityEngine.Random.Range(0, 10)));
+                EntityFactory.Create<ItemType>(new Vector2(UnityEngine.Random.Range(-50, 50), UnityEngine.Random.Range(0, 10)));
             }
         }
     }
@@ -110,6 +122,7 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Dispose()
     {
+        _invertoryView.Dispose();
         _hatchLogic.Dispose();
         _nucleusLogic.Dispose();
         _inventoryController.Dispose();

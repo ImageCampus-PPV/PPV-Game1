@@ -1,5 +1,5 @@
 ﻿using GreenAbyss.Events;
-
+using IEvent = GreenAbyss.Events.IEvent;
 namespace GreenAbyss.Inputs
 {
     public struct InputDeviceDisconnectRequestEvent : IEvent

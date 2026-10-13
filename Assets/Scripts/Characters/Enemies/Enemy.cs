@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+using FSM = GreenAbyss.FSM.FSM;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+
+
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStatusEffectReceiver, IStateDebugInfo
 {
@@ -32,7 +36,7 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     private List<StatusEffect> _effects = new List<StatusEffect>();
     private List<DamageBehaviour> _damageBehaviours;
 
-    private FSM _fsm;
+    private GreenAbyss.FSM.FSM _fsm;
     private TransitionEvaluator _evaluator;
 
     private Dictionary<Type, object> _commandHandlers = new Dictionary<Type, object>();
@@ -88,9 +92,9 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
         _evaluator = new TransitionEvaluator(stateMachineConfig, stateNameToType);
 
         Type defaultStateType = stateNameToType[stateMachineConfig.DefaultState];
-        _fsm = new FSM(defaultStateType);
+        _fsm = new GreenAbyss.FSM.FSM(defaultStateType);
 
-        MethodInfo addStateMethod = typeof(FSM).GetMethod(nameof(FSM.AddState));
+        MethodInfo addStateMethod = typeof(GreenAbyss.FSM.FSM).GetMethod(nameof(GreenAbyss.FSM.FSM.AddState));
         foreach (StateMachineConfig.StateEntry entry in stateMachineConfig.states)
         {
             StateBehaviour<IEnemyContext> stateBehaviourInstance = Instantiate(entry.behaviour);

@@ -1,9 +1,10 @@
-﻿using GreenAbyss.Entities;
-using GreenAbyss.Events;
-using GreenAbyss.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
+using ServiceProvider = GreenAbyss.Services.ServiceProvider;
+using EventBus = GreenAbyss.Events.EventBus;
+using IService = GreenAbyss.Services.IService;
 
 public class Inventory : IService
 {
@@ -69,7 +70,7 @@ public sealed class InventoryController : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private Inventory InventoryLogic => ServiceProvider.Instance.GetService<Inventory>();
-    private GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
     public bool IsPersistance => false;
 
@@ -79,6 +80,9 @@ public sealed class InventoryController : IInitiable, IDisposable
 
     private Dictionary<Type, Type> _mineToResource;
     private MethodInfo _tryAddToInventory;
+    private MethodInfo _addToWallet;
+
+
     public void Init()
     {
         _mineToResource = new Dictionary<Type, Type>();
@@ -86,6 +90,7 @@ public sealed class InventoryController : IInitiable, IDisposable
 
         _unsuscribeEventSystem = EventBus.GetType().GetMethod(nameof(EventBus.Subscribe), BindingFlags.Public | BindingFlags.Instance);
         _subscribeToInteractionEvent = GetType().GetMethod(nameof(SubscribeToInteract), BindingFlags.NonPublic | BindingFlags.Instance);
+        _addToWallet = Wallet.GetType().GetMethod(nameof(Wallet.AddResourceByType), BindingFlags.Public | BindingFlags.Instance);
 
         _tryAddToInventory = InventoryLogic.GetType().GetMethod(nameof(InventoryLogic.TryAddItemOfType), BindingFlags.Public | BindingFlags.Instance);
 
@@ -111,7 +116,7 @@ public sealed class InventoryController : IInitiable, IDisposable
     {
         foreach ((Type resourceType, uint resourceAmount) item in InventoryLogic.FlushItems())
         {
-            Wallet.AddResource(item.resourceAmount, item.resourceType.Name);
+            _addToWallet.MakeGenericMethod(item.resourceType).Invoke(Wallet, new object[] { item.resourceAmount });
         }
     }
 
