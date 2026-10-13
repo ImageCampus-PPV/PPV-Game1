@@ -1,5 +1,5 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Skills/Dive Skill (Y)")]

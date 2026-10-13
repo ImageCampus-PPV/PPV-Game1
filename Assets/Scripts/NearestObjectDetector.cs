@@ -1,6 +1,5 @@
-﻿using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Entities;
+using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +8,7 @@ public class NearestObjectDetector : ITickable, IService
 {
     public bool IsPersistance => false;
 
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     private Dictionary<uint, (uint, Type)> _interactablePerCharacter = new Dictionary<uint, (uint, Type)>();
     private float _tolerance = 3f;
@@ -28,7 +27,7 @@ public class NearestObjectDetector : ITickable, IService
         foreach (Character character in EntityRegistry.FilterEntities<TypeReference>())
         {
             float nearestDistance = float.MaxValue;
-            (uint, Type) nearestObject = (BaseEntity.NULL_BASE_ENTITY, null);
+            (uint, Type) nearestObject = (GreenAbyss.Entities.BaseEntity.NULL_BASE_ENTITY, null);
 
             foreach (Interactable interactable in EntityRegistry.FilterEntities<TypeToFind>())
             {
@@ -41,7 +40,7 @@ public class NearestObjectDetector : ITickable, IService
                 nearestObject = (interactable.ID, interactable.GetType());
             }
 
-            _interactablePerCharacter[character.ID] = nearestDistance < _tolerance * _tolerance ? nearestObject : (BaseEntity.NULL_BASE_ENTITY, null);
+            _interactablePerCharacter[character.ID] = nearestDistance < _tolerance * _tolerance ? nearestObject : (GreenAbyss.Entities.BaseEntity.NULL_BASE_ENTITY, null);
         }
     }
 

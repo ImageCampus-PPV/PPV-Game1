@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Entities;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -70,7 +69,7 @@ public sealed class InventoryController : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
     private Inventory InventoryLogic => ServiceProvider.Instance.GetService<Inventory>();
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
     private Wallet Wallet => ServiceProvider.Instance.GetService<Wallet>();
     public bool IsPersistance => false;
 

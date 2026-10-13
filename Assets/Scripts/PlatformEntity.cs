@@ -1,5 +1,5 @@
 using GreenAbyss.Entities;
 
-public class PlatformEntity : BaseEntity
+public class PlatformEntity : GreenAbyss.Entities.BaseEntity
 {
 }
