@@ -1,10 +1,10 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using TaskScheduler = ImageCampus.ToolBox.Scheduling.TaskScheduler;
+using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
 
 class NucleusLogic : IInitiable, IDisposable
 {

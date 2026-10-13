@@ -1,12 +1,10 @@
 using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
-using System;
+using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 
 public class Character : DamageableEntity
 {

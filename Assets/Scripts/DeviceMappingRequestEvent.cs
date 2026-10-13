@@ -1,5 +1,4 @@
-﻿using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Events;
 
 public struct DeviceMappingRequestEvent : IEvent
 {

@@ -1,7 +1,5 @@
-﻿using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,7 +7,7 @@ using System.Reflection;
 public class InteractionLogic : IInitiable, IDisposable
 {
     private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    private GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     private Dictionary<string, Type> _entityClassNameToType;
     private Dictionary<Type, Action<uint, Interactable>> interactableTypeToAction;

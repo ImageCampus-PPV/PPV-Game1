@@ -1,6 +1,5 @@
-﻿using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Events;
-using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Events;
+using GreenAbyss.Services;
 using System;
 
 public class InteractionController : IInitiable, IDisposable
@@ -27,7 +26,7 @@ public class InteractionController : IInitiable, IDisposable
     {
         (uint objectID, Type objectType) = CharacterInteraction(playerRequestedInteractionEvent.entityID);
 
-        if (objectID == BaseEntity.NULL_BASE_ENTITY)
+        if (objectID == GreenAbyss.Entities.BaseEntity.NULL_BASE_ENTITY)
             return;
 
         EventBus.Raise<PlayerRequestInteractionAcceptedGeneric>(playerRequestedInteractionEvent.entityID, objectID, objectType.Name);

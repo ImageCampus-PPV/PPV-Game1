@@ -1,9 +1,8 @@
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuntimeDebugVisual : BaseEntity, IService
+public class RuntimeDebugVisual : GreenAbyss.Entities.BaseEntity, IService
 {
     private struct TimedLine
     {

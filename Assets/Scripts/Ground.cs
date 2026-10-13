@@ -1,7 +1,7 @@
 ﻿using GreenAbyss.Entities;
 using UnityEngine;
 
-public class Ground : BaseEntity, IEntityDimensions
+public class Ground : GreenAbyss.Entities.BaseEntity, IEntityDimensions
 {
     private Collider2D _collider;
     public Vector2 Center => transform.position;

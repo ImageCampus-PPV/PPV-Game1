@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 
 
 [CreateAssetMenu(menuName = "Abilities/MechaCombat")]

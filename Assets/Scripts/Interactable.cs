@@ -1,6 +1,6 @@
 ﻿using GreenAbyss.Entities;
 
-public abstract class Interactable : BaseEntity
+public abstract class Interactable : GreenAbyss.Entities.BaseEntity
 {
 
 }

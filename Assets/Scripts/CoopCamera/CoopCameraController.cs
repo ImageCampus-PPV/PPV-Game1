@@ -1,15 +1,13 @@
 using UnityEngine;
-using Assets.Scripts.Entities;
 using System.Collections.Generic;
-using ImageCampus.ToolBox.Services;
-using System;
+using GreenAbyss.Services;
 using GreenAbyss.Entities;
 
 public class CoopCameraController : IInitiable, ITickable, IService
 {
     public bool IsPersistance => false;
 
-    EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
+    GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     private float speed = 10.0f;
     private Vector3 offset = Vector3.forward * -10.0f;

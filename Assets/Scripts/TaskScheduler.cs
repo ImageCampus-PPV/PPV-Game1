@@ -1,8 +1,8 @@
-﻿using ImageCampus.ToolBox.Services;
+﻿using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 
-namespace ImageCampus.ToolBox.Scheduling
+namespace GreenAbyss.Scheduling
 {
     public sealed class TaskScheduler : IService, ITickable
     {

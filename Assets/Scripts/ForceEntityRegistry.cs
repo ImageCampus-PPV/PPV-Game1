@@ -1,5 +1,4 @@
-using GreenAbyss.Entities;
-using ImageCampus.ToolBox.Services;
+using GreenAbyss.Services;
 using UnityEngine;
 
 public class ForceEntityRegistry : MonoBehaviour
@@ -8,7 +7,7 @@ public class ForceEntityRegistry : MonoBehaviour
 
     private void Awake()
     {
-        foreach (BaseEntity entity in GetComponents<BaseEntity>())
+        foreach (GreenAbyss.Entities.BaseEntity entity in GetComponents<GreenAbyss.Entities.BaseEntity>())
             EntityFactory.RegisterEntity(entity);
 
         Destroy(this);
