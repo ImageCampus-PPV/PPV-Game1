@@ -284,7 +284,6 @@ public class Character : DamageableEntity
     {
         DebugVisual.DrawCircle(_groundCheck.position, _groundCheckRadius, Color.red, Time.deltaTime);
         int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
-        Debug.Log("Ground detected: " + groundCount);
         SetGrounded(groundCount != 0);
     }
 
