@@ -97,7 +97,7 @@ namespace GreenAbyss.Entities
 
         public int GetCountOf<EntityType>() where EntityType : BaseEntity
         {
-            return _entityIdsPerType[typeof(EntityType)].Count;
+            return _entityIdsPerType.TryGetValue(typeof(EntityType), out List<uint> ids) ? ids.Count : 0;
         }
 
         private void InvokeEntityDestroyEvent<EntityType>(uint ID) where EntityType : BaseEntity

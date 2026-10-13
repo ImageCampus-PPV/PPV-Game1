@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571b091f58eb7bf438f0211efe4b03b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Wasp
-  _maxHealth: 100
+  maxHealth: 100
   _defaultStateMachineConfig: {fileID: 11400000, guid: f1a2ec0b665d53d409ffecdc3632aa45, type: 2}
   _hordeModeStateMachineConfig: {fileID: 11400000, guid: edf8ed3ac5fdf8b44b54badcffd8919b, type: 2}
   _attackOffset: {fileID: 5725205844104546386}
@@ -221,9 +221,6 @@ MonoBehaviour:
     wanderWeight: 0.3
     wanderJitter: 120
     wanderStrength: 1
-    orbitWeight: 0
-    orbitMinDistance: 0
-    orbitMaxDistance: 0
   _identityLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -657,7 +654,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &885488916508800935
 MonoBehaviour:

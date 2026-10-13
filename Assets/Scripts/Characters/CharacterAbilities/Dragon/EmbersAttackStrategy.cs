@@ -1,7 +1,7 @@
 using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Abilities/Attacks/Air Embers (Y)")]
@@ -55,8 +55,13 @@ public class EmbersAttackStrategy : AttackStrategy
         if (DebugVisual)
             DebugVisual.DrawOrientedBox(beamCenter, beamSize, beamAngle, Color.red, Time.deltaTime, _beamLineThickness <= 0f ? 0.05f : _beamLineThickness);
 
-        foreach (Enemy enemy in EntityRegistry.GetAllEntitiesInBox<Enemy>(beamCenter, beamSize, beamAngle))
+        List<Enemy> enemiesToDamage = new List<Enemy>(EntityRegistry.GetAllEntitiesInBox<Enemy>(beamCenter, beamSize, beamAngle));
+
+        foreach (Enemy enemy in enemiesToDamage)
         {
+            if (enemy.IsDowned)
+                continue;
+
             EventBus.Raise<OnCombatDamage>(enemy.ID, damage);
 
             if (!enemy.HasEffect<BurnEffect>())

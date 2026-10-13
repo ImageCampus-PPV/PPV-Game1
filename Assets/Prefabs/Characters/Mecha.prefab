@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba7278b21fe44849a6184e107625b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  _damageableEntity: {fileID: 0}
+  _damageableEntity: {fileID: 6913589542571779159}
   _healthBar: {fileID: 8542585447198413836}
   _defaultFullHealth: 100
 --- !u!114 &6913589542571779159
