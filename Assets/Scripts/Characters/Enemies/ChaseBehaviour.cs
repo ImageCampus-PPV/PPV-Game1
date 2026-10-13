@@ -1,3 +1,4 @@
+using GreenAbyss.FSM;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behaviour/Chase")]

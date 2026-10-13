@@ -1,3 +1,5 @@
+using GreenAbyss.FSM;
+
 public interface IStateBehaviour<StateContextType> where StateContextType : IStateContext
 {
     BehaviourActions GetOnEnter(StateContextType context);

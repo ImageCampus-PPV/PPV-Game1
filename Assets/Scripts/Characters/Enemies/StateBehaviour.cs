@@ -1,3 +1,4 @@
+using GreenAbyss.FSM;
 using UnityEngine;
 
 public abstract class StateBehaviour<StateContextType> : ScriptableObject, IStateBehaviour<StateContextType> where StateContextType : IStateContext
