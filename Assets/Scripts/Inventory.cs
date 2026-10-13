@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Entities;
-using GreenAbyss.Entities;
+﻿using GreenAbyss.Entities;
 using ImageCampus.ToolBox.Events;
 using ImageCampus.ToolBox.Services;
+using Mono.Cecil;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -80,6 +80,9 @@ public sealed class InventoryController : IInitiable, IDisposable
 
     private Dictionary<Type, Type> _mineToResource;
     private MethodInfo _tryAddToInventory;
+    private MethodInfo _addToWallet;
+
+
     public void Init()
     {
         _mineToResource = new Dictionary<Type, Type>();
@@ -87,6 +90,7 @@ public sealed class InventoryController : IInitiable, IDisposable
 
         _unsuscribeEventSystem = EventBus.GetType().GetMethod(nameof(EventBus.Subscribe), BindingFlags.Public | BindingFlags.Instance);
         _subscribeToInteractionEvent = GetType().GetMethod(nameof(SubscribeToInteract), BindingFlags.NonPublic | BindingFlags.Instance);
+        _addToWallet = Wallet.GetType().GetMethod(nameof(Wallet.AddResourceByType), BindingFlags.Public | BindingFlags.Instance);
 
         _tryAddToInventory = InventoryLogic.GetType().GetMethod(nameof(InventoryLogic.TryAddItemOfType), BindingFlags.Public | BindingFlags.Instance);
 
@@ -112,7 +116,7 @@ public sealed class InventoryController : IInitiable, IDisposable
     {
         foreach ((Type resourceType, uint resourceAmount) item in InventoryLogic.FlushItems())
         {
-            Wallet.AddResource(item.resourceAmount, item.resourceType.Name);
+            _addToWallet.MakeGenericMethod(item.resourceType).Invoke(Wallet, new object[] { item.resourceAmount });
         }
     }
 
