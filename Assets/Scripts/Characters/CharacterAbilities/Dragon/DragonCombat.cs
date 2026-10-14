@@ -100,6 +100,9 @@ public class DragonCombat : CharacterAbility, ICombat
 
     public override void Tick()
     {
+        if (!ServiceProvider.Instance.ContainsService<RuntimeDebugVisual>())
+            return;
+
         _currentAttack?.Tick();
 
         if (_currentAttack != null && !_currentAttack.IsExecuting)
