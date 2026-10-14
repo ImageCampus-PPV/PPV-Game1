@@ -1,3 +1,4 @@
+using GreenAbyss.FSM;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behaviour/GroundPatrol")]
@@ -15,9 +16,9 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
     private int _direction = 1;
     private float _pauseTimer;
 
-    public override BehaviourActions GetOnEnter(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
 
         actions.AddUpdateBehaviour(() =>
         {
@@ -28,9 +29,9 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnExit(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnExit(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
 
         actions.AddUpdateBehaviour(() =>
         {
@@ -40,9 +41,9 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnTick(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnTick(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
 
         actions.AddUpdateBehaviour(() =>
         {

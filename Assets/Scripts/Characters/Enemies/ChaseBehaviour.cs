@@ -1,3 +1,4 @@
+using GreenAbyss.FSM;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behaviour/Chase")]
@@ -7,16 +8,16 @@ public class ChaseBehaviour : StateBehaviour<IEnemyContext>
     [SerializeField] private float _targetLookRange = 100f;
     [SerializeField] private LayerMask _targetMask;
 
-    public override BehaviourActions GetOnEnter(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new ResumeMovementCommand()));
         return actions;
     }
 
-    public override BehaviourActions GetOnTick(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnTick(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             Transform target = context.ExecuteQuery(new FindTargetQuery(_targetLookRange, _targetMask));
@@ -29,9 +30,9 @@ public class ChaseBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnExit(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnExit(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new StopMovementCommand()));
         return actions;
     }

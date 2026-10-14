@@ -1,3 +1,4 @@
+using GreenAbyss.FSM;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behaviour/Attack")]
@@ -11,9 +12,9 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
     private float _anticipationTimer;
     private bool _isAnticipating;
 
-    public override BehaviourActions GetOnEnter(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnEnter(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             context.Execute(new StopMovementCommand());
@@ -24,9 +25,9 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnTick(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnTick(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() =>
         {
             context.Execute(new StopMovementCommand());
@@ -58,9 +59,9 @@ public class AttackBehaviour : StateBehaviour<IEnemyContext>
         return actions;
     }
 
-    public override BehaviourActions GetOnExit(IEnemyContext context)
+    public override GreenAbyss.FSM.BehaviourActions GetOnExit(IEnemyContext context)
     {
-        BehaviourActions actions = new BehaviourActions();
+        GreenAbyss.FSM.BehaviourActions actions = new GreenAbyss.FSM.BehaviourActions();
         actions.AddUpdateBehaviour(() => context.Execute(new ResumeMovementCommand()));
         return actions;
     }
