@@ -65,7 +65,7 @@ public class HordeLogic : IInitiable, IDisposable
 
     public void LateInit()
     {
-        StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
+        StartNewHordeCountdown(HORDE_COOLDOWN);
     }
 
     private void StartNewHordeCountdown(float timer = HORDE_COOLDOWN)
