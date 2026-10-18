@@ -233,7 +233,7 @@ AnimatorController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Meca
-  serializedVersion: 6
+  serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
   - serializedVersion: 5
@@ -248,10 +248,9 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
-  m_EvaluateTransitionsOnStart: 0
 --- !u!1107 &25518083948053819
 AnimatorStateMachine:
-  serializedVersion: 7
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -260,34 +259,34 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -3158058534383859765}
-    m_Position: {x: 360, y: 240, z: 0}
+    m_Position: {x: 460, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8713401252664176474}
-    m_Position: {x: 380, y: 120, z: 0}
+    m_Position: {x: 460, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -677388796219719208}
-    m_Position: {x: 470, y: 350, z: 0}
+    m_Position: {x: 460, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2240856354894001170}
-    m_Position: {x: 490, y: 420, z: 0}
+    m_Position: {x: 450, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2395830652679003630}
-    m_Position: {x: 550, y: 490, z: 0}
+    m_Position: {x: 460, y: 300, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 798902813265026710}
-    m_Position: {x: 510, y: 600, z: 0}
+    m_Position: {x: 420, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1250708729736231063}
-    m_Position: {x: 470, y: 650, z: 0}
+    m_Position: {x: 380, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3413091736219211447}
-    m_Position: {x: 470, y: 700, z: 0}
+    m_Position: {x: 380, y: 510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4180633741082143694}
-    m_Position: {x: 440, y: 760, z: 0}
+    m_Position: {x: 350, y: 570, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4862548880931577086}
-    m_Position: {x: 510, y: 550, z: 0}
+    m_Position: {x: 420, y: 360, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions:

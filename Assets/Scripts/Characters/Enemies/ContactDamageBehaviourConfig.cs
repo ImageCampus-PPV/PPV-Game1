@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Enemy/Behaviour/" + nameof(ContactDamageBehaviourConfig))]
+[CreateAssetMenu(menuName = "ScriptableObject/Enemy/Behaviour/" + nameof(ContactDamageBehaviourConfig))]
 public sealed class ContactDamageBehaviourConfig : DamageBehaviourConfig
 {
     [SerializeField] private float _damage = 1f;
