@@ -1,4 +1,5 @@
 using GreenAbyss.FSM;
+using GreenAbyss.Services;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Enemy/Behaviour/GroundPatrol")]
@@ -15,6 +16,7 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
 
     private int _direction = 1;
     private float _pauseTimer;
+    private RuntimeDebugVisual RuntimeDebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
 
     public override GreenAbyss.FSM.BehaviourActions GetOnEnter(IEnemyContext context)
     {
@@ -59,7 +61,12 @@ public class GroundPatrolBehaviour : StateBehaviour<IEnemyContext>
             Vector2 floorCheckOrigin = position + Vector2.right * (_direction * _lookAheadDistance);
 
             bool isThereGround = Physics2D.Raycast(floorCheckOrigin, Vector2.down * _floorCheckYOffset, _groundCheckDistance, _groundLayer);
-            bool isThereWall = Physics2D.Raycast(position, Vector2.right * _direction, _wallCheckDistance, _wallLayer);
+            RaycastHit2D isThereWall = Physics2D.Raycast(position, Vector2.right * _direction, _wallCheckDistance, _wallLayer);
+
+            //RuntimeDebugVisual.DrawRay(context.Transform.position, Vector2.right * _direction, _wallCheckDistance, Color.black, 3f);
+
+            if (isThereWall)
+                Debug.Log($"{context.Transform.name}: wall detected {isThereWall.transform.name}");
 
             if (!isThereGround || isThereWall)
             {

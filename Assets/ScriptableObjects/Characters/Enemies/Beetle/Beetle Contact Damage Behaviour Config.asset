@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9f9422c35e0ddd4396d13c6971928d3, type: 3}
-  m_Name: ChasePlayerInRange
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInRangeCondition
-  _range: 10
-  _targetLayer:
+  m_Script: {fileID: 11500000, guid: 6e7e0be4acba16749a03714aab16cba8, type: 3}
+  m_Name: Beetle Contact Damage Behaviour Config
+  m_EditorClassIdentifier: Assembly-CSharp::ContactDamageBehaviourConfig
+  _damage: 3
+  _cooldown: 1
+  _targetLayers:
     serializedVersion: 2
     m_Bits: 128

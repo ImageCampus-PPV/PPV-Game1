@@ -12,7 +12,7 @@ public class StateDebugDisplay : MonoBehaviour
     {
         _debug = _stateOwner as IStateDebugInfo;
         if (_debug == null)
-            Debug.LogError("State owner does not implement IStateDebugInfo");
+            Debug.LogError($"State owner {_stateOwner} does not implement IStateDebugInfo");
     }
 
     private void Update()
