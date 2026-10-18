@@ -1,7 +1,7 @@
 using GreenAbyss.FSM;
 using System;
 
-public class EnemyState<MarkerType> : State where MarkerType : new()
+public class EnemyState<MarkerType> : GreenAbyss.FSM.State where MarkerType : new()
 {
     public override GreenAbyss.FSM.BehaviourActions GetOnEnterBehaviour(params object[] parameters)
     {
