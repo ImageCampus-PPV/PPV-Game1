@@ -125,6 +125,9 @@ public class MechaCombat : CharacterAbility
 
     public override void Tick()
     {
+        if (!ServiceProvider.Instance.ContainsService<RuntimeDebugVisual>())
+            return;
+
         _aimDir = Character.CurrentAimDir;
 
         (_slot1Weapon as GatlingWeapon)?.UpdateAimDir(_aimDir);

@@ -27,9 +27,9 @@ public class Character : DamageableEntity
     private Rigidbody2D _rb;
     private Collider2D _ownCollider;
 
-    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
-    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.GetService<RuntimeDebugVisual>();
+    private EventBus EventBus => ServiceProvider.Instance.ContainsService<EventBus>() ? ServiceProvider.Instance.GetService<EventBus>() : null;
+    private EntityRegistry EntityRegistry => ServiceProvider.Instance.ContainsService<EntityRegistry>() ? ServiceProvider.Instance.GetService<EntityRegistry>() : null;
+    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.ContainsService<RuntimeDebugVisual>() ? ServiceProvider.Instance.GetService<RuntimeDebugVisual>() : null;
 
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
@@ -281,7 +281,6 @@ public class Character : DamageableEntity
 
     private void CheckGrounded()
     {
-        DebugVisual.DrawCircle(_groundCheck.position, _groundCheckRadius, Color.red, Time.deltaTime);
         int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
         //Debug.Log($"{name} Ground count: {groundCount}");
         SetGrounded(groundCount != 0);
