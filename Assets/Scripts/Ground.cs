@@ -1,6 +1,7 @@
 ﻿using GreenAbyss.Entities;
 using UnityEngine;
 
+//[RequireComponent(typeof(ForceEntityRegistry))]
 public class Ground : GreenAbyss.Entities.BaseEntity, IEntityDimensions
 {
     private Collider2D _collider;

@@ -272,6 +272,7 @@ public class Character : DamageableEntity
     {
         _activeMovement?.CharacterCollisionStay(collision);
         _activeJump?.CharacterCollisionStay(collision);
+
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.CharacterCollisionStay(collision);
@@ -280,8 +281,8 @@ public class Character : DamageableEntity
 
     private void CheckGrounded()
     {
-        DebugVisual?.DrawCircle(_groundCheck.position, _groundCheckRadius, Color.red, Time.deltaTime);
-        int groundCount = EntityRegistry != null ? EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count() : 0;
+        int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
+        //Debug.Log($"{name} Ground count: {groundCount}");
         SetGrounded(groundCount != 0);
     }
 
