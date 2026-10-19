@@ -3766,7 +3766,7 @@ Transform:
   m_GameObject: {fileID: 120712079}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.18, y: -12.55, z: 15.94}
+  m_LocalPosition: {x: 0.06, y: 7, z: 15.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14884,6 +14884,10 @@ PrefabInstance:
     - target: {fileID: 417975264057165871, guid: bdb1a2eff3c97b342a3477e2d7d2537e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 23.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 417975264057165871, guid: bdb1a2eff3c97b342a3477e2d7d2537e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 2647663951508655563, guid: bdb1a2eff3c97b342a3477e2d7d2537e, type: 3}
       propertyPath: m_Name
@@ -34715,6 +34719,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5916945671769177572, guid: f9806d4b70ecabd429c750d3c410d8e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37856,6 +37864,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 405807341139453377, guid: a9e0bcbfdac4fc348a12ae738325a874, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.7
+      objectReference: {fileID: 0}
     - target: {fileID: 2647663951508655563, guid: a9e0bcbfdac4fc348a12ae738325a874, type: 3}
       propertyPath: m_Name
       value: Estalactita 2 mediana (8)
@@ -44748,7 +44760,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: bc9196a62074b394b88a93fa555c534c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.39
+      value: 13.6
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: bc9196a62074b394b88a93fa555c534c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -65337,6 +65349,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1785546538668194055, guid: 1c4633f67a932704382991399cf96762, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2647663951508655563, guid: 1c4633f67a932704382991399cf96762, type: 3}
       propertyPath: m_Name
       value: Estalactita 1 mediana (3)
@@ -66572,7 +66588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: bdb1a2eff3c97b342a3477e2d7d2537e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.313001
+      value: -11.52
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: bdb1a2eff3c97b342a3477e2d7d2537e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -77770,7 +77786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: 9589333c8ae88ed4ca6570aa983b267a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.75
+      value: -2.08
       objectReference: {fileID: 0}
     - target: {fileID: 3455867277477910385, guid: 9589333c8ae88ed4ca6570aa983b267a, type: 3}
       propertyPath: m_LocalPosition.z
