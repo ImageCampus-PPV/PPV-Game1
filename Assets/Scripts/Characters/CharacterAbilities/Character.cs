@@ -29,7 +29,6 @@ public class Character : DamageableEntity
 
     private EventBus EventBus => ServiceProvider.Instance.ContainsService<EventBus>() ? ServiceProvider.Instance.GetService<EventBus>() : null;
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.ContainsService<EntityRegistry>() ? ServiceProvider.Instance.GetService<EntityRegistry>() : null;
-    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.ContainsService<RuntimeDebugVisual>() ? ServiceProvider.Instance.GetService<RuntimeDebugVisual>() : null;
 
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
@@ -281,7 +280,7 @@ public class Character : DamageableEntity
 
     private void CheckGrounded()
     {
-        int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
+        int groundCount = EntityRegistry != null ? EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count() : 0;
         //Debug.Log($"{name} Ground count: {groundCount}");
         SetGrounded(groundCount != 0);
     }
