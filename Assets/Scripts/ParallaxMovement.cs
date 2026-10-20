@@ -1,77 +1,134 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class ParallaxMovement : MonoBehaviour
+public sealed class ParallaxMovement : MonoBehaviour
 {
-    private ParallaxSettings[] parallaxSettings;
-    Transform cam;
-    Vector3 camStartPos;
-    float distance;
+    [Header("Camera")]
+    [SerializeField] private Camera _camera;
 
-    GameObject[] backgrounds;
-    Material[] mat;
-    float[] backSpeed;
+    [Tooltip("Horizontal distance between the root and the camera.")]
+    [SerializeField] private float _cameraFollowXOffset = -1f;
 
-    float farthestBack;
+    private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
 
-    [Range(0.01f, 1f)]
-    public float parallaxSpeed;
+    private static readonly int BaseMapId = Shader.PropertyToID("_BaseMap");
 
-    // Start is called before the first frame update
-    void Start()
+    private Layer[] _layers;
+    private Vector3 _initialCameraPosition;
+
+    private sealed class Layer
     {
-        cam = Camera.main.transform;
-        camStartPos = cam.position;
-
-        int backCount = transform.childCount;
-        mat = new Material[backCount];
-        backSpeed = new float[backCount];
-        backgrounds = new GameObject[backCount];
-
-        parallaxSettings = new ParallaxSettings[backCount];
-
-        for (int i = 0; i < backCount; i++)
-        {
-            backgrounds[i] = transform.GetChild(i).gameObject;
-            mat[i] = backgrounds[i].GetComponent<Renderer>().material;
-            parallaxSettings[i] = backgrounds[i].GetComponent<ParallaxSettings>();
-        }
-
-        BackSpeedCalculate(backCount);
+        public Transform Transform;
+        public ParallaxSettings Settings;
+        public Material Material;
+        public int TexturePropertyId;
+        public Vector3 InitialPosition;
+        public Vector2 InitialTextureOffset;
     }
 
-    void BackSpeedCalculate(int backCount)
+    private void Awake()
     {
-        for (int i = 0; i < backCount; i++)
+        if (_camera == null)
+            _camera = Camera.main;
+
+        if (_camera == null)
         {
-            if ((backgrounds[i].transform.position.z - cam.position.z) > farthestBack)
-            {
-                farthestBack = backgrounds[i].transform.position.z - cam.position.z;
-            }
+            Debug.LogError("ParallaxMovement requires a camera.");
+            enabled = false;
+            return;
         }
 
-        for (int i = 0; i < backCount; i++)
+        _initialCameraPosition = _camera.transform.position;
+
+        int layerCount = transform.childCount;
+        _layers = new Layer[layerCount];
+
+        for (int i = 0; i < layerCount; i++)
         {
-            backSpeed[i] = 1 - (backgrounds[i].transform.position.z - cam.position.z) / farthestBack;
+            Transform child = transform.GetChild(i);
+            Renderer layerRenderer = child.GetComponentInChildren<Renderer>();
+            ParallaxSettings settings = child.GetComponentInChildren<ParallaxSettings>();
+
+            if (layerRenderer == null || settings == null)
+            {
+                Debug.LogError($"Layer '{child.name}' requires a Renderer and ParallaxSettings.", child);
+
+                enabled = false;
+                return;
+            }
+
+            Material material = layerRenderer.material;
+
+            int texturePropertyId = material.HasProperty(BaseMapId) ? BaseMapId : MainTexId;
+
+            if (!material.HasProperty(texturePropertyId))
+            {
+                Debug.LogError($"Material on '{child.name}' has no supported main texture property (_MainTex or _BaseMap).");
+
+                Destroy(material);
+                enabled = false;
+                return;
+            }
+
+            _layers[i] = new Layer
+            {
+                Transform = child,
+                Settings = settings,
+                Material = material,
+                TexturePropertyId = texturePropertyId,
+                InitialPosition = child.position,
+                InitialTextureOffset = material.GetTextureOffset(texturePropertyId)
+            };
         }
     }
 
     private void LateUpdate()
     {
-        float horizontalDistance = cam.position.x - camStartPos.x;
-        float verticalDistance = cam.position.y - camStartPos.y;
-        transform.position = new Vector3(cam.position.x - 1, transform.position.y, 2f);
+        Vector3 cameraPosition = _camera.transform.position;
 
-        for (int i = 0; i < backgrounds.Length; i++)
+        Vector3 totalCameraDisplacement = cameraPosition - _initialCameraPosition;
+
+        Vector3 rootPosition = transform.position;
+        rootPosition.x = cameraPosition.x + _cameraFollowXOffset;
+        transform.position = rootPosition;
+
+        foreach (Layer layer in _layers)
         {
-            if (mat[i] == null)
-                continue;
-            bool useVerticalParallax = parallaxSettings[i] != null && parallaxSettings[i].verticalParallax;
-            float verticalOffset = useVerticalParallax ? verticalDistance : 0f;
-            Vector2 offset = new Vector2(horizontalDistance, verticalOffset);
-            float speed = backSpeed[i] * parallaxSpeed;
-            mat[i].SetTextureOffset("_MainTex", offset * speed);
+            ParallaxSettings settings = layer.Settings;
+            float factor = settings.ParallaxFactor;
+
+            Vector2 offset = layer.InitialTextureOffset;
+
+            if (settings.RepeatHorizontally)
+            {
+                offset.x -= totalCameraDisplacement.x * factor;
+            }
+
+            if (settings.RepeatVertically)
+            {
+                offset.y -= totalCameraDisplacement.y * factor;
+            }
+            else if (settings.FollowCameraVertically)
+            {
+                Vector3 position = layer.Transform.position;
+                position.y = layer.InitialPosition.y + totalCameraDisplacement.y;
+
+                layer.Transform.position = position;
+            }
+
+            layer.Material.SetTextureOffset(layer.TexturePropertyId, offset);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_layers == null)
+            return;
+
+        foreach (Layer layer in _layers)
+        {
+            if (layer?.Material != null)
+                Destroy(layer.Material);
         }
     }
 }

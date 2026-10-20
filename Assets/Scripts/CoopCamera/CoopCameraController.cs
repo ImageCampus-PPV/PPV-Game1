@@ -7,14 +7,20 @@ public class CoopCameraController : IInitiable, ITickable, IService
 {
     public bool IsPersistance => false;
 
-    GreenAbyss.Entities.EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
+    EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<GreenAbyss.Entities.EntityRegistry>();
 
     private float speed = 10.0f;
     private Vector3 offset = Vector3.forward * -10.0f;
 
-    [SerializeField] private Camera _cam;
+    private Camera _cam;
 
-    [SerializeField] private float _boundsMargin = 0.5f;
+    private float _boundsMargin = 0.5f;
+    private float _maxZoomOut = -21.8f;
+    private float _maxY = 4.86f;
+    private float _minY = -46.92f;
+    private float _minX = -0.38f;
+    private float _maxX = 0.48f;
+
 
     private CoopCameraModel _model;
     private readonly List<Vector3> _positions = new();
@@ -66,22 +72,10 @@ public class CoopCameraController : IInitiable, ITickable, IService
     {
         Vector3 desiredPos = pos + offset;
         Vector3 smoothedPos = Vector3.Lerp(_cam.transform.position, desiredPos, speed * Time.deltaTime);
+
+        smoothedPos = new Vector3(Mathf.Clamp(smoothedPos.x, _minX, _maxX), Mathf.Clamp(smoothedPos.y, _minY, _maxY), Mathf.Clamp(smoothedPos.z, _maxZoomOut, offset.z));
+        
         _cam.transform.position = smoothedPos;
-    }
-
-    public void SetOffset(Vector3 offset)
-    {
-        this.offset = offset;
-    }
-
-    public void SetOffset(float offsetZ)
-    {
-        offset = Vector3.forward * -Mathf.Abs(offsetZ);
-    }
-
-    public void SetSpeed(float speed)
-    {
-        this.speed = speed;
     }
 
     public bool IsInCameraBounds(Vector3 position)

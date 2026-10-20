@@ -60,7 +60,8 @@ public class NearestObjectDetector : ITickable, IService, IInitiable
                 }
             }
 
-            _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
+            if (nearestInteractable != null)
+                _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
         }
     }
 

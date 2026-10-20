@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 835658675612933349}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: -0, z: -3.9}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.2710357}
+  m_LocalPosition: {x: 0, y: 0, z: -3.9}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.271036}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 2125081611076492543}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &1825883404366751347
 MeshFilter:
@@ -103,7 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 0
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &988040867837536404
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,11 +135,11 @@ Transform:
   m_GameObject: {fileID: 988040867837536404}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.87}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.2710357}
+  m_LocalPosition: {x: 0, y: 0, z: 1.8699999}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.271036}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 781540531927629201}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &6619379434713138081
 MeshFilter:
@@ -207,7 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 1
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &2740651946505802154
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,10 +243,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0.1, z: 4.4}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.271036}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.2710361}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 781540531927629201}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &1408160624726073914
 MeshFilter:
@@ -311,7 +317,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 1
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
+--- !u!1 &3398247262718439557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781540531927629201}
+  m_Layer: 0
+  m_Name: bg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &781540531927629201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3398247262718439557}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6331072723320699675}
+  - {fileID: 7636379185532993296}
+  - {fileID: 6562106352195412975}
+  - {fileID: 1464518319202232011}
+  m_Father: {fileID: 9160946473356582090}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4135467575173306099
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,10 +385,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -3.4}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.2710357}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.271036}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 2125081611076492543}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &8964956161415533329
 MeshFilter:
@@ -415,7 +459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 0
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &4946865101045330231
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,14 +493,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6331072723320699675}
-  - {fileID: 7636379185532993296}
-  - {fileID: 6562106352195412975}
-  - {fileID: 1464518319202232011}
-  - {fileID: 5588190126520658975}
-  - {fileID: 3729320725163167539}
-  - {fileID: 6718913518926205068}
-  - {fileID: 8975188764231693202}
+  - {fileID: 781540531927629201}
+  - {fileID: 2125081611076492543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3225068304011718383
@@ -468,7 +509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2eff92522cafe4bbbd64b608bbc062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxMovement
-  parallaxSpeed: 0.2
+  _camera: {fileID: 0}
+  _cameraFollowXOffset: -1
 --- !u!1 &5689556435678689107
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,11 +539,11 @@ Transform:
   m_GameObject: {fileID: 5689556435678689107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 3.09}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.2710357}
+  m_LocalPosition: {x: 0, y: 0, z: 3.0899997}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.271036}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 781540531927629201}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &5803748193599384470
 MeshFilter:
@@ -572,7 +614,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 1
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &6468503081199565264
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,11 +646,11 @@ Transform:
   m_GameObject: {fileID: 6468503081199565264}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: -0.8, z: 0.7}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.271036}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0.70000005}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.2710361}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 2125081611076492543}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &8667537360271443054
 MeshFilter:
@@ -676,7 +721,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 1
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &7094171308564979903
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,10 +754,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0.1, z: 5.5}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.271036}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.2710361}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 781540531927629201}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &5640125272519560226
 MeshFilter:
@@ -780,7 +828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 1
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
 --- !u!1 &7632869760508435444
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,11 +860,11 @@ Transform:
   m_GameObject: {fileID: 7632869760508435444}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: -0, z: -2.21}
-  m_LocalScale: {x: 3.2710354, y: 3.2710357, z: 3.2710357}
+  m_LocalPosition: {x: 0, y: 0, z: -2.21}
+  m_LocalScale: {x: 3.2710354, y: 3.271036, z: 3.271036}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9160946473356582090}
+  m_Father: {fileID: 2125081611076492543}
   m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
 --- !u!33 &5112147618329820861
 MeshFilter:
@@ -884,4 +935,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  verticalParallax: 0
+  _repeatHorizontally: 1
+  _repeatVertically: 1
+  _followCameraVertically: 0
+  _parallaxFactor: 0.5
+--- !u!1 &7960786010834776872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125081611076492543}
+  m_Layer: 0
+  m_Name: fg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2125081611076492543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960786010834776872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5588190126520658975}
+  - {fileID: 3729320725163167539}
+  - {fileID: 6718913518926205068}
+  - {fileID: 8975188764231693202}
+  m_Father: {fileID: 9160946473356582090}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
