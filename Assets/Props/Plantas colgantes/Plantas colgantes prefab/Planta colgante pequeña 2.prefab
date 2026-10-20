@@ -88,6 +88,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Planta colgante peque\xF1a 2 Grupo"
       objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7834481187724633407, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5568551756592279728, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}

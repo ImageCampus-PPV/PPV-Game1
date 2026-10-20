@@ -1,12 +1,8 @@
 using GreenAbyss.Events;
-using GreenAbyss.FSM;
-using GreenAbyss.Services;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-
-using FSM = GreenAbyss.FSM.FSM;
 using ServiceProvider = GreenAbyss.Services.ServiceProvider;
 
 
@@ -235,6 +231,6 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     public override void Dispose()
     {
         base.Dispose();
-        _fsm.Dispose();
+        //_fsm.Dispose();
     }
 }

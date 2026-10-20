@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -52,6 +64,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Estalactita 4 peque\xF1a Modelo"
       objectReference: {fileID: 0}
+    - target: {fileID: -2427768999281476138, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427768999281476138, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427768999281476138, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 623420616769059698, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: "Estalactita 4 peque\xF1a Grupo"
@@ -64,6 +88,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 10a1cb4b6d5013d4ab1e76d10f8a7a97, type: 2}
+    - target: {fileID: 7111167741257018697, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111167741257018697, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111167741257018697, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8523772855540137367, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}

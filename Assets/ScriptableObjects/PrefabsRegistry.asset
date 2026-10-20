@@ -37,3 +37,5 @@ MonoBehaviour:
     gameObject: {fileID: 7620331566330051127, guid: ba27738d7199adb45ab8fae94453d27b, type: 3}
   - TypeName: Ferrite
     gameObject: {fileID: 1986414309342661596, guid: 58b9eb1fef4883440add5b45372cc88c, type: 3}
+  - TypeName: Beetle
+    gameObject: {fileID: 3397934936948879136, guid: 9e6dcdc1656cb0e47bb8de5a0079b66f, type: 3}
