@@ -313,14 +313,24 @@ public class Character : DamageableEntity
         if (CoopCameraController == null)
             return 0f;
 
-        CameraBounds bounds = CoopCameraController.GetBounds();
-        float posX = _rb.position.x;
+        Camera camera = CoopCameraController.Camera;
 
-        if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
-            xVel = 0;
+        if (camera == null)
+            return 0f;
+
+        Vector3 viewportPosition = camera.WorldToViewportPoint(_rb.position);
+
+        float margin = 0.05f;
+
+        if (viewportPosition.x <= margin && xVel < 0f)
+            return 0f;
+
+        if (viewportPosition.x >= 1f - margin && xVel > 0f)
+            return 0f;
 
         return xVel;
     }
+
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);
