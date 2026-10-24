@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Estalactita 2 grande
       objectReference: {fileID: 0}
+    - target: {fileID: -8679538805781343838, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -7778090430328894372, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -84,9 +88,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Estalactita 2 grande
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8523772855540137367, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 2 grande Grupo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523772855540137367, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8804625046137572299, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x

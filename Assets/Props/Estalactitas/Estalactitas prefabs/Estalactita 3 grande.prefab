@@ -68,13 +68,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Estalactita 3 grande Modelo
       objectReference: {fileID: 0}
+    - target: {fileID: -4561475161477121491, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 3 grande
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8523772855540137367, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 3 grande Grupo
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523772855540137367, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8804625046137572299, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x
