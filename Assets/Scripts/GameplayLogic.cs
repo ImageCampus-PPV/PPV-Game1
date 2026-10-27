@@ -27,7 +27,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private HordeLogic _hordeLogic;
     private CombatSystem _combatSystem;
     private GameResultManager _gameResultManager;
-    private DepositView _invertoryView;
+    private DepositView _depositView;
+    private InventoryView _inventoryView;
     private SceneRef _gamePlayScene;
     private SceneRef _bootScene;
 
@@ -62,9 +63,13 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _gameResultManager = new GameResultManager(_lostGo);
 
         GameObject gameObject = new GameObject("invertoryView");
-        _invertoryView = gameObject.AddComponent<DepositView>();
+        _depositView = gameObject.AddComponent<DepositView>();
 
-        _invertoryView.Init();
+        gameObject = new GameObject(nameof(InventoryView));
+        _inventoryView = gameObject.AddComponent<InventoryView>();
+
+        _depositView.Init();
+        _inventoryView.Init();
         _hatchLogic.Init();
         _nucleusLogic.Init();
         _inventoryController.Init();
@@ -82,7 +87,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void LateInit()
     {
-        _invertoryView.LateInit();
+        _inventoryView.LateInit();
+        _depositView.LateInit();
         _hatchLogic.LateInit();
         _nucleusLogic.LateInit();
         _inventoryController.LateInit();
@@ -122,7 +128,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Dispose()
     {
-        _invertoryView.Dispose();
+        _inventoryView.Dispose();
+        _depositView.Dispose();
         _hatchLogic.Dispose();
         _nucleusLogic.Dispose();
         _inventoryController.Dispose();
