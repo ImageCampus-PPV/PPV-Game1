@@ -68,13 +68,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Estalactita 4 mediana Grupo
       objectReference: {fileID: 0}
+    - target: {fileID: -5539764629200458662, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -3607337357986939085, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 4 mediana Modelo
       objectReference: {fileID: 0}
+    - target: {fileID: -3607337357986939085, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 4 mediana
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1366278540751589237, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x
