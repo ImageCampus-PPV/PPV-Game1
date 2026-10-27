@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cannon
   m_EditorClassIdentifier: Assembly-CSharp::CannonWeapon
   damage: 20
-  range: 3
+  range: 10
   cooldown: 1
   _allowedSlot: 1
   _projectileSpeed: 12

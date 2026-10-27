@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Estalactita 2 mediana Grupo
       objectReference: {fileID: 0}
+    - target: {fileID: -5539764629200458662, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -4387358814490131020, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -71,6 +75,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 2 mediana
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1366278540751589237, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -87,6 +95,10 @@ PrefabInstance:
     - target: {fileID: 2594434976233037471, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_Name
       value: Estalactita 2 mediana Modelo
+      objectReference: {fileID: 0}
+    - target: {fileID: 2594434976233037471, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3305283855511328091, guid: 5804e731324cdd24e81c193af1a32a4f, type: 3}
       propertyPath: m_LocalPosition.x
