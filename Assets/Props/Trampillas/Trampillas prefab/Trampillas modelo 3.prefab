@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7886477323682341268}
   - component: {fileID: 7252634505811885549}
   - component: {fileID: 8416166129412781028}
-  m_Layer: 0
+  - component: {fileID: 158670856191904271}
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +106,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b002697fb787c469041c034f2ca9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceEntityRegistry
+--- !u!114 &158670856191904271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692005412336630934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ground
 --- !u!1001 &4998562761151577400
 PrefabInstance:
   m_ObjectHideFlags: 0

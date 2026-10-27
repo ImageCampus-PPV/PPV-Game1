@@ -32,13 +32,16 @@ public class StickyAbility : CharacterAbility
 
         if (collision.gameObject.TryGetComponent<StickyWall>(out StickyWall stickyWall))
         {
-            Stick(collision.contacts[0].point, stickyWall.Normal);
+            Vector3 normal = collision.contacts[0].normal;
+            normal.y = 0;
+            normal.z = 0;
+            Stick(collision.contacts[0].point, collision.contacts[0].normal);
         }
     }
 
     public void Stick(Vector2 contactPoint, Vector2 wallNormal)
     {
-        if (IsSticking)
+        if (IsSticking || wallNormal.Equals(Vector3.zero))
             return;
 
         _wallNormal = wallNormal.normalized;
