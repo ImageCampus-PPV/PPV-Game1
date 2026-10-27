@@ -80,6 +80,30 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 5ff319709b6240343ada4f066546faf3, type: 2}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831314541644075515, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2039026180751328335, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
       propertyPath: m_Name
       value: "Hojas Planta colgante peque\xF1a 1 Modelo"

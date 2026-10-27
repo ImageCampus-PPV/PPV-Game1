@@ -40,7 +40,7 @@ public class HealthBar : MonoBehaviour
 
         if (onHealthChange.entityAffectedID != _damageableEntity.ID)
         {
-            Debug.Log($"Health change triggered by entity of id {onHealthChange.entityAffectedID}. Not updating healthbar, only listening for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
+            //Debug.Log($"Health change triggered by entity of id {onHealthChange.entityAffectedID}. Not updating healthbar, only listening for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
             return;
         }
 
@@ -53,7 +53,7 @@ public class HealthBar : MonoBehaviour
                              $"The value should be between {_healthBar.minValue} and {_healthBar.maxValue}");
             return;
         }
-        Debug.Log($"Updating healthbar for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
+        //Debug.Log($"Updating healthbar for entity {_damageableEntity.name} of id {_damageableEntity.ID}");
 
         _healthBar.value = onHealthChange.currentHealth;
     }

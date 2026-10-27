@@ -169,6 +169,12 @@ namespace Arch_IA_Piccioni.Voronoi
 
             Cell current = GetStartCell();
 
+            if (current == null)
+            {
+                Debug.LogWarning("Start cell is null");
+                return false;
+            }
+
             for (int step = 0; step <= cells.Count; step++)
             {
                 if (!current.region.TryGetMostViolated(position, out HalfPlane worst))

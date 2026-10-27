@@ -62,6 +62,11 @@ public class JumpAbility : CharacterAbility
         Character.ForceSetGrounded(false);
     }
 
+    public void ForceResetJumpCount()
+    {
+        currentJumpCount = 0;
+    }
+
     public virtual void RequestJump()
     {
         if (CanJump())

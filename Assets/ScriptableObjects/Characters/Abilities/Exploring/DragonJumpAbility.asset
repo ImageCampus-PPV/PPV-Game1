@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7c0d816bbff35439dbc116ae70c7b5, type: 3}
   m_Name: DragonJumpAbility
   m_EditorClassIdentifier: Assembly-CSharp::JumpAbility
-  jumpForce: 6
+  jumpForce: 8
   jumpsCount: 5
   holdForce: 15
   maxHoldTime: 0.2
-  jumpForceModifier: 0.5
+  jumpForceModifier: 0.8

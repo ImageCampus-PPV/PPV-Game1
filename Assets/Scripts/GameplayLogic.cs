@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using TaskScheduler = GreenAbyss.Scheduling.TaskScheduler;
 using ServiceProvider = GreenAbyss.Services.ServiceProvider;
 using EntityRegistry = GreenAbyss.Entities.EntityRegistry;
-using EventBus = GreenAbyss.Events.EventBus;
 using IEvent = GreenAbyss.Events.IEvent;
 
 public class GameplayLogic : IInitiable, ITickable, IDisposable
@@ -27,7 +26,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
     private HordeLogic _hordeLogic;
     private CombatSystem _combatSystem;
     private GameResultManager _gameResultManager;
-    private DepositView _invertoryView;
+    private DepositView _depositView;
+    private InventoryView _inventoryView;
     private SceneRef _gamePlayScene;
     private SceneRef _bootScene;
 
@@ -62,9 +62,13 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _gameResultManager = new GameResultManager(_lostGo);
 
         GameObject gameObject = new GameObject("invertoryView");
-        _invertoryView = gameObject.AddComponent<DepositView>();
+        _depositView = gameObject.AddComponent<DepositView>();
 
-        _invertoryView.Init();
+        gameObject = new GameObject(nameof(InventoryView));
+        _inventoryView = gameObject.AddComponent<InventoryView>();
+
+        _depositView.Init();
+        _inventoryView.Init();
         _hatchLogic.Init();
         _nucleusLogic.Init();
         _inventoryController.Init();
@@ -82,7 +86,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void LateInit()
     {
-        _invertoryView.LateInit();
+        _inventoryView.LateInit();
+        _depositView.LateInit();
         _hatchLogic.LateInit();
         _nucleusLogic.LateInit();
         _inventoryController.LateInit();
@@ -122,7 +127,8 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
 
     public void Dispose()
     {
-        _invertoryView.Dispose();
+        _inventoryView.Dispose();
+        _depositView.Dispose();
         _hatchLogic.Dispose();
         _nucleusLogic.Dispose();
         _inventoryController.Dispose();
@@ -135,42 +141,6 @@ public class GameplayLogic : IInitiable, ITickable, IDisposable
         _gameResultManager = null;
 
         ServiceProvider.Instance.ClearAllServices();
-    }
-}
-
-public class GameResultManager : ITickable
-{
-    private EntityRegistry EntityRegistry => ServiceProvider.Instance.GetService<EntityRegistry>();
-    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
-    private TaskScheduler TaskScheduler => ServiceProvider.Instance.GetService<TaskScheduler>();
-    private GameCanvas GameCanvas => ServiceProvider.Instance.GetService<GameCanvas>();
-
-    private float _restartDelay = 4f;
-    private bool _restarted = false;
-    private GameObject _lostGameGO;
-
-    public GameResultManager(GameObject lostGameGO)
-    {
-        _lostGameGO = lostGameGO;
-    }
-
-    public void Tick(float deltaTime)
-    {
-        if (EntityRegistry.GetCountOf<Character>() == 0 && !_restarted)
-        {
-            _restarted = true;
-            Debug.Log("All characters died.");
-            GameObject lostGO = GameObject.Instantiate(_lostGameGO);
-            GameCanvas.AddDynmic("LostGO", lostGO);
-            EventBus.Raise<OnLoseEvent>();
-            TaskScheduler.Schedule(RestartGame, _restartDelay);
-        }
-    }
-
-    private void RestartGame()
-    {
-        _restarted = false;
-        EventBus.Raise<OnRestartEvent>();
     }
 }
 

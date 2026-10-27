@@ -30,15 +30,25 @@ public class StickyAbility : CharacterAbility
         if (IsSticking || Character.IsGrounded)
             return;
 
-        if (collision.gameObject.TryGetComponent<StickyWall>(out StickyWall stickyWall))
+        if (!collision.gameObject.TryGetComponent<StickyWall>(out _))
+            return;
+
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            Stick(collision.contacts[0].point, stickyWall.Normal);
+            ContactPoint2D contact = collision.GetContact(i);
+            Vector2 normal = contact.normal;
+
+            if (Mathf.Abs(normal.x) < 0.7f)
+                continue;
+
+            Stick(contact.point, normal);
+            return;
         }
     }
 
     public void Stick(Vector2 contactPoint, Vector2 wallNormal)
     {
-        if (IsSticking)
+        if (IsSticking || wallNormal.sqrMagnitude < 0.001f)
             return;
 
         _wallNormal = wallNormal.normalized;
@@ -53,6 +63,7 @@ public class StickyAbility : CharacterAbility
         Rb.gravityScale = _slowFallGravityScale;
 
         Character.transform.position = _attachPoint;
+        Character.ForceResetJumpCount();
     }
 
     public override void FixedTick()

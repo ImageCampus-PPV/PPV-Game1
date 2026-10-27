@@ -46,6 +46,7 @@ public class NearestObjectDetector : ITickable, IService, IInitiable
                 if (dragonInteractableVoronoi.TryGetNearestObject(character.transform.position, out uint interactableID))
                 {
                     nearestInteractable = EntityRegistry.GetAs<Interactable>(interactableID);
+                    Debug.Log($"Nearest: ({character.name})" + nearestInteractable.name);
 
                     _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
                 }
@@ -55,12 +56,14 @@ public class NearestObjectDetector : ITickable, IService, IInitiable
                 if (mechaInteractableVoronoi.TryGetNearestObject(character.transform.position, out uint interactableID))
                 {
                     nearestInteractable = EntityRegistry.GetAs<Interactable>(interactableID);
+                    Debug.Log($"Nearest ({character.name}): " + nearestInteractable.name + $". ID: {nearestInteractable.ID}, Type: {nearestInteractable.GetType()}");
 
                     _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
                 }
             }
 
-            _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
+            if (nearestInteractable != null)
+                _interactablePerCharacter[character.ID] = Vector3.Distance(character.transform.position, nearestInteractable.transform.position) < _tolerance ? (nearestInteractable.ID, nearestInteractable.GetType()) : (BaseEntity.NULL_BASE_ENTITY, null);
         }
     }
 

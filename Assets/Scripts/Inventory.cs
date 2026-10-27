@@ -8,61 +8,122 @@ using IService = GreenAbyss.Services.IService;
 
 public class Inventory : IService
 {
-    private Dictionary<Type, uint> _amountOfitemsByType;
+    private EventBus EventBus => ServiceProvider.Instance.GetService<EventBus>();
+
+    private readonly Dictionary<Type, uint> _amountOfitemsByType;
+    private readonly Type[] _slots;
+    private readonly MethodInfo raiseEventModified;
 
     public const uint MAX_SLOTS = 5;
     public const uint MAX_ITEMS_COUNT = 50;
     public bool IsPersistance => false;
-    public bool IsInventoryFull => _amountOfitemsByType.Count == MAX_SLOTS;
+    public bool IsInventoryFull => _amountOfitemsByType.Count >= MAX_SLOTS;
 
     public Inventory()
     {
         _amountOfitemsByType = new Dictionary<Type, uint>();
+        _slots = new Type[MAX_SLOTS];
+
+        raiseEventModified = GetType().GetMethod(
+            nameof(RaiseItemModified),
+            BindingFlags.Instance | BindingFlags.NonPublic);
+    }
+
+    private void RaiseItemModified<ItemType>(int slot, uint previousAmount, uint currentAmount) where ItemType : Item
+    {
+        EventBus.Raise<InventoryItemModifiedEvent<ItemType>>(slot, previousAmount, currentAmount);
+    }
+
+    private void RaiseItemModifiedType(Type itemType, int slot, uint previousAmount, uint currentAmount)
+    {
+        raiseEventModified.MakeGenericMethod(itemType).Invoke(this, new object[] { slot, previousAmount, currentAmount });
     }
 
     public bool IsItemAtMax<ItemType>() where ItemType : Item
     {
-        return _amountOfitemsByType[typeof(ItemType)] == MAX_ITEMS_COUNT;
+        return _amountOfitemsByType.TryGetValue(typeof(ItemType), out uint amount) && amount >= MAX_ITEMS_COUNT;
     }
 
     public bool TryAddItemOfType<ItemType>(uint amount = 1) where ItemType : Item
     {
-        if (!_amountOfitemsByType.ContainsKey(typeof(ItemType)) && IsInventoryFull)
+        Type type = typeof(ItemType);
+        bool exists = _amountOfitemsByType.TryGetValue(type, out uint previous);
+
+        if (!exists && IsInventoryFull)
             return false;
 
-        if (!_amountOfitemsByType.ContainsKey(typeof(ItemType)))
-            _amountOfitemsByType.Add(typeof(ItemType), 0);
+        if (exists && previous >= MAX_ITEMS_COUNT)
+            return false;
 
-        if (!IsItemAtMax<ItemType>())
+        int slot;
+        if (exists)
         {
-            _amountOfitemsByType[typeof(ItemType)] += amount;
-            return true;
+            slot = Array.IndexOf(_slots, type);
+        }
+        else
+        {
+            slot = Array.IndexOf(_slots, null);
+            _slots[slot] = type;
         }
 
-        return false;
+        uint current = Math.Min(previous + amount, MAX_ITEMS_COUNT);
+        _amountOfitemsByType[type] = current;
+
+        RaiseItemModified<ItemType>(slot, previous, current);
+        return true;
     }
 
     public bool TryRemoveItemOfType<ItemType>(uint amount = 1) where ItemType : Item
     {
-        if (!_amountOfitemsByType.ContainsKey(typeof(ItemType)))
+        Type type = typeof(ItemType);
+
+        if (!_amountOfitemsByType.TryGetValue(type, out uint previous))
             return false;
 
-        _amountOfitemsByType[typeof(ItemType)] -= amount;
+        int slot = Array.IndexOf(_slots, type);
+        uint current = amount >= previous ? 0 : previous - amount;
 
-        if (_amountOfitemsByType[typeof(ItemType)] <= 0)
-            _amountOfitemsByType.Remove(typeof(ItemType));
+        if (current == 0)
+        {
+            _amountOfitemsByType.Remove(type);
+            _slots[slot] = null;
+        }
+        else
+        {
+            _amountOfitemsByType[type] = current;
+        }
 
+        RaiseItemModified<ItemType>(slot, previous, current);
         return true;
     }
 
-    public IEnumerable<(Type, uint)> FlushItems()
+    public List<(Type, uint)> FlushItems()
     {
-        foreach (KeyValuePair<Type, uint> itemByType in _amountOfitemsByType)
+        List<(Type, uint)> flushed = new List<(Type, uint)>(_amountOfitemsByType.Count);
+
+        for (int slot = 0; slot < _slots.Length; slot++)
         {
-            yield return (itemByType.Key, itemByType.Value);
+            Type type = _slots[slot];
+            if (type == null)
+                continue;
+
+            uint previous = _amountOfitemsByType[type];
+            flushed.Add((type, previous));
         }
 
         _amountOfitemsByType.Clear();
+
+        for (int i = 0; i < _slots.Length; ++i)
+        {
+            Type type = _slots[i];
+            if (type == null)
+                continue;
+
+            _slots[i] = null;
+            RaiseItemModifiedType(type, i, flushed.Find(f => f.Item1 == type).Item2, 0);
+        }
+
+        return flushed;
     }
 }
 

@@ -18,6 +18,7 @@ public class Character : DamageableEntity
 
     [SerializeField] private CharacterDebugInfo info;
 
+    private float _viewportMargin = 0.05f;
     private Vector2 _rawAimInput;
     private bool _isOnGamepad;
     private MovementAbility _activeMovement;
@@ -29,7 +30,8 @@ public class Character : DamageableEntity
 
     private EventBus EventBus => ServiceProvider.Instance.ContainsService<EventBus>() ? ServiceProvider.Instance.GetService<EventBus>() : null;
     private EntityRegistry EntityRegistry => ServiceProvider.Instance.ContainsService<EntityRegistry>() ? ServiceProvider.Instance.GetService<EntityRegistry>() : null;
-    private RuntimeDebugVisual DebugVisual => ServiceProvider.Instance.ContainsService<RuntimeDebugVisual>() ? ServiceProvider.Instance.GetService<RuntimeDebugVisual>() : null;
+
+    private Vector3 _initPos;
 
     public bool IsGrounded { get; internal set; }
     public float LastGroundedTime { get; private set; }
@@ -47,6 +49,8 @@ public class Character : DamageableEntity
     public override Vector2 Center => transform.position;
     public override Vector2 Size => _ownCollider == null ? Vector2.zero : _ownCollider.bounds.size;
 
+    public Vector3 InitPos => _initPos;
+
     public override void Init()
     {
         base.Init();
@@ -62,6 +66,8 @@ public class Character : DamageableEntity
             debugger.DebugInfo = info;
             debugger.UpdateInfo();
         }
+
+        _initPos = transform.position;
     }
 
     public void EquipCharacter(CharacterDebugInfo info)
@@ -109,6 +115,12 @@ public class Character : DamageableEntity
             if (ability != null)
                 Destroy(ability);
     }
+
+    public void ForceResetJumpCount()
+    {
+        _activeJump.ForceResetJumpCount();
+    }
+
     public void OnAim(Vector2 dir)
     {
         if (IsIgnoringInput || IsBlockingRotation)
@@ -225,6 +237,32 @@ public class Character : DamageableEntity
             ability.Tick();
     }
 
+    private void LateUpdate()
+    {
+        if (CoopCameraController == null || CoopCameraController.Camera == null || EntityRegistry == null)
+            return;
+
+        bool isOutsideCamera = !CoopCameraController.IsInCameraBounds(_rb.position);
+
+        if (!isOutsideCamera)
+            return;
+
+        //todo: linq (im not sorry)
+        Character otherCharacter = EntityRegistry.FilterEntities<Character>().FirstOrDefault(character => character != this);
+
+        if (otherCharacter == null)
+            return;
+
+        if (!CoopCameraController.IsInCameraBounds(otherCharacter.Rb.position))
+        {
+            otherCharacter.Rb.position = otherCharacter.InitPos;
+            otherCharacter.Rb.linearVelocity = Vector3.zero;
+        }
+
+        _rb.position = otherCharacter.Rb.position;
+        _rb.linearVelocity = Vector2.zero;
+    }
+
     private void CalculateAim()
     {
         if (CoopCameraController == null)
@@ -281,7 +319,7 @@ public class Character : DamageableEntity
 
     private void CheckGrounded()
     {
-        int groundCount = EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count();
+        int groundCount = EntityRegistry != null ? EntityRegistry.GetAllEntitiesInRadius<Ground>(_groundCheck.position, _groundCheckRadius).Count() : 0;
         //Debug.Log($"{name} Ground count: {groundCount}");
         SetGrounded(groundCount != 0);
     }
@@ -313,14 +351,22 @@ public class Character : DamageableEntity
         if (CoopCameraController == null)
             return 0f;
 
-        CameraBounds bounds = CoopCameraController.GetBounds();
-        float posX = _rb.position.x;
+        Camera camera = CoopCameraController.Camera;
 
-        if ((posX <= bounds.left + bounds.margin && xVel < 0) || (posX >= bounds.right - bounds.margin && xVel > 0))
-            xVel = 0;
+        if (camera == null)
+            return 0f;
+
+        Vector3 viewportPosition = camera.WorldToViewportPoint(_rb.position);
+
+        if (viewportPosition.x <= _viewportMargin && xVel < 0f)
+            return 0f;
+
+        if (viewportPosition.x >= 1f - _viewportMargin && xVel > 0f)
+            return 0f;
 
         return xVel;
     }
+
     public void ApplyHVelocity(float xVel)
     {
         xVel = ClampScreenMovement(xVel);
