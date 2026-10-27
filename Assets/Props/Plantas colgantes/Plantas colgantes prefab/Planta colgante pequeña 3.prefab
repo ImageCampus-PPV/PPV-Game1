@@ -84,6 +84,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Planta colgante peque\xF1a 3"
       objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3982889539341226066, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9079906610577427355, guid: 9f232da6c09576f458290c7cbdbd9f6d, type: 3}
       propertyPath: m_Name
       value: "Planta colgante peque\xF1a 3 Grupo"

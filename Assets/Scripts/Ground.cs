@@ -8,6 +8,11 @@ public class Ground : GreenAbyss.Entities.BaseEntity, IEntityDimensions
     public Vector2 Center => transform.position;
     public Vector2 Size => _collider == null ? Vector2.zero : _collider.bounds.size;
 
+    private void Awake()
+    {
+        gameObject.AddComponent<ForceEntityRegistry>();
+    }
+
     public override void Init()
     {
         base.Init();

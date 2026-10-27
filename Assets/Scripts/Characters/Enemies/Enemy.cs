@@ -231,6 +231,6 @@ public abstract class Enemy : DamageableEntity, IEnemyContext, IStunnable, IStat
     public override void Dispose()
     {
         base.Dispose();
-        _fsm.Dispose();
+        //_fsm.Dispose();
     }
 }
