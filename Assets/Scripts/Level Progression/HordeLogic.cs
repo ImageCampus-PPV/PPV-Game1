@@ -65,7 +65,7 @@ public class HordeLogic : IInitiable, IDisposable
 
     public void LateInit()
     {
-        StartNewHordeCountdown(HORDE_COOLDOWN);
+        StartNewHordeCountdown(FIRST_HORDE_COOLDOWN);
     }
 
     private void StartNewHordeCountdown(float timer = HORDE_COOLDOWN)
@@ -127,9 +127,11 @@ public class HordeLogic : IInitiable, IDisposable
 
     private Type GetRandomEnemyType()
     {
-        int randomEnemyIndex = UnityEngine.Random.Range(0, _enemyTypesList.Count - 1);
+        //TODO: Enable random types when the Beetle moves correctly.
+        //int randomEnemyIndex = UnityEngine.Random.Range(0, _enemyTypesList.Count - 1);
 
-        return _enemyTypesList[randomEnemyIndex];
+        //return _enemyTypesList[randomEnemyIndex];
+        return typeof(Wasp);
     }
 
     public void Dispose()

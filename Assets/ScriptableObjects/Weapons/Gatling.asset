@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gatling
   m_EditorClassIdentifier: Assembly-CSharp::GatlingWeapon
   damage: 5
-  range: 4
+  range: 13
   cooldown: 5
   _allowedSlot: 1
   _projectileSpeed: 18
