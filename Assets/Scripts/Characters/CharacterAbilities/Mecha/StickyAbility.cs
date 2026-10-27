@@ -30,18 +30,25 @@ public class StickyAbility : CharacterAbility
         if (IsSticking || Character.IsGrounded)
             return;
 
-        if (collision.gameObject.TryGetComponent<StickyWall>(out StickyWall stickyWall))
+        if (!collision.gameObject.TryGetComponent<StickyWall>(out _))
+            return;
+
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            Vector3 normal = collision.contacts[0].normal;
-            normal.y = 0;
-            normal.z = 0;
-            Stick(collision.contacts[0].point, collision.contacts[0].normal);
+            ContactPoint2D contact = collision.GetContact(i);
+            Vector2 normal = contact.normal;
+
+            if (Mathf.Abs(normal.x) < 0.7f)
+                continue;
+
+            Stick(contact.point, normal);
+            return;
         }
     }
 
     public void Stick(Vector2 contactPoint, Vector2 wallNormal)
     {
-        if (IsSticking || wallNormal.Equals(Vector3.zero))
+        if (IsSticking || wallNormal.sqrMagnitude < 0.001f)
             return;
 
         _wallNormal = wallNormal.normalized;
