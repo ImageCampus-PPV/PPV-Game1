@@ -53,6 +53,7 @@ public class StickyAbility : CharacterAbility
         Rb.gravityScale = _slowFallGravityScale;
 
         Character.transform.position = _attachPoint;
+        Character.ForceResetJumpCount();
     }
 
     public override void FixedTick()

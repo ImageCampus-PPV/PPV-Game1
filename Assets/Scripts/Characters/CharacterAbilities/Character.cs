@@ -108,6 +108,12 @@ public class Character : DamageableEntity
             if (ability != null)
                 Destroy(ability);
     }
+
+    public void ForceResetJumpCount()
+    {
+        _activeJump.ForceResetJumpCount();
+    }
+
     public void OnAim(Vector2 dir)
     {
         if (IsIgnoringInput || IsBlockingRotation)
