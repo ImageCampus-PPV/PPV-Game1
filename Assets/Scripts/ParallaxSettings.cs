@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public sealed class ParallaxSettings : MonoBehaviour
@@ -8,6 +7,7 @@ public sealed class ParallaxSettings : MonoBehaviour
     [SerializeField] private bool _repeatVertically = true;
 
     [Header("Camera Following")]
+    [SerializeField] private bool _followCameraHorizontally;
     [SerializeField] private bool _followCameraVertically;
 
     [Header("Parallax")]
@@ -16,6 +16,9 @@ public sealed class ParallaxSettings : MonoBehaviour
 
     public bool RepeatHorizontally => _repeatHorizontally;
     public bool RepeatVertically => _repeatVertically;
+
+    public bool FollowCameraHorizontally => _followCameraHorizontally;
     public bool FollowCameraVertically => _followCameraVertically;
+
     public float ParallaxFactor => _parallaxFactor;
 }
