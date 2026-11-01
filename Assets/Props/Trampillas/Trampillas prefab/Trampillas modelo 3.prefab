@@ -66,11 +66,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7833971819391746207, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6910140261211042464, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5516341967870668201, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Name
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5516341967870668201, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4834639200685843456, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -90,7 +90,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1845313539544617418, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Name
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3326352408577520373, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Name
@@ -106,7 +106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3326352408577520373, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4005848512580819219, guid: 5a3e7469fa5d2274fba7e408ada1aa7b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

@@ -64,10 +64,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plataforma_2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c43adb001c966a546ba77c3e25382bd6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3227585174543805311, guid: c43adb001c966a546ba77c3e25382bd6, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: eb862f2bcf2f97149bece8ee7c4d4dc6, type: 2}
+    - target: {fileID: 4884259908633211068, guid: c43adb001c966a546ba77c3e25382bd6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
