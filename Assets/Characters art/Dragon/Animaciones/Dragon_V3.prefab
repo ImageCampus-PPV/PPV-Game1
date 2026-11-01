@@ -64,6 +64,18 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a9654bd064e2dea4eaf8ef48d15d426f, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4d5a18126e6b4f64483eb3bdd0db18ee, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 06ea8e3784c5fde40905df9f3654d13e, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4d5a18126e6b4f64483eb3bdd0db18ee, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4d5a18126e6b4f64483eb3bdd0db18ee, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
