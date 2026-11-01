@@ -6,9 +6,6 @@ public sealed class ParallaxMovement : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera _camera;
 
-    [Tooltip("Horizontal distance between the root and the camera.")]
-    [SerializeField] private float _cameraFollowXOffset = -1f;
-
     private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
 
     private static readonly int BaseMapId = Shader.PropertyToID("_BaseMap");
@@ -46,12 +43,14 @@ public sealed class ParallaxMovement : MonoBehaviour
         for (int i = 0; i < layerCount; i++)
         {
             Transform child = transform.GetChild(i);
+
             Renderer layerRenderer = child.GetComponentInChildren<Renderer>();
-            ParallaxSettings settings = child.GetComponentInChildren<ParallaxSettings>();
+
+            ParallaxSettings settings =  child.GetComponentInChildren<ParallaxSettings>();
 
             if (layerRenderer == null || settings == null)
             {
-                Debug.LogError($"Layer '{child.name}' requires a Renderer and ParallaxSettings.", child);
+                Debug.LogError(  $"Layer '{child.name}' requires a Renderer and ParallaxSettings.", child);
 
                 enabled = false;
                 return;
@@ -63,7 +62,7 @@ public sealed class ParallaxMovement : MonoBehaviour
 
             if (!material.HasProperty(texturePropertyId))
             {
-                Debug.LogError($"Material on '{child.name}' has no supported main texture property (_MainTex or _BaseMap).");
+                Debug.LogError(  $"Material on '{child.name}' has no supported texture property.", child);
 
                 Destroy(material);
                 enabled = false;
@@ -84,39 +83,35 @@ public sealed class ParallaxMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        Vector3 cameraPosition = _camera.transform.position;
-
-        Vector3 totalCameraDisplacement = cameraPosition - _initialCameraPosition;
-
-        Vector3 rootPosition = transform.position;
-        rootPosition.x = cameraPosition.x + _cameraFollowXOffset;
-        transform.position = rootPosition;
+        Vector3 cameraDisplacement =  _camera.transform.position - _initialCameraPosition;
 
         foreach (Layer layer in _layers)
         {
             ParallaxSettings settings = layer.Settings;
-            float factor = settings.ParallaxFactor;
+
+            bool repeatX = settings.RepeatHorizontally;
+            bool repeatY = settings.RepeatVertically;
+
+            Vector3 position = layer.InitialPosition;
+
+            if (repeatX || settings.FollowCameraHorizontally)
+                position.x += cameraDisplacement.x;
+
+            if (repeatY || settings.FollowCameraVertically)
+                position.y += cameraDisplacement.y;
+
+            layer.Transform.position = position;
 
             Vector2 offset = layer.InitialTextureOffset;
+            float factor = settings.ParallaxFactor;
 
-            if (settings.RepeatHorizontally)
-            {
-                offset.x -= totalCameraDisplacement.x * factor;
-            }
+            if (repeatX)
+                offset.x -= cameraDisplacement.x * factor;
 
-            if (settings.RepeatVertically)
-            {
-                offset.y -= totalCameraDisplacement.y * factor;
-            }
-            else if (settings.FollowCameraVertically)
-            {
-                Vector3 position = layer.Transform.position;
-                position.y = layer.InitialPosition.y + totalCameraDisplacement.y;
+            if (repeatY)
+                offset.y -= cameraDisplacement.y * factor;
 
-                layer.Transform.position = position;
-            }
-
-            layer.Material.SetTextureOffset(layer.TexturePropertyId, offset);
+            layer.Material.SetTextureOffset( layer.TexturePropertyId, offset);
         }
     }
 
