@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6640787401246340512}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,8 +44,7 @@ GameObject:
   - component: {fileID: 6955250746171518254}
   - component: {fileID: 412416523880754646}
   - component: {fileID: 7323630814612126059}
-  - component: {fileID: 4570953221921707226}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,52 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f07996d050feb4da21d5732586989c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ground
---- !u!61 &4570953221921707226
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7136243237404786653}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.023542404, y: 0.014801264}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 17.78444, y: 0.4792273}
-  m_EdgeRadius: 0
 --- !u!1 &8947355068062629386
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5882106439994250482}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +146,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2538437297562850062, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -241,23 +194,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5304993558831448169, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6203236228898521689, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7297017023061258328, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7743910685455175629, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8515306803709489007, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
