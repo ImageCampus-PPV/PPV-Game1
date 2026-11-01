@@ -558,7 +558,7 @@ Transform:
   m_GameObject: {fileID: 241539505}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: 1.3000001}
+  m_LocalPosition: {x: -32.6, y: 0, z: 6.3}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -578,6 +578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &241539508
@@ -665,7 +666,7 @@ Transform:
   m_GameObject: {fileID: 252621031}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: 3.0899997}
+  m_LocalPosition: {x: -32.6, y: 0, z: 8.09}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -685,6 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &252621034
@@ -875,7 +877,7 @@ Transform:
   m_GameObject: {fileID: 510621417}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 4.4}
+  m_LocalPosition: {x: 0, y: 0, z: 9.4}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -895,6 +897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &510621420
@@ -982,7 +985,7 @@ Transform:
   m_GameObject: {fileID: 524923002}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: 4.4}
+  m_LocalPosition: {x: -32.6, y: 0, z: 9.4}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1002,6 +1005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &524923005
@@ -1089,7 +1093,7 @@ Transform:
   m_GameObject: {fileID: 543557162}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: -3.3000002}
+  m_LocalPosition: {x: -32.6, y: 0, z: 1.6999998}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1109,6 +1113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &543557165
@@ -1168,113 +1173,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543557162}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &650052669
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 650052670}
-  - component: {fileID: 650052673}
-  - component: {fileID: 650052672}
-  - component: {fileID: 650052671}
-  m_Layer: 0
-  m_Name: 7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &650052670
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650052669}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: -2.8000002}
-  m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964369647}
-  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
---- !u!114 &650052671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650052669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  _repeatHorizontally: 0
-  _repeatVertically: 0
-  _followCameraVertically: 1
-  _parallaxFactor: 0.24
---- !u!23 &650052672
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650052669}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: fbb75701740e7274e8a2f532421eb8fb, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &650052673
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650052669}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &671821710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,7 +1201,7 @@ Transform:
   m_GameObject: {fileID: 671821710}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3000001}
+  m_LocalPosition: {x: 0, y: 0, z: 6.3}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1323,6 +1221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &671821713
@@ -1410,7 +1309,7 @@ Transform:
   m_GameObject: {fileID: 721984021}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -3.3000002}
+  m_LocalPosition: {x: 0, y: 0, z: 1.6999998}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1430,6 +1329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &721984024
@@ -1517,7 +1417,7 @@ Transform:
   m_GameObject: {fileID: 744797393}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -1.61}
+  m_LocalPosition: {x: 0, y: 0, z: -3.8000002}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1537,6 +1437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &744797396
@@ -1624,7 +1525,7 @@ Transform:
   m_GameObject: {fileID: 768104774}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: 1.8699999}
+  m_LocalPosition: {x: 32.4, y: 0, z: 6.87}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1644,6 +1545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &768104777
@@ -1731,7 +1633,7 @@ Transform:
   m_GameObject: {fileID: 814591515}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: 4.4}
+  m_LocalPosition: {x: 32.4, y: 0, z: 9.4}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1751,6 +1653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &814591518
@@ -2034,113 +1937,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948045837}
   m_CullTransparentMesh: 1
---- !u!1 &952073867
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 952073868}
-  - component: {fileID: 952073871}
-  - component: {fileID: 952073870}
-  - component: {fileID: 952073869}
-  m_Layer: 0
-  m_Name: 7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &952073868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952073867}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: -2.8000002}
-  m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964369647}
-  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
---- !u!114 &952073869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952073867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  _repeatHorizontally: 0
-  _repeatVertically: 0
-  _followCameraVertically: 1
-  _parallaxFactor: 0.24
---- !u!23 &952073870
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952073867}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: fbb75701740e7274e8a2f532421eb8fb, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &952073871
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952073867}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &964369646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2177,7 +1973,6 @@ Transform:
   - {fileID: 671821711}
   - {fileID: 721984022}
   - {fileID: 744797394}
-  - {fileID: 1908683141}
   - {fileID: 1600847881}
   - {fileID: 814591516}
   - {fileID: 2032604315}
@@ -2185,7 +1980,6 @@ Transform:
   - {fileID: 1849702692}
   - {fileID: 1334894180}
   - {fileID: 1780994951}
-  - {fileID: 952073868}
   - {fileID: 1036192308}
   - {fileID: 524923003}
   - {fileID: 252621032}
@@ -2193,7 +1987,6 @@ Transform:
   - {fileID: 241539506}
   - {fileID: 543557163}
   - {fileID: 1142127868}
-  - {fileID: 650052670}
   m_Father: {fileID: 1178054634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &977420149
@@ -2361,7 +2154,7 @@ Transform:
   m_GameObject: {fileID: 1036192307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: 5.5}
+  m_LocalPosition: {x: -32.6, y: 0, z: 10.5}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2381,6 +2174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1036192310
@@ -2468,7 +2262,7 @@ Transform:
   m_GameObject: {fileID: 1142127867}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: -1.61}
+  m_LocalPosition: {x: -32.6, y: -0, z: -3.8}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2488,6 +2282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1142127870
@@ -2769,10 +2564,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3397934936948879136, guid: d3b07fcc304a9544a8266650cd08312a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1301398555}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3b07fcc304a9544a8266650cd08312a, type: 3}
 --- !u!4 &1301398553 stripped
 Transform:
@@ -2807,7 +2599,7 @@ Transform:
   m_GameObject: {fileID: 1334894179}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: -3.3000002}
+  m_LocalPosition: {x: 32.4, y: 0, z: 1.6999998}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2827,6 +2619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1334894182
@@ -2914,7 +2707,7 @@ Transform:
   m_GameObject: {fileID: 1353050796}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -32.6, y: 0, z: 1.8699999}
+  m_LocalPosition: {x: -32.6, y: 0, z: 6.87}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2934,6 +2727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1353050799
@@ -3784,7 +3578,7 @@ Transform:
   m_GameObject: {fileID: 1600847880}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: 5.5}
+  m_LocalPosition: {x: 32.4, y: 0, z: 10.5}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3804,6 +3598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1600847883
@@ -4243,7 +4038,7 @@ Transform:
   m_GameObject: {fileID: 1780994950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: -1.61}
+  m_LocalPosition: {x: 32.4, y: 0, z: -3.8000002}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4263,6 +4058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 0
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1780994953
@@ -4350,7 +4146,7 @@ Transform:
   m_GameObject: {fileID: 1849702691}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: 1.3000001}
+  m_LocalPosition: {x: 32.4, y: 0, z: 6.3}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4370,6 +4166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1849702694
@@ -4457,7 +4254,7 @@ Transform:
   m_GameObject: {fileID: 1877560821}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 5.5}
+  m_LocalPosition: {x: 0, y: 0, z: 10.5}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4477,6 +4274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1877560824
@@ -4536,113 +4334,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877560821}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1908683140
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1908683141}
-  - component: {fileID: 1908683144}
-  - component: {fileID: 1908683143}
-  - component: {fileID: 1908683142}
-  m_Layer: 0
-  m_Name: 7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1908683141
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908683140}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -2.8000002}
-  m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 964369647}
-  m_LocalEulerAnglesHint: {x: 90, y: -180, z: 0}
---- !u!114 &1908683142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908683140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc36049babd015849a35a77372da4eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
-  _repeatHorizontally: 0
-  _repeatVertically: 0
-  _followCameraVertically: 1
-  _parallaxFactor: 0.24
---- !u!23 &1908683143
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908683140}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: fbb75701740e7274e8a2f532421eb8fb, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1908683144
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1908683140}
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1910014709
 GameObject:
   m_ObjectHideFlags: 0
@@ -4671,7 +4362,7 @@ Transform:
   m_GameObject: {fileID: 1910014709}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 3.0899997}
+  m_LocalPosition: {x: 0, y: 0, z: 8.09}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4691,6 +4382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &1910014712
@@ -4778,7 +4470,7 @@ Transform:
   m_GameObject: {fileID: 2014536474}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1.8699999}
+  m_LocalPosition: {x: 0, y: 0, z: 6.87}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4798,6 +4490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &2014536477
@@ -4885,7 +4578,7 @@ Transform:
   m_GameObject: {fileID: 2032604314}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 32.4, y: 0, z: 3.0899997}
+  m_LocalPosition: {x: 32.4, y: 0, z: 8.09}
   m_LocalScale: {x: 3.27104, y: 3.271041, z: 3.271041}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4905,6 +4598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ParallaxSettings
   _repeatHorizontally: 0
   _repeatVertically: 1
+  _followCameraHorizontally: 0
   _followCameraVertically: 1
   _parallaxFactor: 0.24
 --- !u!23 &2032604317
