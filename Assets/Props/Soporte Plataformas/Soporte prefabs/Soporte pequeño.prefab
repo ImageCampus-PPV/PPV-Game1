@@ -72,14 +72,26 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3222571599813942138, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
       propertyPath: m_Name
       value: "Soporte peque\xF1o"
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4768332081750910691, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 6525b538cc0bdf84691d741d38af2db5, type: 2}
+    - target: {fileID: 9120902417415248904, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 597581229633123227, guid: 24794fa45332670439ae8f0668420ac7, type: 3}

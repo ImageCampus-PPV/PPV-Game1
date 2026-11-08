@@ -60,13 +60,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6983383589239055385, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -1283483161926968703, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 20ded73e6a8f2ee41bfe2310cecfd9f8, type: 2}
+    - target: {fileID: 657401298698427912, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
       propertyPath: m_Name
       value: Soporte mediano 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6152100765955753681, guid: 24794fa45332670439ae8f0668420ac7, type: 3}
       propertyPath: m_LocalPosition.x
