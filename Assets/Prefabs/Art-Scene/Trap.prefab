@@ -28,8 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8362297765946388453}
+  m_Children: []
   m_Father: {fileID: 5882106439994250482}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &7136243237404786653
@@ -134,91 +133,68 @@ Transform:
   m_Children:
   - {fileID: 9074524622860287978}
   - {fileID: 6640787401246340512}
+  - {fileID: 6007507220242123982}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3951933580574520630
+--- !u!1001 &9062713819016390608
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6640787401246340512}
+    m_TransformParent: {fileID: 5882106439994250482}
     m_Modifications:
-    - target: {fileID: 2538437297562850062, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
-      value: 0
+    - target: {fileID: 2724705691744792996, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
+      propertyPath: m_Name
+      value: Trampilla_Modelo Low
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
+    - target: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5304993558831448169, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Name
-      value: Trampillas modelo 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5304993558831448169, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6203236228898521689, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7297017023061258328, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7743910685455175629, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8515306803709489007, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
---- !u!4 &8362297765946388453 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
+--- !u!4 &6007507220242123982 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4815701657160653523, guid: c01f66bd1c33f0743bbefd76f5fc83d8, type: 3}
-  m_PrefabInstance: {fileID: 3951933580574520630}
+  m_CorrespondingSourceObject: {fileID: 3358499839697398558, guid: 684fb408fab73014ebf49855ffbd5ffe, type: 3}
+  m_PrefabInstance: {fileID: 9062713819016390608}
   m_PrefabAsset: {fileID: 0}
