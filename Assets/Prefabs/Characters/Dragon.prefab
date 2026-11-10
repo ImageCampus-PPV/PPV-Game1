@@ -282,6 +282,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dragon
   maxHealth: 100
+  _animator: {fileID: 4713224628208188235}
+  _body: {fileID: 1429184797578510628}
   _coyoteTime: 0.12
   _groundCheck: {fileID: 5234064675125401376}
   _groundCheckRadius: 0.3
@@ -490,6 +492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1429184797578510628}
+  - component: {fileID: 4713224628208188235}
   m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
@@ -513,6 +516,28 @@ Transform:
   - {fileID: 5985604237673857171}
   m_Father: {fileID: 1615699600732601346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4713224628208188235
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5769077967185803216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: da25884d4142f014b86855bf398dca17, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8161533798512958530
 GameObject:
   m_ObjectHideFlags: 0

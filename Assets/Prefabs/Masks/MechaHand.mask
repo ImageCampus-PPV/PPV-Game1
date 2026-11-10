@@ -1,0 +1,225 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MechaHand
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: bn_main
+    m_Weight: 0
+  - m_Path: bn_main/bn_cadera
+    m_Weight: 0
+  - m_Path: bn_main/bn_cadera/bn_l_muslo
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_l_muslo/bn_l_rodilla
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_l_muslo/bn_l_rodilla/bn_l_tobillo
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_l_muslo/bn_l_rodilla/bn_l_tobillo/bn_l_pie
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_l_muslo/bn_l_rodilla/bn_l_tobillo/bn_l_pie/bn_l_planta1
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_l_muslo/bn_l_rodilla/bn_l_tobillo/bn_l_pie/bn_l_planta1/bn_l_planta2
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1/bn_r_rodilla
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1/bn_r_rodilla/bn_r_tobillo
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1/bn_r_rodilla/bn_r_tobillo/bn_r_pie
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1/bn_r_rodilla/bn_r_tobillo/bn_r_pie/bn_r_planta1
+    m_Weight: 1
+  - m_Path: bn_main/bn_cadera/bn_r_muslo1/bn_r_rodilla/bn_r_tobillo/bn_r_pie/bn_r_planta1/bn_r_planta2
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase
+    m_Weight: 0
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/bn_m_cabezaF
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform1
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform1/bn_l_hombro
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform1/bn_l_hombro/bn_l_codo
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform1/bn_l_hombro/bn_l_codo/bn_l_muneca
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform2
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform2/bn_r_hombro1
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform2/bn_r_hombro1/bn_r_codo
+    m_Weight: 1
+  - m_Path: bn_main/bn_m_columnaBase/bn_m_cabeza/transform2/bn_r_hombro1/bn_r_codo/bn_r_muneca
+    m_Weight: 1
+  - m_Path: grp_ctrl_main
+    m_Weight: 0
+  - m_Path: grp_ctrl_main/ctrl_main
+    m_Weight: 0
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_l_hombro
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_l_hombro/ctrl_l_hombro
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_l_hombro/ctrl_l_hombro/grp_ctrl_l_codo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_l_hombro/ctrl_l_hombro/grp_ctrl_l_codo/ctrl_l_codo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_l_hombro/ctrl_l_hombro/grp_ctrl_l_codo/ctrl_l_codo/grp_ctrl_l_muneca
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_r_hombro
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_r_hombro/ctrl_r_hombro
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_r_hombro/ctrl_r_hombro/grp_ctrl_r_codo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_r_hombro/ctrl_r_hombro/grp_ctrl_r_codo/ctrl_r_codo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_caveza/ctrl_caveza/grp_ctrl_r_hombro/ctrl_r_hombro/grp_ctrl_r_codo/ctrl_r_codo/ctrl_r_muneca
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_l_ik__pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/grp_ctrl_r_ik__pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo/pasted__ctrl_l_tobillo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo/pasted__ctrl_l_tobillo/pasted__grp_ctrl_l_pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo/pasted__ctrl_l_tobillo/pasted__grp_ctrl_l_pie/pasted__ctrl_l_pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo/pasted__ctrl_l_tobillo/pasted__grp_ctrl_l_pie/pasted__ctrl_l_pie/pasted__grp_ctrl_l_planta
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_l_muslo/pasted__ctrl_l_muslo/pasted__grp_ctrl_l_rodilla/pasted__ctrl_l_rodilla/pasted__grp_ctrl_l_tobillo/pasted__ctrl_l_tobillo/pasted__grp_ctrl_l_pie/pasted__ctrl_l_pie/pasted__grp_ctrl_l_planta/pasted__ctrl_l_planta
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo/pasted__ctrl_r_tobillo
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo/pasted__ctrl_r_tobillo/pasted__grp_ctrl_r_pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo/pasted__ctrl_r_tobillo/pasted__grp_ctrl_r_pie/pasted__ctrl_r_pie
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo/pasted__ctrl_r_tobillo/pasted__grp_ctrl_r_pie/pasted__ctrl_r_pie/pasted__grp_ctrl_r_planta
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_cadera/ctrl_cadera/pasted__grp_ctrl_r_muslo/pasted__ctrl_r_muslo/pasted__grp_ctrl_r_rodilla/pasted__ctrl_r_rodilla/pasted__grp_ctrl_r_tobillo/pasted__ctrl_r_tobillo/pasted__grp_ctrl_r_pie/pasted__ctrl_r_pie/pasted__grp_ctrl_r_planta/pasted__ctrl_r_planta
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_ik_fk_l_pierna
+    m_Weight: 1
+  - m_Path: grp_ctrl_main/ctrl_main/grp_ctrl_ik_fk_l_pierna/ctrl_ik_fk_l_pierna
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cabeza_low
+    m_Weight: 0
+  - m_Path: Mecha_low_backup1/Cabeza_low/BackPack_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cabeza_low/Cabeza_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cabeza_low/Hombro_base_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cabeza_low/Hombro_base_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cabeza_low/Luces_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cintura_low
+    m_Weight: 0
+  - m_Path: Mecha_low_backup1/Cintura_low/Cintura_1_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cintura_low/Cintura_2_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cintura_low/Torso_1_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cintura_low/Torso_2_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Cintura_low/Torso_3_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Brazo_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Brazo_der_low/Brazo_1_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Brazo_der_low/Brazo_2_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Brazo_der_low/Brazo_3_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Brazo_der_low/Brazo_4_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Hombro_1_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_der_low/Hombro_2_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Brazo_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Brazo_izq_low/Brazo_1_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Brazo_izq_low/Brazo_2_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Brazo_izq_low/Brazo_3_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Brazo_izq_low/Brazo_4_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Hombro_1_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Hombro_Brazo_izq_low/Hombro_2_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_der_low
+    m_Weight: 0
+  - m_Path: Mecha_low_backup1/Pierna_der_low/Pie_1_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_der_low/Pierna_1_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_der_low/Pierna_2_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_der_low/Pierna_3_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_der_low/Rodilla_der_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_izq_low
+    m_Weight: 0
+  - m_Path: Mecha_low_backup1/Pierna_izq_low/Pie_1_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_izq_low/Pierna_1_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_izq_low/Pierna_2_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_izq_low/Pierna_3_izq_low
+    m_Weight: 1
+  - m_Path: Mecha_low_backup1/Pierna_izq_low/Rodilla_izq_low
+    m_Weight: 1

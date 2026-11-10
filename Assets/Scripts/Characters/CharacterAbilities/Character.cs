@@ -6,9 +6,21 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum CharacterState
+{
+    Idle,
+    Walk,
+    Land,
+    Attack
+}
+
 public class Character : DamageableEntity
 {
     private CoopCameraController CoopCameraController => ServiceProvider.Instance.ContainsService<CoopCameraController>() ? ServiceProvider.Instance.GetService<CoopCameraController>() : null;
+
+    [SerializeField] private Animator _animator;
+
+    [SerializeField] private Transform _body;
 
     [Header("Ground checks")]
     [SerializeField] private float _coyoteTime = 0.12f;
@@ -137,11 +149,15 @@ public class Character : DamageableEntity
         if (IsIgnoringInput)
             return;
 
-        _activeMovement?.ProcessMove(dir);
+        if (!Mathf.Approximately(dir.x, 0))
+            _body.transform.rotation = Quaternion.Euler(0f, dir.x > 0 ? 90 : -90, 0f);
 
+        _activeMovement?.ProcessMove(dir);
+        _animator.SetBool("Walking", !Mathf.Approximately(dir.sqrMagnitude, 0));
         foreach (CharacterAbility ability in _activeAbilities)
             ability.ProcessMove(dir);
     }
+
     public void OnJump(InputAction.CallbackContext context)
     {
         if (IsIgnoringInput || IsBlockingAbilities)
@@ -158,6 +174,7 @@ public class Character : DamageableEntity
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
+
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessAction(context);
@@ -168,6 +185,9 @@ public class Character : DamageableEntity
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
+
+        _animator.SetTrigger("Attack");
+
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
@@ -220,6 +240,9 @@ public class Character : DamageableEntity
     {
         if (IsIgnoringInput || IsBlockingAbilities)
             return;
+
+        _animator.SetTrigger("Attack");
+
         foreach (CharacterAbility ability in _activeAbilities)
         {
             ability.ProcessSkill(context);
@@ -340,10 +363,14 @@ public class Character : DamageableEntity
         if (!grounded)
             return;
 
+
         LastGroundedTime = Time.time;
 
         if (!wasGrounded)
+        {
+            _animator.SetTrigger("Land");
             EventBus.Raise<OnCharacterTouchedGround>(ID);
+        }
     }
 
     private float ClampScreenMovement(float xVel)

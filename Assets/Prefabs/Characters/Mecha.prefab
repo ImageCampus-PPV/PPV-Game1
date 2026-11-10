@@ -369,6 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mecha
   maxHealth: 100
+  _animator: {fileID: 8336204759614702674}
+  _body: {fileID: 2688660914508176936}
   _coyoteTime: 0.12
   _groundCheck: {fileID: 5234064675125401376}
   _groundCheckRadius: 0.3
@@ -768,5 +770,10 @@ PrefabInstance:
 --- !u!4 &2688660914508176936 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2065336593148347675, guid: 5a62697e690c3964ab467bb1693c2ad6, type: 3}
+  m_PrefabInstance: {fileID: 4177517923793214259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8336204759614702674 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5352985987175997281, guid: 5a62697e690c3964ab467bb1693c2ad6, type: 3}
   m_PrefabInstance: {fileID: 4177517923793214259}
   m_PrefabAsset: {fileID: 0}
