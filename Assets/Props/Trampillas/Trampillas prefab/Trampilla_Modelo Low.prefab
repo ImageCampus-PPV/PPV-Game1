@@ -71,11 +71,11 @@ PrefabInstance:
     - target: {fileID: -694598559685233369, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7ac4576055c2b5344a7727382eec2900, type: 2}
+      objectReference: {fileID: 2100000, guid: 644ac04c68ac5f4408f2fe4e546ecf2b, type: 2}
     - target: {fileID: 301731124852486900, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7ac4576055c2b5344a7727382eec2900, type: 2}
+      objectReference: {fileID: 2100000, guid: b61be13cf6eb33a4aa2aa0b250d4d8d3, type: 2}
     - target: {fileID: 919132149155446097, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: m_Name
       value: Trampilla_Modelo Low
@@ -83,11 +83,11 @@ PrefabInstance:
     - target: {fileID: 1284768995751901783, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 54319d1b20969ad4db073a6749b97417, type: 2}
+      objectReference: {fileID: 2100000, guid: db1f705d87348e14eab78691c7089804, type: 2}
     - target: {fileID: 1284768995751901783, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 8623498d5416d3b42a6fdf5b12539d5c, type: 2}
+      objectReference: {fileID: 2100000, guid: c0606a7904ca6bf4088bc3da6805f361, type: 2}
     - target: {fileID: 3182677607451344836, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -95,11 +95,11 @@ PrefabInstance:
     - target: {fileID: 6036358020471316131, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 54319d1b20969ad4db073a6749b97417, type: 2}
+      objectReference: {fileID: 2100000, guid: c4bf02740684639479ca321517d44e44, type: 2}
     - target: {fileID: 6036358020471316131, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 8623498d5416d3b42a6fdf5b12539d5c, type: 2}
+      objectReference: {fileID: 2100000, guid: b50db2ea25a6da24c8b729e137c6fed1, type: 2}
     - target: {fileID: 6718089849001129144, guid: f03d7a5009be85b44bf936dffe9a5fb8, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
