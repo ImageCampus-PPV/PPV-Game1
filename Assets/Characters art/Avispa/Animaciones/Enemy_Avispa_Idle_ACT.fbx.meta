@@ -1,0 +1,375 @@
+fileFormatVersion: 2
+guid: bae7f4f4595e53549b2de1d80e738f6b
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: avispaRigging:grp_bones
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 1
+    importConstraints: 1
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Enemy_Avispa_Idle
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: avispaRigging:Enemy_Avispa:Avispa
+        weight: 1
+      - path: avispaRigging:Enemy_Avispa:Avispa/avispaRigging:Enemy_Avispa:Avispa_Aguijon
+        weight: 1
+      - path: avispaRigging:Enemy_Avispa:Avispa/avispaRigging:Enemy_Avispa:Avispa_Body
+        weight: 1
+      - path: avispaRigging:grp_bones
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion/avispaRigging:bn_Avispa_abdomen_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion/avispaRigging:bn_Avispa_abdomen_base/avispaRigging:bn_Avispa_abdomen_middle
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion/avispaRigging:bn_Avispa_abdomen_base/avispaRigging:bn_Avispa_abdomen_middle/avispaRigging:bn_Avispa_abdomen_cola
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion/avispaRigging:bn_Avispa_abdomen_base/avispaRigging:bn_Avispa_abdomen_middle/avispaRigging:bn_Avispa_abdomen_cola/avispaRigging:bn_Avispa_Aguijon_ataque
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torax/avispaRigging:bn_Avispa_separacion/avispaRigging:bn_Avispa_abdomen_base/avispaRigging:bn_Avispa_abdomen_middle/avispaRigging:bn_Avispa_abdomen_cola/avispaRigging:bn_Avispa_Aguijon_ataque/avispaRigging:bn_Avispa_Aguijon_ataque_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_left_base/avispaRigging:bn_Avispa_back_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_left_base/avispaRigging:bn_Avispa_back_arm_left_middlejoint/avispaRigging:bn_Avispa_back_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_left_base/avispaRigging:bn_Avispa_back_arm_left_middlejoint/avispaRigging:bn_Avispa_back_arm_left_blade/avispaRigging:bn_Avispa_back_arm_left_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_right_base/avispaRigging:bn_Avispa_back_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_right_base/avispaRigging:bn_Avispa_back_arm_right_middlejoint/avispaRigging:bn_Avispa_back_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_back_arm_right_base/avispaRigging:bn_Avispa_back_arm_right_middlejoint/avispaRigging:bn_Avispa_back_arm_right_blade/avispaRigging:bn_Avispa_back_arm_right_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_left_base/avispaRigging:bn_Avispa_middle_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_left_base/avispaRigging:bn_Avispa_middle_arm_left_middlejoint/avispaRigging:bn_Avispa_middle_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_left_base/avispaRigging:bn_Avispa_middle_arm_left_middlejoint/avispaRigging:bn_Avispa_middle_arm_left_blade/avispaRigging:bn_Avispa_middle_arm_left_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_right_base/avispaRigging:bn_Avispa_middle_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_right_base/avispaRigging:bn_Avispa_middle_arm_right_middlejoint/avispaRigging:bn_Avispa_middle_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_middle_arm_right_base/avispaRigging:bn_Avispa_middle_arm_right_middlejoint/avispaRigging:bn_Avispa_middle_arm_right_blade/avispaRigging:bn_Avispa_middle_arm_right_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_left_base/avispaRigging:bn_Avispa_first_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_left_base/avispaRigging:bn_Avispa_first_arm_left_middlejoint/avispaRigging:bn_Avispa_first_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_left_base/avispaRigging:bn_Avispa_first_arm_left_middlejoint/avispaRigging:bn_Avispa_first_arm_left_blade/avispaRigging:bn_Avispa_first_arm_left_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_right_base/avispaRigging:bn_Avispa_first_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_right_base/avispaRigging:bn_Avispa_first_arm_right_middlejoint/avispaRigging:bn_Avispa_first_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_first_arm_right_base/avispaRigging:bn_Avispa_first_arm_right_middlejoint/avispaRigging:bn_Avispa_first_arm_right_blade/avispaRigging:bn_Avispa_first_arm_right_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_left_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_left_base/avispaRigging:bn_Avispa_antena_left_middle
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_left_base/avispaRigging:bn_Avispa_antena_left_middle/avispaRigging:bn_Avispa_antena_left_END
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_right_base
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_right_base/avispaRigging:bn_Avispa_antena_right_middle
+        weight: 1
+      - path: avispaRigging:grp_bones/avispaRigging:bn_Avispa_MAIN/avispaRigging:bn_Avispa_torso/avispaRigging:bn_Avispa_middle_arms/avispaRigging:bn_Avispa_pecho/avispaRigging:bn_Avispa_neck/avispaRigging:bn_Avispa_Cabeza/avispaRigging:bn_Avispa_antena_right_base/avispaRigging:bn_Avispa_antena_right_middle/avispaRigging:bn_Avispa_antena_right_END
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio/avispaRigging:cntr_Avispa_abdomen_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio/avispaRigging:cntr_Avispa_abdomen_medio/avispaRigging:grp_cntr_Avispa_abdomen_cola
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio/avispaRigging:cntr_Avispa_abdomen_medio/avispaRigging:grp_cntr_Avispa_abdomen_cola/avispaRigging:cntr_Avispa_abdomen_cola
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio/avispaRigging:cntr_Avispa_abdomen_medio/avispaRigging:grp_cntr_Avispa_abdomen_cola/avispaRigging:cntr_Avispa_abdomen_cola/avispaRigging:grp_cntr_Avispa_Aguijon_Ataque
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torax/avispaRigging:cntr_Avispa_torax/avispaRigging:grp_cntr_Avispa_separacion_torax/avispaRigging:cntr_Avispa_separacion_torax/avispaRigging:grp_cntr_Avispa_abdomen_base/avispaRigging:cntr_Avispa_abdomen_base/avispaRigging:grp_cntr_Avispa_abdomen_medio/avispaRigging:cntr_Avispa_abdomen_medio/avispaRigging:grp_cntr_Avispa_abdomen_cola/avispaRigging:cntr_Avispa_abdomen_cola/avispaRigging:grp_cntr_Avispa_Aguijon_Ataque/avispaRigging:cntr_Avispa_Aguijon_Ataque
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base/avispaRigging:cntr_Avispa_back_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base/avispaRigging:cntr_Avispa_back_arm_left_base/avispaRigging:grp_cntr_Avispa_back_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base/avispaRigging:cntr_Avispa_back_arm_left_base/avispaRigging:grp_cntr_Avispa_back_arm_left_middlejoint/avispaRigging:cntr_Avispa_back_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base/avispaRigging:cntr_Avispa_back_arm_left_base/avispaRigging:grp_cntr_Avispa_back_arm_left_middlejoint/avispaRigging:cntr_Avispa_back_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_back_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_left_base/avispaRigging:cntr_Avispa_back_arm_left_base/avispaRigging:grp_cntr_Avispa_back_arm_left_middlejoint/avispaRigging:cntr_Avispa_back_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_back_arm_left_blade/avispaRigging:cntr_Avispa_back_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base/avispaRigging:cntr_Avispa_back_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base/avispaRigging:cntr_Avispa_back_arm_right_base/avispaRigging:grp_cntr_Avispa_back_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base/avispaRigging:cntr_Avispa_back_arm_right_base/avispaRigging:grp_cntr_Avispa_back_arm_right_middlejoint/avispaRigging:cntr_Avispa_back_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base/avispaRigging:cntr_Avispa_back_arm_right_base/avispaRigging:grp_cntr_Avispa_back_arm_right_middlejoint/avispaRigging:cntr_Avispa_back_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_back_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_back_arm_right_base/avispaRigging:cntr_Avispa_back_arm_right_base/avispaRigging:grp_cntr_Avispa_back_arm_right_middlejoint/avispaRigging:cntr_Avispa_back_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_back_arm_right_blade/avispaRigging:cntr_Avispa_back_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base/avispaRigging:cntr_Avispa_middle_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base/avispaRigging:cntr_Avispa_middle_arm_left_base/avispaRigging:grp_cntr_Avispa_middle_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base/avispaRigging:cntr_Avispa_middle_arm_left_base/avispaRigging:grp_cntr_Avispa_middle_arm_left_middlejoint/avispaRigging:cntr_Avispa_middle_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base/avispaRigging:cntr_Avispa_middle_arm_left_base/avispaRigging:grp_cntr_Avispa_middle_arm_left_middlejoint/avispaRigging:cntr_Avispa_middle_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_middle_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_left_base/avispaRigging:cntr_Avispa_middle_arm_left_base/avispaRigging:grp_cntr_Avispa_middle_arm_left_middlejoint/avispaRigging:cntr_Avispa_middle_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_middle_arm_left_blade/avispaRigging:cntr_Avispa_middle_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base/avispaRigging:cntr_Avispa_middle_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base/avispaRigging:cntr_Avispa_middle_arm_right_base/avispaRigging:grp_cntr_Avispa_middle_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base/avispaRigging:cntr_Avispa_middle_arm_right_base/avispaRigging:grp_cntr_Avispa_middle_arm_right_middlejoint/avispaRigging:cntr_Avispa_middle_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base/avispaRigging:cntr_Avispa_middle_arm_right_base/avispaRigging:grp_cntr_Avispa_middle_arm_right_middlejoint/avispaRigging:cntr_Avispa_middle_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_middle_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_middle_arm_right_base/avispaRigging:cntr_Avispa_middle_arm_right_base/avispaRigging:grp_cntr_Avispa_middle_arm_right_middlejoint/avispaRigging:cntr_Avispa_middle_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_middle_arm_right_blade/avispaRigging:cntr_Avispa_middle_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_left_base/avispaRigging:cntr_Avispa_Antena_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_left_base/avispaRigging:cntr_Avispa_Antena_left_base/avispaRigging:grp_cntr_Avispa_Antena_left_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_left_base/avispaRigging:cntr_Avispa_Antena_left_base/avispaRigging:grp_cntr_Avispa_Antena_left_medio/avispaRigging:cntr_Avispa_Antena_left_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_right_base/avispaRigging:cntr_Avispa_Antena_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_right_base/avispaRigging:cntr_Avispa_Antena_right_base/avispaRigging:grp_cntr_Avispa_Antena_right_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_cuello/avispaRigging:cntr_Avispa_cuello/avispaRigging:grp_cntr_Avispa_cabeza/avispaRigging:cntr_Avispa_cabeza/avispaRigging:grp_cntr_Avispa_Antena_right_base/avispaRigging:cntr_Avispa_Antena_right_base/avispaRigging:grp_cntr_Avispa_Antena_right_medio/avispaRigging:cntr_Avispa_Antena_right_medio
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base/avispaRigging:cntr_Avispa_first_arm_left_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base/avispaRigging:cntr_Avispa_first_arm_left_base/avispaRigging:grp_cntr_Avispa_first_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base/avispaRigging:cntr_Avispa_first_arm_left_base/avispaRigging:grp_cntr_Avispa_first_arm_left_middlejoint/avispaRigging:cntr_Avispa_first_arm_left_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base/avispaRigging:cntr_Avispa_first_arm_left_base/avispaRigging:grp_cntr_Avispa_first_arm_left_middlejoint/avispaRigging:cntr_Avispa_first_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_first_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_left_base/avispaRigging:cntr_Avispa_first_arm_left_base/avispaRigging:grp_cntr_Avispa_first_arm_left_middlejoint/avispaRigging:cntr_Avispa_first_arm_left_middlejoint/avispaRigging:grp_cntr_Avispa_first_arm_left_blade/avispaRigging:cntr_Avispa_first_arm_left_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base/avispaRigging:cntr_Avispa_first_arm_right_base
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base/avispaRigging:cntr_Avispa_first_arm_right_base/avispaRigging:grp_cntr_Avispa_first_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base/avispaRigging:cntr_Avispa_first_arm_right_base/avispaRigging:grp_cntr_Avispa_first_arm_right_middlejoint/avispaRigging:cntr_Avispa_first_arm_right_middlejoint
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base/avispaRigging:cntr_Avispa_first_arm_right_base/avispaRigging:grp_cntr_Avispa_first_arm_right_middlejoint/avispaRigging:cntr_Avispa_first_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_first_arm_right_blade
+        weight: 1
+      - path: avispaRigging:grp_cntr_Avispa_MAIN/avispaRigging:cntr_Avispa_MAIN/avispaRigging:grp_cntr_Avispa_Direccion/avispaRigging:cntr_Avispa_Direccion/avispaRigging:grp_cntr_Avispa_torso/avispaRigging:cntr_Avispa_torso/avispaRigging:grp_cntr_Avispa_torso_medio/avispaRigging:cntr_Avispa_torso_medio/avispaRigging:grp_cntr_Avispa_pecho/avispaRigging:cntr_Avispa_pecho/avispaRigging:grp_cntr_Avispa_first_arm_right_base/avispaRigging:cntr_Avispa_first_arm_right_base/avispaRigging:grp_cntr_Avispa_first_arm_right_middlejoint/avispaRigging:cntr_Avispa_first_arm_right_middlejoint/avispaRigging:grp_cntr_Avispa_first_arm_right_blade/avispaRigging:cntr_Avispa_first_arm_right_blade
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: avispaRigging:bn_Avispa_MAIN
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

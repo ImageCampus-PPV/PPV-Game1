@@ -68,7 +68,7 @@ Transform:
   m_Children:
   - {fileID: 5725205844104546386}
   - {fileID: 865562461805149416}
-  - {fileID: 6853459469961495264}
+  - {fileID: 3934735518115178625}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &8185128234979137790
@@ -160,7 +160,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.028053284, y: -0.10682726}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -170,7 +170,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.6, y: 1.8}
+  m_Size: {x: 1.8397522, y: 1.2692451}
   m_EdgeRadius: 0
 --- !u!114 &4368972793849004028
 MonoBehaviour:
@@ -604,7 +604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
---- !u!1001 &8969529465360567975
+--- !u!1001 &4372515838100407027
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -612,69 +612,69 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3969646043472997445}
     m_Modifications:
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 107917389065154760, guid: bba59da98ce996742a437435d2bdd537, type: 3}
+      propertyPath: m_Name
+      value: Enemy_Avispa_RIG_Act Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.15
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.15
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.15
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.293
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.75
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
+    - target: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2895139707456362237, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
-      propertyPath: m_Name
-      value: Enemy_Avispa_RIG
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
---- !u!4 &6853459469961495264 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: bba59da98ce996742a437435d2bdd537, type: 3}
+--- !u!4 &3934735518115178625 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 2550808243108629575, guid: 61fe7363141828441a42023b48c54a3f, type: 3}
-  m_PrefabInstance: {fileID: 8969529465360567975}
+  m_CorrespondingSourceObject: {fileID: 735413745423002226, guid: bba59da98ce996742a437435d2bdd537, type: 3}
+  m_PrefabInstance: {fileID: 4372515838100407027}
   m_PrefabAsset: {fileID: 0}
