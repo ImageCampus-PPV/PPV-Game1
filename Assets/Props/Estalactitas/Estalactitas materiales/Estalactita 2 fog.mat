@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Estalactita 2 fog
-  m_Shader: {fileID: 4800000, guid: 4668530ff4c880245922781f960aa73f, type: 3}
+  m_Shader: {fileID: 4800000, guid: 0d23b019d471965429cdb44269d7d79e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

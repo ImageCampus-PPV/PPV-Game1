@@ -1,10 +1,11 @@
-Shader "Custom/PBRToonShaderFog"
+Shader "Custom/PBRToonShaderFogV2"
 {
     Properties
     {
         [Header(Base Texture)]
         [MainTexture] _BaseMap("Base Texture (RGB)", 2D) = "white" {}
         [MainColor] _BaseColor("Diffuse Color", Color) = (1,1,1,1)
+        _ShadowColor("Toon Shadow Tint", Color) = (0.4, 0.4, 0.5, 1)
         
         [Header(Normal)]
         _BumpMap("Normal Map", 2D) = "bump" {}
@@ -26,13 +27,14 @@ Shader "Custom/PBRToonShaderFog"
         _OcclusionStrength("AO Strength", Range(0.0, 1.0)) = 1.0
         
         [Header(Toon Core Settings)]
-        _LightingSteps("Toon Steps)", Range(1.0, 5.0)) = 2.0
+        _LightingSteps("Toon Steps", Range(1.0, 5.0)) = 2.0
         _LightingCutoff("Lighting Cutoff", Range(-1.0, 1.0)) = 0.0
-        _FalloffAmount("Toon Edge Softness", Range(0.001, 0.5)) = 0.01
-        _AmbientStrength("Ambient Shadow Density", Range(0.0, 1.0)) = 0.2
+        _FalloffAmount("Toon Edge Softness", Range(0.001, 0.5)) = 0.02
+        _AmbientStrength("Ambient Shadow Density", Range(0.0, 1.0)) = 0.35
+        _ReceiveShadows("Receive Physical Shadows", Range(0.0, 1.0)) = 0.0
         
         [Header(Toon Stylized Details)]
-        _FresnelColor("Toon Rim Color", Color) = (0,0,0,1)
+        _FresnelColor("Toon Rim Color", Color) = (1,1,1,1)
         _FresnelSize("Toon Rim Thickness", Range(0.01, 1.0)) = 0.15
         _SpecularSize("Specular Sharpness", Range(0.01, 0.99)) = 0.1
     }
@@ -42,6 +44,9 @@ Shader "Custom/PBRToonShaderFog"
         Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry" }
         LOD 300
 
+        // =========================================================================
+        // PASS 1: RENDERIZADO PRINCIPAL CON TOON + FOG (ForwardLit)
+        // =========================================================================
         Pass
         {
             Name "ForwardLit"
@@ -50,10 +55,12 @@ Shader "Custom/PBRToonShaderFog"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
-            #pragma multi_compile _ _ADDITIONAL_LIGHTS
+
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile _ _FORWARD_PLUS
             #pragma multi_compile_fog
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
@@ -76,7 +83,7 @@ Shader "Custom/PBRToonShaderFog"
                 float3 tangentWS    : TEXCOORD5;
                 float3 bitangentWS  : TEXCOORD6;
                 float3 viewDirWS    : TEXCOORD7;
-                float fogFactor     : TEXCOORD8; 
+                float fogFactor     : TEXCOORD8;
             };
 
             TEXTURE2D(_BaseMap);           SAMPLER(sampler_BaseMap);
@@ -88,6 +95,7 @@ Shader "Custom/PBRToonShaderFog"
             CBUFFER_START(UnityPerMaterial)
                 float4 _BaseMap_ST;
                 half4 _BaseColor;
+                half4 _ShadowColor;
                 half _BumpScale;
                 half4 _EmissionColor;
                 half _EmissionPower;
@@ -99,6 +107,7 @@ Shader "Custom/PBRToonShaderFog"
                 half _LightingCutoff;
                 half _FalloffAmount;
                 half _AmbientStrength;
+                half _ReceiveShadows;
                 half4 _FresnelColor;
                 half _FresnelSize;
                 half _SpecularSize;
@@ -141,22 +150,23 @@ Shader "Custom/PBRToonShaderFog"
                 // 2. TEXTURE SAMPLING
                 half4 albedo = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, uvDisplaced) * _BaseColor;
                 half3 normalSample = UnpackNormalScale(SAMPLE_TEXTURE2D(_BumpMap, sampler_BumpMap, uvDisplaced), _BumpScale);
-                
                 half3 emission = SAMPLE_TEXTURE2D(_EmissionMap, sampler_EmissionMap, uvDisplaced).rgb * _EmissionColor.rgb * _EmissionPower;
 
+                // Mask Map
                 half4 packedMask = SAMPLE_TEXTURE2D(_MetallicGlossMap, sampler_MetallicGlossMap, uvDisplaced);
                 half customMetallic = packedMask.r * _Metallic;
                 half ao = packedMask.g; 
                 half customSmoothness = packedMask.a * _Smoothness;
                 half aoStrength = lerp(1.0, ao, _OcclusionStrength);
 
+                // Normales en Espacio de Mundo
                 float3 normalWS = normalize(
                     normalSample.x * input.tangentWS + 
                     normalSample.y * input.bitangentWS + 
                     normalSample.z * input.normalWS
                 );
 
-                // 4. MAIN LIGHT (Multi-Banda Cel Shading)
+                // 3. MAIN LIGHT (Sombreado Toon puro + control de sombra física)
                 float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
                 Light mainLight = GetMainLight(shadowCoord);
                 
@@ -165,56 +175,96 @@ Shader "Custom/PBRToonShaderFog"
                 half diffuseWeight = (mainNdotL * 0.5 + 0.5);
                 half discreteDiffuse = floor(diffuseWeight * _LightingSteps) / _LightingSteps;
                 half mainCelDiffuse = smoothstep(_LightingCutoff, _LightingCutoff + _FalloffAmount, discreteDiffuse);
-                mainCelDiffuse = max(mainCelDiffuse, _AmbientStrength * aoStrength) * mainLight.shadowAttenuation;
+
+                // Control de sombra física proyectada (0 = limpio en personajes, 1 = recibe sombras físicas)
+                half physicalShadow = lerp(1.0, mainLight.shadowAttenuation, _ReceiveShadows);
+                mainCelDiffuse *= physicalShadow;
+
+                // Mezcla entre el tinte de sombra estilizado y la luz directa
+                half3 ambientTint = _ShadowColor.rgb * _AmbientStrength * aoStrength;
+                half3 lightingFactor = lerp(ambientTint, mainLight.color, mainCelDiffuse);
 
                 // Especular Toon
                 float3 mainHalfWS = normalize(mainLight.direction + viewDirWS);
                 half mainNdotH = max(0.0, dot(normalWS, mainHalfWS));
                 half mainSpecular = pow(mainNdotH, lerp(4.0, 256.0, customSmoothness)) * customMetallic;
-                half mainCelSpecular = smoothstep(_SpecularSize, _SpecularSize + _FalloffAmount, mainSpecular) * mainLight.shadowAttenuation;
+                half mainCelSpecular = smoothstep(_SpecularSize, _SpecularSize + _FalloffAmount, mainSpecular) * physicalShadow;
 
-                half3 finalColor = albedo.rgb * (mainLight.color * mainCelDiffuse) + (mainLight.color * mainCelSpecular);
+                half3 finalColor = albedo.rgb * lightingFactor + (mainLight.color * mainCelSpecular);
 
-                // 5. ADDITIONAL LIGHTS LOOP
+                // 4. ADDITIONAL LIGHTS LOOP (Compatible con Forward y Forward+ de Unity 6)
                 #if defined(_ADDITIONAL_LIGHTS)
-                int pixelLightCount = GetAdditionalLightsCount();
-                for (int i = 0; i < pixelLightCount; ++i)
+                uint pixelLightCount = GetAdditionalLightsCount();
+
+                #if USE_FORWARD_PLUS
+                for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
                 {
-                    Light addLight = GetAdditionalLight(i, input.positionWS);
-                    half addNdotL = dot(normalWS, addLight.direction);
+                    FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+                    Light addLight = GetAdditionalLight(lightIndex, input.positionWS);
                     
+                    half addNdotL = dot(normalWS, addLight.direction);
                     half addWeight = (addNdotL * 0.5 + 0.5);
                     half addDiscrete = floor(addWeight * _LightingSteps) / _LightingSteps;
-                    half addCelDiffuse = smoothstep(_LightingCutoff, _LightingCutoff + _FalloffAmount, addDiscrete) * addLight.distanceAttenuation * addLight.shadowAttenuation;
-                    
-                    float3 addHalfWS = normalize(addLight.direction + viewDirWS);
-                    half addNdotH = max(0.0, dot(normalWS, addHalfWS));
-                    half addSpecular = pow(addNdotH, lerp(4.0, 256.0, customSmoothness)) * customMetallic;
-                    half addCelSpecular = smoothstep(_SpecularSize, _SpecularSize + _FalloffAmount, addSpecular) * addLight.distanceAttenuation * addLight.shadowAttenuation;
-
-                    finalColor += albedo.rgb * (addLight.color * addCelDiffuse) + (addLight.color * addCelSpecular);
-                }
-                #endif
-
-                // 6. TOON SILHOUETTE / RIM LIGHT
-                half fresnel = 1.0 - max(0.0, dot(normalWS, viewDirWS));
-                half celFresnel = smoothstep(1.0 - _FresnelSize, 1.0 - _FresnelSize + _FalloffAmount, fresnel);
-                
-                half3 fresnelOutput = lerp(_FresnelColor.rgb, albedo.rgb * _FresnelColor.rgb, customMetallic);
-                if(dot(_FresnelColor.rgb, float3(1,1,1)) < 0.1)
-                {
-                    finalColor = lerp(finalColor, _FresnelColor.rgb, celFresnel * 0.8);
-                }
-                else
-                {
+                    half addShadow = lerp(1.0, addLight.shadowAttenuation, _ReceiveShadows);
+half addCelDiffuse = smoothstep(_LightingCutoff, _LightingCutoff + _FalloffAmount, addDiscrete) * addLight.distanceAttenuation * addShadow;
+float3 addHalfWS = normalize(addLight.direction + viewDirWS);
+half addNdotH = max(0.0, dot(normalWS, addHalfWS));
+half addSpecular = pow(addNdotH, lerp(4.0, 256.0, customSmoothness)) * customMetallic;
+half addCelSpecular = smoothstep(_SpecularSize, _SpecularSize + _FalloffAmount, addSpecular) * addLight.distanceAttenuation * addShadow;
+finalColor += albedo.rgb * (addLight.color * addCelDiffuse) + (addLight.color * addCelSpecular);
+}
+#endif
+LIGHT_LOOP_BEGIN(pixelLightCount)
+Light addLight = GetAdditionalLight(lightIndex, input.positionWS);
+half addNdotL = dot(normalWS, addLight.direction);
+half addWeight = (addNdotL * 0.5 + 0.5);
+half addDiscrete = floor(addWeight * _LightingSteps) / _LightingSteps;
+half addShadow = lerp(1.0, addLight.shadowAttenuation, _ReceiveShadows);
+half addCelDiffuse = smoothstep(_LightingCutoff, _LightingCutoff + _FalloffAmount, addDiscrete) * addLight.distanceAttenuation * addShadow;
+float3 addHalfWS = normalize(addLight.direction + viewDirWS);
+half addNdotH = max(0.0, dot(normalWS, addHalfWS));
+half addSpecular = pow(addNdotH, lerp(4.0, 256.0, customSmoothness)) * customMetallic;
+half addCelSpecular = smoothstep(_SpecularSize, _SpecularSize + _FalloffAmount, addSpecular) * addLight.distanceAttenuation * addShadow;
+finalColor += albedo.rgb * (addLight.color * addCelDiffuse) + (addLight.color * addCelSpecular);
+LIGHT_LOOP_END
+#endif
+// 5. TOON SILHOUETTE / RIM LIGHT
+half fresnel = 1.0 - max(0.0, dot(normalWS, viewDirWS));
+half celFresnel = smoothstep(1.0 - _FresnelSize, 1.0 - _FresnelSize + _FalloffAmount, fresnel);
+half3 fresnelOutput = lerp(_FresnelColor.rgb, albedo.rgb * _FresnelColor.rgb, customMetallic);
+if(dot(_FresnelColor.rgb, float3(1,1,1)) < 0.1)
+{
+finalColor = lerp(finalColor, _FresnelColor.rgb, celFresnel * 0.8);
+}
+else
+{
 finalColor += fresnelOutput * celFresnel * (aoStrength + customMetallic);
 }
-// 7. EMISSION
+// 6. EMISSION
 finalColor += emission;
-// 8. FOG INTERPOLATION
+// 7. FOG INTERPOLATION
 finalColor = MixFog(finalColor, input.fogFactor);
 return half4(finalColor, albedo.a);
 }
+ENDHLSL
+}
+// =========================================================================
+// PASS 2: PROYECCIÓN DE SOMBRAS FÍSICAS (ShadowCaster)
+// =========================================================================
+Pass
+{
+Name "ShadowCaster"
+Tags { "LightMode" = "ShadowCaster" }
+ZWrite On
+ZTest LEqual
+ColorMask 0
+HLSLPROGRAM
+#pragma vertex ShadowPassVertex
+#pragma fragment ShadowPassFragment
+#pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
 ENDHLSL
 }
 }
