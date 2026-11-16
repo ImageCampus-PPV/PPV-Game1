@@ -108,7 +108,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _LightingCutoff: 0
-    - _LightingSteps: 2
+    - _LightingSteps: 2.65
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005

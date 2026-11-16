@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: a8d9fa4b2b3fa3842a4b500456bad63c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 9fb9708d87120fb46b1f39991620d947, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 378b4045c06c5b443b5963a6e65a3ba9, type: 3}
+        m_Texture: {fileID: 2800000, guid: b9e94f3f99731d14a9bdda78bae6711e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 2800000, guid: 73d1f3d92936dbb419c6765e0fe9c839, type: 3}
+        m_Texture: {fileID: 2800000, guid: bc7d943b5ed14104a9f3a69bd99b91ea, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 20e330b8349a69243875f57c3b7d8094, type: 3}
+        m_Texture: {fileID: 2800000, guid: 896b16c93df848f46b8d069725d5871f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -61,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 2800000, guid: b9db0ad7a97cec34990c10766df8c65e, type: 3}
+        m_Texture: {fileID: 2800000, guid: db6894a12949eaa49988c1dc1818d201, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -123,7 +123,7 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8773585, g: 0.8152813, b: 0.8152813, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 0.90196085, b: 0, a: 1}
     - _FresnelColor: {r: 0, g: 0, b: 0, a: 1}
